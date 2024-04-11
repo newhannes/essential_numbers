@@ -3,6 +3,7 @@ import pandas as pd
 from datetime import date
 import requests
 from full_fred.fred import Fred
+import streamlit as st
 
 FRED_API_KEY = st.secrets["FRED_API_KEY"]
 fred = Fred()
