@@ -1,16 +1,12 @@
 #### GET DEBT ####
 import pandas as pd
-import os 
 from datetime import date
 import requests
-#FRED
 from full_fred.fred import Fred
-from dotenv import load_dotenv
-from datetime import date
-load_dotenv()
-FRED_API_KEY = os.environ.get('fred_api_key')
+
+FRED_API_KEY = st.secrets["FRED_API_KEY"]
 fred = Fred()
-os.chdir(r"C:\Users\DSikkink\OneDrive - US House of Representatives\Python\Essential Numbers")
+
 
 ### SETUP ###
 thisyear = date.today().year

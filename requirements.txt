@@ -1,0 +1,4 @@
+pandas
+requests
+full_fred
+datetime

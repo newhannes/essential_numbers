@@ -1,8 +1,8 @@
 import streamlit as st
 import pandas as pd
-import os
+#import os
 import debt_tracker
-os.chdir(r"C:\Users\DSikkink\OneDrive - US House of Representatives\Python\Essential Numbers")
+#os.chdir(r"C:\Users\DSikkink\OneDrive - US House of Representatives\Python\Essential Numbers")
 
 page = st.sidebar.radio("Go to page", ["Home", "Debt Tracker", "About"])
 rd_file_path = "README.md"
