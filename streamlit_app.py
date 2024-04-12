@@ -7,13 +7,11 @@ from st_pages import Page, add_page_title, show_pages
 
 show_pages(
     [
-        Page("streamlit_app.py", "Home"),
+        #Page("streamlit_app.py", "Home"),
         Page("pages/01_Debt Tracker.py", "Debt Tracker"),
         Page("pages/About.py", "About")
     ]
 )
-
-add_page_title("Home")
 # page = st.sidebar.radio("Go to page", ["Home", "Debt Tracker", "Inflation", "Job Market and Wages", "Interest Rates", "Consumer Debt", "Oil and Gas", "About"])
 # rd_file_path = "README.md"
 
