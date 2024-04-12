@@ -1,4 +1,6 @@
 import streamlit as st
+import debt_tracker
+
 st.title('Debt Tracker')
 st.write("In development.")
 

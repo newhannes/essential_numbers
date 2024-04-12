@@ -2,3 +2,4 @@ pandas
 requests
 full_fred
 datetime
+st-pages
