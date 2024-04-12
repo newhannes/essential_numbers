@@ -7,9 +7,9 @@ from st_pages import Page, add_page_title, show_pages
 
 show_pages(
     [
-        Page("streamlit_app.py", "Home", ":house:"),
-        Page("pages/01_Debt Tracker.py", "Debt Tracker", ":moneybag:"),
-        Page("pages/About.py", "About", ":questionmark:")
+        Page("streamlit_app.py", "Home"),
+        Page("pages/01_Debt Tracker.py", "Debt Tracker"),
+        Page("pages/About.py", "About")
     ]
 )
 
