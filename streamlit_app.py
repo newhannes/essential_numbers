@@ -7,7 +7,7 @@ from st_pages import Page, add_page_title, show_pages
 
 show_pages(
     [
-        #Page("streamlit_app.py", "Home"),
+        Page("Home.py", "Home"),
         Page("pages/01_Debt Tracker.py", "Debt Tracker"),
         Page("pages/About.py", "About")
     ]
@@ -15,8 +15,8 @@ show_pages(
 # page = st.sidebar.radio("Go to page", ["Home", "Debt Tracker", "Inflation", "Job Market and Wages", "Interest Rates", "Consumer Debt", "Oil and Gas", "About"])
 # rd_file_path = "README.md"
 
-st.title("Essential Numbers")
-st.write("A dashboard to store essential numbers used by the House Budget Committee. Work in progress.")
+# st.title("Essential Numbers")
+# st.write("A dashboard to store essential numbers used by the House Budget Committee. Work in progress.")
 
 
 
