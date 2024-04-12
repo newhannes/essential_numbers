@@ -2,4 +2,3 @@ pandas
 requests
 full_fred
 datetime
-debt_tracker
