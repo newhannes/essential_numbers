@@ -13,6 +13,7 @@ show_pages(
     ]
 )
 
+add_page_title("Home")
 # page = st.sidebar.radio("Go to page", ["Home", "Debt Tracker", "Inflation", "Job Market and Wages", "Interest Rates", "Consumer Debt", "Oil and Gas", "About"])
 # rd_file_path = "README.md"
 
