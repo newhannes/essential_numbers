@@ -7,7 +7,7 @@ from st_pages import Page, add_page_title, show_pages
 
 show_pages(
     [
-        Page("Home.py", "Home"),
+        Page("pages/Home.py", "Home"),
         Page("pages/01_Debt Tracker.py", "Debt Tracker"),
         Page("pages/About.py", "About")
     ]
