@@ -9,7 +9,7 @@ show_pages(
     [
         Page("streamlit_app.py", "Home", ":house:"),
         Page("pages/01_Debt Tracker.py", "Debt Tracker", ":moneybag:"),
-        Page("pages/About.py", "About", ":information_source:")
+        Page("pages/About.py", "About", ":questionmark:")
     ]
 )
 
