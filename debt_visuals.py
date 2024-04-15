@@ -1,7 +1,7 @@
 #### VISUALIZE GROSS DEBT TO GDP HISTORICALLY ####
 import pandas as pd
 import plotly.express as px
-import plotly.graph_objects as go
+#import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 from full_fred.fred import Fred
 from datetime import date
