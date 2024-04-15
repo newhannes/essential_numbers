@@ -1,5 +1,5 @@
 import streamlit as st
-import debt_tracker
+import debt_tracker, debt_visuals
 
 st.title('Debt Tracker')
 st.write("In development.")
@@ -16,7 +16,7 @@ st.markdown(f"- **${debt_tracker.biden_debt_per_person:,}** more debt per person
 st.markdown(f"- **${debt_tracker.biden_debt_per_household:,}** more debt per household")
 st.markdown(f"- **${debt_tracker.biden_debt_per_child:,}** more debt per child")
 
-st.header('Debt Accumulation Under Biden')
+#st.header('Debt Accumulation Under Biden')
 st.write("The rate of debt accumulation during the Biden Administration has equaled:")
 st.markdown(f"- **${debt_tracker.biden_debt_per_day_rounded:,} billion** in new debt per day")
 st.markdown(f"- **${debt_tracker.biden_debt_per_hour:,} million** in new debt per hour")
@@ -30,3 +30,5 @@ st.markdown(f"- **${debt_tracker.last_year_debt_per_day_rounded:,} billion** in 
 st.markdown(f"- **${debt_tracker.last_year_debt_per_hour:,} million** in new debt per hour")
 st.markdown(f"- **${debt_tracker.last_year_debt_per_min:,} million** in new debt per minute")
 st.markdown(f"- **${debt_tracker.last_year_debt_per_sec:,}** in new debt per second")
+
+st.plotly_chart(debt_visuals.fig)

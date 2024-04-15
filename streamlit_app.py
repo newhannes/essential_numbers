@@ -1,7 +1,4 @@
 import streamlit as st
-import pandas as pd
-#import os
-import debt_tracker
 #os.chdir(r"C:\Users\DSikkink\OneDrive - US House of Representatives\Python\Essential Numbers")
 from st_pages import Page, add_page_title, show_pages
 
