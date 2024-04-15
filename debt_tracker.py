@@ -6,13 +6,7 @@ import requests
 from full_fred.fred import Fred
 import streamlit as st
 
-try:
-    FRED_API_KEY = st.secrets["FRED_API_KEY"]
-except:
-    import os
-    import dotenv
-    dotenv.load_dotenv()
-    FRED_API_KEY = os.environ.get("FRED_API_KEY") 
+FRED_API_KEY = st.secrets["FRED_API_KEY"]
 fred = Fred()
 
 
