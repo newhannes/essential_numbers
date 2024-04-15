@@ -4,3 +4,4 @@ full_fred
 datetime
 st-pages
 plotly.express
+matplotlib
