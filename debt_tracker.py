@@ -12,7 +12,7 @@ except:
     import os
     import dotenv
     dotenv.load_dotenv()
-    FRED_API_KEY = os.getenv("FRED_API_KEY") 
+    FRED_API_KEY = os.environ.get("FRED_API_KEY") 
 fred = Fred()
 
 
@@ -31,6 +31,7 @@ data = p.json()
 debt_df = pd.DataFrame(data['data'])
 debt_df['tot_pub_debt_out_amt'] = debt_df['tot_pub_debt_out_amt'].astype(float)
 since_biden = debt_df[debt_df['record_date'] >= '2021-01-20'] #filter to since biden
+debt_df.set_index('record_date', inplace=True) #so we can use asof(x) method
 
 ### FRED ###
 population = fred.get_series_df('POPTOTUSA647NWDB', observation_start=biden_start)
@@ -48,7 +49,8 @@ current_child_population = child_population
 biden_start_debt = since_biden['tot_pub_debt_out_amt'].iloc[0]
 biden_start_debt_rounded = round(biden_start_debt/1e+12, 2)
 # Year Ago
-debt_year_ago = debt_df[debt_df['record_date'] == year_ago]['tot_pub_debt_out_amt'].iloc[0]
+year_ago_index = debt_df.index.asof(year_ago)
+debt_year_ago = debt_df.loc[year_ago_index, 'tot_pub_debt_out_amt']
 
 ### CALCULATIONS ###
 # Americans
