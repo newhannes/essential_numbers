@@ -6,3 +6,4 @@ st-pages
 plotly.express
 matplotlib
 openpyxl
+pdfkit

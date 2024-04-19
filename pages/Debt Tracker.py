@@ -1,8 +1,9 @@
 import streamlit as st
-import debt_tracker, debt_visuals, debt_visual2, debt_visual3
+from workhorses import debt_tracker, debt_visuals, debt_visual2, debt_visual3
 
 st.markdown("<h1 style='text-align: center; color: black;'>Debt Tracker</h1>", unsafe_allow_html=True)
-#st.write("In development.")
+st.markdown(f"<h3 style='text-align: center; color: black;'> As of {debt_tracker.today}.</h3>", unsafe_allow_html=True)
+#st.write("In development.
 
 
 
