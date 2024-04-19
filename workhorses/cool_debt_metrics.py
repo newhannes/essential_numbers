@@ -13,8 +13,6 @@ FRED_API_KEY = st.secrets["FRED_API_KEY"]
 fred = Fred()
 today = date.today().strftime("%Y-%m-%d")
 
-import os
-os.chdir(r"C:\Users\DSikkink\OneDrive - US House of Representatives\Python\Essential Numbers")
 
 ### DEBT TO FEDERAL ASSETS ###
 ## get data ##
