@@ -6,6 +6,7 @@ show_pages(
     [
         Page("pages/Home.py", "Home"),
         Page("pages/Debt Tracker.py", "Debt Tracker"),
+        Page("pages/Debt Tracker 2.0.py", "Debt Tracker 2.0 TEST"),
         Page("pages/About.py", "About")
     ]
 )
