@@ -8,8 +8,8 @@ import requests
 import json
 import streamlit as st
 
-FRED_API_KEY = st.secrets('FRED_API_KEY')
-BLS_API_KEY = st.secrets('BLS_API_KEY')
+FRED_API_KEY = st.secrets['FRED_API_KEY']
+BLS_API_KEY = st.secrets['BLS_API_KEY']
 fred = Fred()
 today = date.today().strftime("%Y-%m-%d")
 gold = "#967D4A"
