@@ -22,7 +22,6 @@ data = p.json()
 debt_df = pd.DataFrame(data['data'])
 debt_df['tot_pub_debt_out_amt'] = debt_df['tot_pub_debt_out_amt'].astype(float)
 since_biden = debt_df[debt_df['record_date'] >= '2021-01-20'] #filter to since biden
-debt_df.set_index('record_date', inplace=True) #so we can use asof(x) method
 
 ### FRED ###
 population = fred.get_series_df('POPTOTUSA647NWDB', observation_start=biden_start)
