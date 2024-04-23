@@ -128,11 +128,11 @@ html = f"""
 
 
 # Write the HTML string to a file
-with open("report.html", "w") as f:
-    f.write(html)
+#with open("report.html", "w") as f:
+ #   f.write(html)
 
 # Convert the HTML file to a PDF
-pdf = pdfkit.from_file("report.html", False)
+pdf = pdfkit.from_string(html, False)
 
 # Add a button to download the PDF
 st.download_button(
