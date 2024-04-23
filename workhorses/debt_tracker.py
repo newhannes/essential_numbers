@@ -8,16 +8,12 @@ import streamlit as st
 
 FRED_API_KEY = st.secrets["FRED_API_KEY"]
 fred = Fred()
-import os
-os.chdir(r"C:\Users\DSikkink\OneDrive - US House of Representatives\Python\Essential Numbers")
 
 ### SETUP ###
 thisyear = date.today().year
 today = date.today()
 biden_start = date(2021,1,20)
 biden_days = (today - biden_start).days
-year_ago = date(today.year-1, today.month, today.day).strftime('%Y-%m-%d')
-
 ### Treasury API ###
 #get debt data
 treasury_link = 'https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/accounting/od/debt_to_penny?page[size]=10000'
@@ -44,6 +40,10 @@ current_child_population = child_population
 biden_start_debt = since_biden['tot_pub_debt_out_amt'].iloc[0]
 biden_start_debt_rounded = round(biden_start_debt/1e+12, 2)
 # Year Ago
+debt_df['record_date'] = pd.to_datetime(debt_df['record_date'])
+most_recent_date = debt_df['record_date'].iloc[-1]
+debt_df.set_index('record_date', inplace=True) #so we can use asof(x) method
+year_ago = most_recent_date - pd.DateOffset(years=1)
 year_ago_index = debt_df.index.asof(year_ago)
 debt_year_ago = debt_df.loc[year_ago_index, 'tot_pub_debt_out_amt']
 
