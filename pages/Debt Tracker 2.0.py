@@ -142,5 +142,5 @@ st.download_button(
     mime="application/octet-stream"
 )
 
-components.html(html, scrolling=False, height=4500, width=1000)
+components.html(html, scrolling=True, height=4500, width=1000)
 

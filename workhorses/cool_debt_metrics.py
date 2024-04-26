@@ -17,7 +17,7 @@ jade = "#84AE95"
 emerald = "#004647"
 
 #### --------- DEBT TO FEDERAL ASSETS --------- ####
-
+# MARK: DEBT TO ASSETS
 ## --- Get Data from FRED --- ##
 # both are quarterly data 
 startdate = "1966-01-01"
@@ -38,10 +38,6 @@ most_recent_quarter = quarter_dict[int(most_recent_date[5:7])]
 most_recent_year = most_recent_date[:4]
 most_recent_debt = round(debt_to_assets['Total Debt'].iloc[-1] / 1e6, 2)
 most_recent_assets = round(debt_to_assets['Financial Assets'].iloc[-1]/1e6, 2)
-# peak = debt_to_assets['debt_to_assets'].max()
-# peak_date = debt_to_assets['date_total_debt'][debt_to_assets['debt_to_assets'] == peak].values[0]
-# peak_quarter = quarter_dict[int(peak_date[5:7])]
-# peak_year = peak_date[:4]
 
 # HTML #
 text_debt_to_assets = f"""
@@ -54,16 +50,16 @@ text_debt_to_assets = f"""
 
 ## --- Chart Time --- ##
 debt_to_assets["debt_to_assets"] = round(debt_to_assets["debt_to_assets"],2)
-debt_to_assets['QuarterYear'] = debt_to_assets['date_total_debt'].apply(lambda x: f"{quarter_dict[int(x[5:7])]}{x[:4]}")
-fig = px.line(debt_to_assets, x='date_total_debt', y='debt_to_assets', title='Debt to Federal Assets', labels={'date_total_debt':'Date', 'debt_to_assets':'Debt to Assets'})
+debt_to_assets['QuarterYear'] = debt_to_assets['date_total_debt'].apply(lambda x: f"{quarter_dict[int(x[5:7])]} {x[:4]}")
+fig = px.line(debt_to_assets, x='date_total_debt', y='debt_to_assets', title='Debt to Federal Assets', labels={'date_total_debt':'Date', 'debt_to_assets':'Debt to Assets'}, hover_data={"date_total_debt":False, "QuarterYear":True})
 fig.update_layout(template='plotly_white', title='<b>Ratio of Gross Debt to Federal Assets Since 1966</b>', titlefont=dict(size=24, family="Montserrat", color="black"))                                                                                                                        
-fig.update_xaxes(title_text="", tickfont=dict(size=14, family="Montserrat", color="black"))
+fig.update_xaxes(title_text="", tickfont=dict(size=14, family="Montserrat", color="black"), showgrid=False)
 fig.update_yaxes(title_text="Debt to Assets", tickfont=dict(size=14, family="Montserrat", color="black"))
-fig.update_traces(line=dict(width=3.5, color="#004647"), hovertemplate='<b>%{x}</b><br>%{y}<extra>{customdata}</extra>', customdata=debt_to_assets['QuarterYear'])
+fig.update_traces(line=dict(width=3.5, color="#004647"), hovertemplate='<b>%{customdata[0]}</b><br>%{y}')
 fig_debt_to_assets = fig.to_html(full_html=False)
 
-
 #### -------- RATIO OF DEBT TO TOTAL WAGES -------- ####
+# MARK: DEBT TO WAGES
 # This is annual data. While BLS has quarterly data, I am having trouble comparing quarterly wages paid to the level of debt in that quarter. 
 # I would need to have the debt ADDED in that quarter to compare to the wages PAID in that quarter.
 ### --- BLS API --- ###
@@ -135,13 +131,14 @@ text_debt_to_wages = f"""
 debt_to_wage['debt_to_wages'] = round(debt_to_wage['debt_to_wages'],2)
 fig = px.line(debt_to_wage, x='year', y='debt_to_wages', title='Debt to Wages', labels={'year':'Year', 'debt_to_wages':'Debt to Wages'})
 fig.update_layout(template='plotly_white', title='<b>Ratio of Gross Debt to Total Wages Since 2004</b>', titlefont=dict(size=24, family="Montserrat", color="black"))
-fig.update_xaxes(title_text="", tickfont=dict(size=14, family="Montserrat", color="black"), nticks=5)
-fig.update_yaxes(title_text="Debt to Wages", tickfont=dict(size=14, family="Montserrat", color="black"))
+fig.update_xaxes(title_text="", tickfont=dict(size=14, family="Montserrat", color="black"), nticks=5, showgrid=False)
+fig.update_yaxes(title_text="<b>Debt to Wages</b>", tickfont=dict(size=14, family="Montserrat", color="black"))
 fig.update_traces(line=dict(width=3.5, color="#004647"), hovertemplate='<b>%{x}</b><br>%{y}')
 fig_debt_to_wages = fig.to_html(full_html=False)
 
 
 #### -------- MORTGAGE RATES/HOUSING PRICES SINCE JAN 2021 -------- ####
+# MARK: MORTGAGE
 ## -- FRED Data -- ##
 mortgage_rate = fred.get_series_df("MORTGAGE30US", observation_start="2021-01-20", observation_end=today).drop(columns={'realtime_start', 'realtime_end'}).rename(columns={"value": "Mortgage Rate"})
 mortgage_rate['Mortgage Rate'] = mortgage_rate['Mortgage Rate'].astype(float)
@@ -151,8 +148,6 @@ median_sales['Median Sales Price'] = median_sales['Median Sales Price'].astype(f
 average = mortgage_rate['Mortgage Rate'].mean()
 most_recent = mortgage_rate['Mortgage Rate'].iloc[-1]
 most_recent_date = pd.to_datetime(mortgage_rate['date'].iloc[-1]).strftime('%B %d, %Y')
-#peak = mortgage_rate['Mortgage Rate'].max()
-#peak_date = mortgage_rate['date'][mortgage_rate['Mortgage Rate'] == peak].values[0]
 before = mortgage_rate['Mortgage Rate'].iloc[0]
 house_before_biden = round(median_sales['Median Sales Price'].iloc[0])
 house_now = round(median_sales['Median Sales Price'].iloc[-1])
@@ -162,7 +157,6 @@ def mortgage_calculator(principal, rate, years):
     n = years * 12
     payment = principal * r / (1 - (1 + r)**-n)
     return payment
-#<li>The 30 year fixed mortgage rate peaked on {peak_date} at {round(peak, 2)}%.</li>
 mortgage_before = round(mortgage_calculator(house_before_biden, before, 30))
 mortgage_now = round(mortgage_calculator(house_now, most_recent, 30))
 text_mortgage_rate = f"""
@@ -177,13 +171,14 @@ text_mortgage_rate = f"""
 ## -- Plot Time -- ##
 fig = px.line(mortgage_rate, x='date', y='Mortgage Rate', title='30 Year Fixed Mortgage Rate', labels={'date':'Date', 'Mortgage Rate':'Rate'})
 fig.update_layout(template='plotly_white', title='<b>30 Year Fixed Mortgage Rate Since January 2021</b>', titlefont=dict(size=24, family="Montserrat", color="black"))
-fig.update_xaxes(title_text="", tickfont=dict(size=14, family="Montserrat", color="black"))
-fig.update_yaxes(title_text="Rate (%)", tickfont=dict(size=14, family="Montserrat", color="black"))
+fig.update_xaxes(title_text="", tickfont=dict(size=14, family="Montserrat", color="black"), showgrid=False)
+fig.update_yaxes(title_text="<b>Rate (%)</b>", tickfont=dict(size=14, family="Montserrat", color="black"))
 fig.update_traces(line=dict(width=3.5, color="#004647"), hovertemplate='<b>%{x}</b><br>%{y}')
 fig_mortgage_rate = fig.to_html(full_html=False)
 
 
 ### --- OUR BUDGET VS PRESIDENT BUDGET --- ###
+# MARK: OUR BUDGET VS PB
 ## GET LOCAL DATA ##
 df = pd.read_excel("data/gross_debt_gdp.xlsx", header=1)
 df = df.iloc[[4,19], 1:12]
@@ -197,6 +192,8 @@ gross_debt_to_gdp['value'] = round(gross_debt_to_gdp['value'].astype(float))
 gross_debt_to_gdp = gross_debt_to_gdp.query('date >= "2000"')
 gross_debt_to_gdp = gross_debt_to_gdp.rename(columns={'date': 'year', 'value': 'debt_gdp'})
 gross_debt_to_gdp['source'] = "Actual"
+
+
 
 ## COMBINE DATA ##
 df = pd.concat([df_long, gross_debt_to_gdp], axis=0)
@@ -237,7 +234,7 @@ fig = go.Figure() # Create a new figure
 for source in sources:
     df_source = df[df['source'] == source]
     if source == 'HBC':
-        fig.add_trace(go.Scatter(x=df_source['year'], y=df_source['debt_gdp'], fill='tozeroy', mode="lines", name=source, line=dict(color=colors.get(source, 'black'))))#colors['Our Budget']))
+        fig.add_trace(go.Scatter(x=df_source['year'], y=df_source['debt_gdp'], fill='tozeroy', mode="lines", name=source, line=dict(color=colors.get(source, 'black'))))
     elif source == "Biden's Budget":
         fig.add_trace(go.Scatter(x=df_source['year'], y=df_source['debt_gdp'], fill='tonexty', mode="lines", name=source, line=dict(color=colors.get(source, 'black'))))
     else:
@@ -247,19 +244,20 @@ for source in sources:
 fig.update_layout(
     template='plotly_white', 
     hovermode="x unified",
-    title={'text': "<b>Gross Debt to GDP, HBC Budget Resolution vs President's Budget</b>",'font': dict(size=24, color="black", family="Montserrat")},
+    title={'text': "<b>Gross Debt to GDP, HBC Budget vs President's Budget</b>",'font': dict(size=24, color="black", family="Montserrat")},
     yaxis=dict(range=[0, max(df['debt_gdp'])]),
     legend = dict(font=dict(family="Montserrat", color="black", size=13))
 )
 
-fig.update_xaxes(showgrid=False, tickfont = dict(family="Montserrat"))
-fig.update_yaxes(ticksuffix="%", tickfont = dict(family="Montserrat"))
+fig.update_xaxes(showgrid=False, tickfont = dict(family="Montserrat"), range=[df['year'].min() - 0.5, df['year'].max()])  # Adjust the range of the x-axis)
+fig.update_yaxes(ticksuffix="%", title = "<b>Gross Debt as Percentage of GDP</b>", titlefont = dict(family="Montserrat"), tickfont = dict(family="Montserrat"))  
 
 # HTML #
 fig_debt_gdp = fig.to_html(full_html=False)
 
 
 #### ---- RATE OF INCREASE ---- ####
+# MARK: RATE OF INCREASE
 ## Treasury API ##
 # Get debt data
 treasury_link = 'https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/accounting/od/debt_to_penny?page[size]=10000'
@@ -268,7 +266,7 @@ data = p.json()
 debt_df = pd.DataFrame(data['data'])
 # Clean debt data
 debt_df['tot_pub_debt_out_amt'] = debt_df['tot_pub_debt_out_amt'].astype(float)
-debt_df = debt_df[['record_date','tot_pub_debt_out_amt']]#.query("record_date > '2020-01-01'") #filter to 2020
+debt_df = debt_df[['record_date','tot_pub_debt_out_amt']]
 debt_df["record_date"] = pd.to_datetime(debt_df["record_date"])
 debt_df["date_year_ago"] = debt_df["record_date"] - pd.DateOffset(years=1)
 # Get the debt from a year ago (or the closest date to a year ago)
@@ -277,9 +275,6 @@ debt_df["debt_year_ago"] = debt_df["date_year_ago"].apply(lambda x: debt_df["tot
 debt_df.reset_index(inplace=True)
 # Calculate Rate of Increase
 debt_df["year_increase"] = debt_df["tot_pub_debt_out_amt"] - debt_df["debt_year_ago"]
-debt_df['day_increase'] = debt_df['year_increase'] / 365
-debt_df['hour_increase'] = debt_df['year_increase'] / 365 / 24
-debt_df['minute_increase'] = debt_df['year_increase'] / 365 / 24 / 60
 debt_df['second_increase'] = round(debt_df['year_increase'] / 365 / 24 / 60 / 60)
 ## -- Textual Analysis -- ##
 average = round(debt_df['second_increase'].mean())
@@ -310,6 +305,7 @@ fig_debt_increase = fig.to_html(full_html=False)
 
 
 #### ---- CBO Projections ---- ####
+# MARK: CBO PROJECTIONS
 ### FRED Gross Debt to GDP ###
 gross_debt_to_gdp = fred.get_series_df('GFDGDPA188S').drop(columns=['realtime_start', 'realtime_end'])
 gross_debt_to_gdp['date'] = gross_debt_to_gdp['date'].apply(lambda x: x[0:4])
@@ -382,6 +378,7 @@ fig_random = fig.to_html(full_html=False)
 
 
 #### ---- GDP ADDED VS DEBT ADDED ---- ####
+# MARK: GDP VS DEBT
 ## -- FRED GDP -- ##
 start = "2022-01-01"
 today_quarter = quarter_dict[int(today[5:7])]
@@ -404,10 +401,9 @@ debt_increase = debt['Debt'].iloc[-1] - debt['Debt'].iloc[0]
 debt_day = debt_increase / 365
 text_gdp_debt = f"""
 <ul>
-    <li>In 2023, the U.S. added ${gdp_increase/1e12:.2f} trillion to its nominal GDP.</li>
-    <li>During the same period, the U.S. added ${debt_increase/1e12:.2f} trillion to its gross debt.</li>
-    <li>On average, the U.S. added ${gdp_day/1e9:,.2f} billion to its GDP and ${debt_day/1e9:,.2f} billion to its gross debt every day in 2023.</li>
-    <li>The growth in the gross debt was {round((debt_increase/gdp_increase)*100)}% higher than the growth in GDP.</li>
+    <li>In 2023, GDP grew by ${gdp_increase/1e12:.2f} trillion and gross debt grew by ${debt_increase/1e12:.2f} trillion.</li>
+    <li>This equates to a ${gdp_day/1e9:,.2f} billion increase in GDP every day and ${debt_day/1e9:,.2f} billion increase in debt every day in 2023.</li>
+    <li>In 2023, the growth in the gross debt was {round((debt_increase/gdp_increase)*100)}% higher than the growth in GDP.</li>
 </ul>
 """
 
@@ -426,12 +422,12 @@ fig = go.Figure(data=[
 # Update layout
 fig.update_layout(
     title='<b>Increase in Debt vs Increase in GDP, 2023 </b>', titlefont=dict(size=24, family="Montserrat", color="black"),
-    #xaxis_title='Dollars (Trillions)', 
     yaxis_title='',
     barmode='stack'
 )
-#fig.update_xaxes(tickprefix="$", tickfont=dict(size=14, family="Montserrat", color="black"), titlefont=dict(size=16, family="Montserrat", color="black"))
+
 fig.update_xaxes(showticklabels=False, showline=False, showgrid=False)
 fig.update_yaxes(tickfont=dict(size=16, family="Montserrat", color="black"))
-# Show figure
 fig_debt_vs_gdp_increase = fig.to_html(full_html=False)
+
+print("Cool Debt Metrics script complete.")
