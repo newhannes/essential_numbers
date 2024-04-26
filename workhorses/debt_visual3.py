@@ -5,8 +5,6 @@ import requests
 import plotly.express as px
 import datetime
 import streamlit as st
-import os
-os.chdir(r"C:\Users\DSikkink\OneDrive - US House of Representatives\Python\Essential Numbers")
 ### Treasury API ###
 
 # Get debt data

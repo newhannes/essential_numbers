@@ -6,8 +6,6 @@ import matplotlib.pyplot as plt
 from full_fred.fred import Fred
 from datetime import date
 import streamlit as st
-import os
-os.chdir(r"C:\Users\DSikkink\OneDrive - US House of Representatives\Python\Essential Numbers")
 FRED_API_KEY = st.secrets["FRED_API_KEY"]
 fred = Fred()
 today = date.today().strftime("%Y-%m-%d")
