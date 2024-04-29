@@ -51,12 +51,12 @@ text_debt_to_assets = f"""
 ## --- Chart Time --- ##
 debt_to_assets["debt_to_assets"] = round(debt_to_assets["debt_to_assets"],2)
 debt_to_assets['QuarterYear'] = debt_to_assets['date_total_debt'].apply(lambda x: f"{quarter_dict[int(x[5:7])]} {x[:4]}")
-fig = px.line(debt_to_assets, x='date_total_debt', y='debt_to_assets', title='Debt to Federal Assets', labels={'date_total_debt':'Date', 'debt_to_assets':'Debt to Assets'}, hover_data={"date_total_debt":False, "QuarterYear":True})
-fig.update_layout(template='plotly_white', title='<b>Ratio of Gross Debt to Federal Assets Since 1966</b>', titlefont=dict(size=24, family="Montserrat", color="black"))                                                                                                                        
-fig.update_xaxes(title_text="", tickfont=dict(size=14, family="Montserrat", color="black"), showgrid=False)
-fig.update_yaxes(title_text="Debt to Assets", tickfont=dict(size=14, family="Montserrat", color="black"))
-fig.update_traces(line=dict(width=3.5, color="#004647"), hovertemplate='<b>%{customdata[0]}</b><br>%{y}')
-fig_debt_to_assets = fig.to_html(full_html=False)
+fig1 = px.line(debt_to_assets, x='date_total_debt', y='debt_to_assets', title='Debt to Federal Assets', labels={'date_total_debt':'Date', 'debt_to_assets':'Debt to Assets'}, hover_data={"date_total_debt":False, "QuarterYear":True})
+fig1.update_layout(template='plotly_white', title='<b>Ratio of Gross Debt to Federal Assets Since 1966</b>', titlefont=dict(size=24, family="Montserrat", color="black"))                                                                                                                        
+fig1.update_xaxes(title_text="", tickfont=dict(size=14, family="Montserrat", color="black"), showgrid=False)
+fig1.update_yaxes(title_text="Debt to Assets", tickfont=dict(size=14, family="Montserrat", color="black"))
+fig1.update_traces(line=dict(width=3.5, color="#004647"), hovertemplate='<b>%{customdata[0]}</b><br>%{y}')
+fig_debt_to_assets = fig1.to_html(full_html=False)
 
 #### -------- RATIO OF DEBT TO TOTAL WAGES -------- ####
 # MARK: DEBT TO WAGES
