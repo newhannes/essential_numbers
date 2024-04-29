@@ -1,23 +1,10 @@
-import streamlit as st
-import plotly.express as px
+###### ------------------ STATIC MAIN FILE, PRODUCES HTML AND PDFS ------------------ ######
 
-from workhorses import cool_debt_metrics as cdm 
+import static_cool_debt_metrics as cdm
 from workhorses import debt_tracker as dt
-st.title("Testing Writing Image")
-
-
-### --- create images from plotly --- ###
-
-d_to_a_image = cdm.debt_to_assets_plotly.write_image("debt_to_assets.png")
-d_to_w_image = cdm.debt_to_wages_plotly.write_image("debt_to_wages.png")
-mortgage_image = cdm.mortgage_plotly.write_image("mortgage_rate.png")
-us_vs_biden_image = cdm.us_vs_biden_plotly.write_image("our_vs_president.png")
-rate_increase_image = cdm.rate_increase_plotly.write_image("rate_increase.png")
-cbo_image = cdm.cbo_proj_plotly.write_image("cbo.png")
-debt_vs_gdp_image = cdm.debt_vs_gdp_plotly.write_image("debt_vs_gdp.png")
-
-
-### --- assemble html --- ###
+import pdfkit
+import streamlit as st
+import streamlit.components.v1 as components
 
 basic_debt_html = f"""
 <div class="container">
@@ -57,13 +44,13 @@ basic_debt_html = f"""
 </div>
 """
 
-
+#### ---- FINAL HTML ---- ####
 html = f"""
 <!DOCTYPE html>
 <html>
 <head>
     <center>
-        <img src="data/HBR_Logo_Primary.png" width="500" align = "middle">
+        <img src="../inputs/HBR_Logo_Primary.png" width="500" align = "middle">
     </center> 
     <title>Debt Tracker</title>
     <style>
@@ -114,29 +101,40 @@ html = f"""
         <div class="content">
             <h2>Debt to Federal Assets</h2>
             <p>{cdm.text_debt_to_assets}</p>
-            {d_to_a_image}           
+            <img src="../charts/debt_to_assets.png">
             <h2>Debt to Wages</h2>
             <p>{cdm.text_debt_to_wages}</p>
-            <img src="debt_to_wages.png" width="500" align = "left">
+            <img src="../charts/debt_to_wages.png">
             <h2>Mortgage Rates</h2>
             <p>{cdm.text_mortgage_rate}</p>
-            <img src="mortgage_rate.png" width="500" align = "left">
+            <img src="../charts/mortgage_rate.png">
             <h2>Our Budget vs President's Budget</h2>
             <p>{cdm.comparison_html}</p>
-            <img src="our_vs_president.png" width="500" align = "left">
+            <img src="../charts/budget_comparison.png">
             <h2>Rate of Increase</h2>
             <p>{cdm.rate_increase_html}</p>
-            <img src="rate_increase.png" width="500" align = "left">
+            <img src="../charts/debt_increase.png">
             <h2>CBO Projections</h2>
             <p>{cdm.random_html}</p>
-            <img src="cbo.png" width="500" align = "left">
+            <img src="../charts/cbo_projections.png">
             <h2>GDP Growth vs Debt Growth</h2>
             <p>{cdm.text_gdp_debt}</p>
-            <img src="debt_vs_gdp.png" width="500" align = "left">
+            <img src="../charts/gdp_debt.png">
         </div>
     </div>
 </body>
 </html>
 """
 
-st.markdown(html, unsafe_allow_html=True)
+# Convert the HTML file to a PDF
+pdf = pdfkit.from_string(html, False, options={"enable-local-file-access": ""})
+
+# Add a button to download the PDF
+st.download_button(
+    "⬇️ Download PDF",
+    data=pdf,
+    file_name=f"Debt Tracking Report {cdm.today}.pdf",
+    mime="application/octet-stream"
+)
+
+components.html(html, scrolling=True)
