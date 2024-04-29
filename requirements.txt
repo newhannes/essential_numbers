@@ -7,3 +7,4 @@ plotly.express
 matplotlib
 openpyxl
 pdfkit
+kaleido
