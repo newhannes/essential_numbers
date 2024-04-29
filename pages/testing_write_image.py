@@ -138,3 +138,5 @@ html = f"""
 </body>
 </html>
 """
+
+st.markdown(html, unsafe_allow_html=True)
