@@ -101,7 +101,7 @@ html = f"""
         <div class="content">
             <h2>Debt to Federal Assets</h2>
             <p>{cdm.text_debt_to_assets}</p>
-            <img src="../charts/debt_to_assets.png">
+            <img src={cdm.tempfile+"/debt_to_assets.png"}>
             <h2>Debt to Wages</h2>
             <p>{cdm.text_debt_to_wages}</p>
             <img src="../charts/debt_to_wages.png">

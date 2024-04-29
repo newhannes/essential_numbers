@@ -8,6 +8,7 @@ from full_fred.fred import Fred
 from datetime import date
 import requests 
 import json
+import tempfile
 import streamlit as st
 FRED_API_KEY = st.secrets["FRED_API_KEY"]
 BLS_API_KEY = st.secrets["BLS_API_KEY"]
@@ -18,6 +19,8 @@ jade = "#84AE95"
 emerald = "#004647"
 darker_emerald = "#002F2F"
 
+# Create a temporary directory
+temp_dir = tempfile.mkdtemp()
 
 #### --------- DEBT TO FEDERAL ASSETS --------- ####
 # MARK: DEBT TO ASSETS
@@ -63,7 +66,7 @@ plt.xlabel('')
 plt.ylabel("Ratio")
 plt.grid(axis="y", alpha=0.3)
 sns.despine()
-plt.savefig("charts/debt_to_assets.png", dpi=600, bbox_inches='tight')
+plt.savefig(temp_dir+"/debt_to_assets.png", dpi=600, bbox_inches='tight')
 
 
 #### -------- RATIO OF DEBT TO TOTAL WAGES -------- ####
