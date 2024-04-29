@@ -51,12 +51,12 @@ text_debt_to_assets = f"""
 ## --- Chart Time --- ##
 debt_to_assets["debt_to_assets"] = round(debt_to_assets["debt_to_assets"],2)
 debt_to_assets['QuarterYear'] = debt_to_assets['date_total_debt'].apply(lambda x: f"{quarter_dict[int(x[5:7])]} {x[:4]}")
-fig1 = px.line(debt_to_assets, x='date_total_debt', y='debt_to_assets', title='Debt to Federal Assets', labels={'date_total_debt':'Date', 'debt_to_assets':'Debt to Assets'}, hover_data={"date_total_debt":False, "QuarterYear":True})
-fig1.update_layout(template='plotly_white', title='<b>Ratio of Gross Debt to Federal Assets Since 1966</b>', titlefont=dict(size=24, family="Montserrat", color="black"))                                                                                                                        
-fig1.update_xaxes(title_text="", tickfont=dict(size=14, family="Montserrat", color="black"), showgrid=False)
-fig1.update_yaxes(title_text="Debt to Assets", tickfont=dict(size=14, family="Montserrat", color="black"))
-fig1.update_traces(line=dict(width=3.5, color="#004647"), hovertemplate='<b>%{customdata[0]}</b><br>%{y}')
-fig_debt_to_assets = fig1.to_html(full_html=False)
+debt_to_assets_plotly = px.line(debt_to_assets, x='date_total_debt', y='debt_to_assets', title='Debt to Federal Assets', labels={'date_total_debt':'Date', 'debt_to_assets':'Debt to Assets'}, hover_data={"date_total_debt":False, "QuarterYear":True})
+debt_to_assets_plotly.update_layout(template='plotly_white', title='<b>Ratio of Gross Debt to Federal Assets Since 1966</b>', titlefont=dict(size=24, family="Montserrat", color="black"))                                                                                                                        
+debt_to_assets_plotly.update_xaxes(title_text="", tickfont=dict(size=14, family="Montserrat", color="black"), showgrid=False)
+debt_to_assets_plotly.update_yaxes(title_text="Debt to Assets", tickfont=dict(size=14, family="Montserrat", color="black"))
+debt_to_assets_plotly.update_traces(line=dict(width=3.5, color="#004647"), hovertemplate='<b>%{customdata[0]}</b><br>%{y}')
+fig_debt_to_assets = debt_to_assets_plotly.to_html(full_html=False)
 
 #### -------- RATIO OF DEBT TO TOTAL WAGES -------- ####
 # MARK: DEBT TO WAGES
@@ -129,12 +129,12 @@ text_debt_to_wages = f"""
 
 ## Plot Time ##
 debt_to_wage['debt_to_wages'] = round(debt_to_wage['debt_to_wages'],2)
-fig = px.line(debt_to_wage, x='year', y='debt_to_wages', title='Debt to Wages', labels={'year':'Year', 'debt_to_wages':'Debt to Wages'})
-fig.update_layout(template='plotly_white', title='<b>Ratio of Gross Debt to Total Wages Since 2004</b>', titlefont=dict(size=24, family="Montserrat", color="black"))
-fig.update_xaxes(title_text="", tickfont=dict(size=14, family="Montserrat", color="black"), nticks=5, showgrid=False)
-fig.update_yaxes(title_text="<b>Debt to Wages</b>", tickfont=dict(size=14, family="Montserrat", color="black"))
-fig.update_traces(line=dict(width=3.5, color="#004647"), hovertemplate='<b>%{x}</b><br>%{y}')
-fig_debt_to_wages = fig.to_html(full_html=False)
+debt_to_wages_plotly = px.line(debt_to_wage, x='year', y='debt_to_wages', title='Debt to Wages', labels={'year':'Year', 'debt_to_wages':'Debt to Wages'})
+debt_to_wages_plotly.update_layout(template='plotly_white', title='<b>Ratio of Gross Debt to Total Wages Since 2004</b>', titlefont=dict(size=24, family="Montserrat", color="black"))
+debt_to_wages_plotly.update_xaxes(title_text="", tickfont=dict(size=14, family="Montserrat", color="black"), nticks=5, showgrid=False)
+debt_to_wages_plotly.update_yaxes(title_text="<b>Debt to Wages</b>", tickfont=dict(size=14, family="Montserrat", color="black"))
+debt_to_wages_plotly.update_traces(line=dict(width=3.5, color="#004647"), hovertemplate='<b>%{x}</b><br>%{y}')
+fig_debt_to_wages = debt_to_wages_plotly.to_html(full_html=False)
 
 
 #### -------- MORTGAGE RATES/HOUSING PRICES SINCE JAN 2021 -------- ####
@@ -169,12 +169,12 @@ text_mortgage_rate = f"""
 """
 
 ## -- Plot Time -- ##
-fig = px.line(mortgage_rate, x='date', y='Mortgage Rate', title='30 Year Fixed Mortgage Rate', labels={'date':'Date', 'Mortgage Rate':'Rate'})
-fig.update_layout(template='plotly_white', title='<b>30 Year Fixed Mortgage Rate Since January 2021</b>', titlefont=dict(size=24, family="Montserrat", color="black"))
-fig.update_xaxes(title_text="", tickfont=dict(size=14, family="Montserrat", color="black"), showgrid=False)
-fig.update_yaxes(title_text="<b>Rate (%)</b>", tickfont=dict(size=14, family="Montserrat", color="black"))
-fig.update_traces(line=dict(width=3.5, color="#004647"), hovertemplate='<b>%{x}</b><br>%{y}')
-fig_mortgage_rate = fig.to_html(full_html=False)
+mortgage_plotly = px.line(mortgage_rate, x='date', y='Mortgage Rate', title='30 Year Fixed Mortgage Rate', labels={'date':'Date', 'Mortgage Rate':'Rate'})
+mortgage_plotly.update_layout(template='plotly_white', title='<b>30 Year Fixed Mortgage Rate Since January 2021</b>', titlefont=dict(size=24, family="Montserrat", color="black"))
+mortgage_plotly.update_xaxes(title_text="", tickfont=dict(size=14, family="Montserrat", color="black"), showgrid=False)
+mortgage_plotly.update_yaxes(title_text="<b>Rate (%)</b>", tickfont=dict(size=14, family="Montserrat", color="black"))
+mortgage_plotly.update_traces(line=dict(width=3.5, color="#004647"), hovertemplate='<b>%{x}</b><br>%{y}')
+fig_mortgage_rate = mortgage_plotly.to_html(full_html=False)
 
 
 ### --- OUR BUDGET VS PRESIDENT BUDGET --- ###
@@ -254,7 +254,7 @@ fig.update_yaxes(ticksuffix="%", title = "<b>Gross Debt as Percentage of GDP</b>
 
 # HTML #
 fig_debt_gdp = fig.to_html(full_html=False)
-
+us_vs_biden_plotly = fig
 
 #### ---- RATE OF INCREASE ---- ####
 # MARK: RATE OF INCREASE
@@ -300,6 +300,7 @@ fig.update_yaxes(title_text='<b>Debt Increase per Second</b>', titlefont=dict(fa
 fig.update_layout(template='plotly_white', title='<b>Rate of Debt Accumulation Since 1994</b>', titlefont=dict(size=24, family="Montserrat", color="black"))
 fig.update_traces(line=dict(width=3, color="#004647"), hovertemplate="Date: %{x}<br>Increase per second: %{y}")
 
+rate_increase_plotly = fig
 fig_debt_increase = fig.to_html(full_html=False)
 
 
@@ -375,7 +376,7 @@ fig.add_annotation(
 fig.update_traces(fillcolor="#84AE95", line = dict(color="#84AE95"), hovertemplate="%{y}")
 
 fig_random = fig.to_html(full_html=False)
-
+cbo_proj_plotly = fig
 
 #### ---- GDP ADDED VS DEBT ADDED ---- ####
 # MARK: GDP VS DEBT
@@ -429,5 +430,6 @@ fig.update_layout(
 fig.update_xaxes(showticklabels=False, showline=False, showgrid=False)
 fig.update_yaxes(tickfont=dict(size=16, family="Montserrat", color="black"))
 fig_debt_vs_gdp_increase = fig.to_html(full_html=False)
+debt_vs_gdp_plotly = fig
 
 print("Cool Debt Metrics script complete.")
