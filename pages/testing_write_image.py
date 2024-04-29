@@ -114,7 +114,7 @@ html = f"""
         <div class="content">
             <h2>Debt to Federal Assets</h2>
             <p>{cdm.text_debt_to_assets}</p>
-             <img src="debt_to_assets.png" width="500" align = "left">           
+            {d_to_a_image}           
             <h2>Debt to Wages</h2>
             <p>{cdm.text_debt_to_wages}</p>
             <img src="debt_to_wages.png" width="500" align = "left">
