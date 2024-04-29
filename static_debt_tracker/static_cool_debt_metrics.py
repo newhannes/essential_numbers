@@ -148,7 +148,7 @@ plt.xticks(debt_to_wage['year'][::4])
 plt.ylabel('Debt to Wages')
 sns.despine()
 plt.grid(axis='y', alpha=0.3)
-plt.savefig("charts/debt_to_wages.png", dpi=600, bbox_inches='tight')
+plt.savefig(temp_dir+"/debt_to_wages.png", dpi=600, bbox_inches='tight')
 
 
 #### -------- MORTGAGE RATES/HOUSING PRICES SINCE JAN 2021 -------- ####
@@ -194,7 +194,7 @@ ax.xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))
 plt.ylabel('Mortgage Rate (%)')
 plt.grid(axis='y', alpha=0.3)
 sns.despine()
-plt.savefig("charts/mortgage_rate.png", dpi=600, bbox_inches='tight')
+plt.savefig(temp_dir+"/mortgage_rate.png", dpi=600, bbox_inches='tight')
 
 
 ### --- OUR BUDGET VS PRESIDENT BUDGET --- ###
@@ -267,7 +267,7 @@ plt.gca().yaxis.set_major_formatter(ticker.StrMethodFormatter('{x:,.0f}%'))
 plt.ylabel('Gross Debt as Percentage of GDP')
 plt.grid(axis='y', alpha=0.3)
 sns.despine()
-plt.savefig("charts/budget_comparison.png", dpi=600, bbox_inches='tight')
+plt.savefig(temp_dir+"/budget_comparison.png", dpi=600, bbox_inches='tight')
 
 
 
@@ -317,7 +317,7 @@ plt.gca().yaxis.set_major_formatter('${x:,.0f}')
 plt.ylabel('Debt Increase per Second')
 plt.grid(axis='y', alpha=0.3)
 sns.despine()
-plt.savefig("charts/debt_increase.png", dpi=600, bbox_inches='tight')
+plt.savefig(temp_dir+"/debt_increase.png", dpi=600, bbox_inches='tight')
 
 
 #### ---- CBO Projections ---- ####
@@ -358,7 +358,7 @@ actual_value_2023 = round(combined.loc[combined['date'] == "2023", 'value'].valu
 projected_value_2054 = round(combined.loc[combined['date'] == "2054", 'value'].values[0])
 plt.annotate(f'Actual: {actual_value_2023}% in 2023', ("2023", actual_value_2023), textcoords="offset points", xytext=(-20,20), ha='center', color='black', arrowprops=dict(arrowstyle='->', color='black'))
 plt.annotate(f'Projected: {projected_value_2054}% in 2054', ("2054", projected_value_2054), textcoords="offset points", xytext=(-40,10), ha='center', color='black', arrowprops=dict(arrowstyle='->', color='black'))
-plt.savefig("charts/cbo_projections.png", dpi=600, bbox_inches='tight')
+plt.savefig(temp_dir+"/cbo_projections.png", dpi=600, bbox_inches='tight')
 
 #### ---- GDP ADDED VS DEBT ADDED ---- ####
 # MARK: GDP VS DEBT
@@ -408,6 +408,6 @@ plt.title('GDP Added vs Debt Added in 2023', fontsize=18, fontweight='bold', col
 plt.xlabel('')
 plt.xticks([])
 sns.despine(left=True, bottom=True)
-plt.savefig("charts/gdp_debt.png", dpi=600, bbox_inches='tight')
+plt.savefig(temp_dir+"/gdp_debt.png", dpi=600, bbox_inches='tight')
 
 print("Cool Debt Metrics script complete.")

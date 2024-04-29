@@ -104,22 +104,23 @@ html = f"""
             <img src={cdm.tempfile+"/debt_to_assets.png"}>
             <h2>Debt to Wages</h2>
             <p>{cdm.text_debt_to_wages}</p>
-            <img src="../charts/debt_to_wages.png">
+            <img src={cdm.temp_dir+"/debt_to_wages.png"}>
             <h2>Mortgage Rates</h2>
             <p>{cdm.text_mortgage_rate}</p>
-            <img src="../charts/mortgage_rate.png">
+            <img src={cdm.temp_dir+"/mortgage_rate.png"}>
             <h2>Our Budget vs President's Budget</h2>
             <p>{cdm.comparison_html}</p>
-            <img src="../charts/budget_comparison.png">
+            <img src={cdm.temp_dir+"/budget_comparison.png"}>
             <h2>Rate of Increase</h2>
             <p>{cdm.rate_increase_html}</p>
             <img src="../charts/debt_increase.png">
+            <img src={cdm.temp_dir+"/debt_increase.png"}
             <h2>CBO Projections</h2>
             <p>{cdm.random_html}</p>
-            <img src="../charts/cbo_projections.png">
+            <img src={cdm.temp_dir+"/cbo_projections.png"}
             <h2>GDP Growth vs Debt Growth</h2>
             <p>{cdm.text_gdp_debt}</p>
-            <img src="../charts/gdp_debt.png">
+            <img src={cdm.temp_dir+"/gdp_debt.png"}
         </div>
     </div>
 </body>
