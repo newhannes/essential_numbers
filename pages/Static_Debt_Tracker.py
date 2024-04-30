@@ -128,7 +128,7 @@ html = f"""
 """
 
 # Convert the HTML file to a PDF
-pdf = pdfkit.from_string(html)
+pdf = pdfkit.from_string(html, False)
 
 st.title("Static Debt Tracker")
 
