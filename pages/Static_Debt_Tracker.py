@@ -141,5 +141,5 @@ st.download_button(
 )
 
 st.image(cdm.temp_dir+"/debt_increase.png")
-st.image("../inputs/HBR_Logo_Primary.png")
+st.image("inputs/HBR_Logo_Primary.png")
 #components.html(html, scrolling=True, height=5000, width=1000)
