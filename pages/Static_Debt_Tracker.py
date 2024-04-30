@@ -113,7 +113,6 @@ html = f"""
             <img src={cdm.temp_dir+"/budget_comparison.png"}>
             <h2>Rate of Increase</h2>
             <p>{cdm.rate_increase_html}</p>
-            <img src="../charts/debt_increase.png">
             <img src={cdm.temp_dir+"/debt_increase.png"}
             <h2>CBO Projections</h2>
             <p>{cdm.random_html}</p>
@@ -140,4 +139,4 @@ st.download_button(
     mime="application/octet-stream"
 )
 
-components.html(html, scrolling=True)
+components.html(html, scrolling=True, height=5000, width=1000)
