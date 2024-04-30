@@ -5,6 +5,14 @@ from workhorses import debt_tracker as dt
 import pdfkit
 import streamlit as st
 import streamlit.components.v1 as components
+import shutil
+#write the house budget header from inputs/HBR_Logo_Primary.png to the temp directory
+# Define the source and destination paths
+source_path = 'inputs/HBR_Logo_Primary.png'
+destination_path = cdm.temp_dir + '/HBR_Logo_Primary.png'
+
+# Copy the file
+shutil.copy(source_path, destination_path)
 
 basic_debt_html = f"""
 <div class="container">
@@ -50,7 +58,7 @@ html = f"""
 <html>
 <head>
     <center>
-        <img src="inputs/HBR_Logo_Primary.png" width="500" align = "middle">
+        <img src={cdm.temp_dir + "/HBR_Logo_Primary.png"} width="500" align = "middle">
     </center> 
     <title>Debt Tracker</title>
     <style>
