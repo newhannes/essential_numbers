@@ -50,7 +50,7 @@ html = f"""
 <html>
 <head>
     <center>
-        <img src="https://github.com/newhannes/essential_numbers/blob/master/inputs/HBR_Logo_Primary.png" width="500" align = "middle">
+        <img src="../inputs/HBR_Logo_Primary.png" width="500" align = "middle">
     </center> 
     <title>Debt Tracker</title>
     <style>
@@ -140,4 +140,6 @@ st.download_button(
     mime="application/octet-stream"
 )
 
-components.html(html, scrolling=True, height=5000, width=1000)
+st.image(cdm.temp_dir+"/debt_increase.png")
+st.image("../inputs/HBR_Logo_Primary.png")
+#components.html(html, scrolling=True, height=5000, width=1000)
