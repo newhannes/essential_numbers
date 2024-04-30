@@ -113,10 +113,10 @@ html = f"""
             <img src={cdm.temp_dir+"/budget_comparison.png"}>
             <h2>Rate of Increase</h2>
             <p>{cdm.rate_increase_html}</p>
-            <img src={cdm.temp_dir+"/debt_increase.png"}
+            <img src={cdm.temp_dir+"/debt_increase.png"}>
             <h2>CBO Projections</h2>
             <p>{cdm.random_html}</p>
-            <img src={cdm.temp_dir+"/cbo_projections.png"}
+            <img src={cdm.temp_dir+"/cbo_projections.png"}?
             <h2>GDP Growth vs Debt Growth</h2>
             <p>{cdm.text_gdp_debt}</p>
             <img src={cdm.temp_dir+"/gdp_debt.png"}
@@ -139,4 +139,5 @@ st.download_button(
     mime="application/octet-stream"
 )
 
-components.html(html, scrolling=True, height=5000, width=1000)
+#components.html(html, scrolling=True, height=5000, width=1000)
+st.markdown(html, unsafe_allow_html=True)
