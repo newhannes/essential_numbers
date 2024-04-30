@@ -105,6 +105,7 @@ html = f"""
             <h2>Debt to Wages</h2>
             <p>{cdm.text_debt_to_wages}</p>
             <img src={cdm.temp_dir+"/debt_to_wages.png"}>
+            <br> </br>
             <h2>Mortgage Rates</h2>
             <p>{cdm.text_mortgage_rate}</p>
             <img src={cdm.temp_dir+"/mortgage_rate.png"}>
@@ -139,5 +140,4 @@ st.download_button(
     mime="application/octet-stream"
 )
 
-#components.html(html, scrolling=True, height=5000, width=1000)
-st.markdown(html, unsafe_allow_html=True)
+components.html(html, scrolling=True, height=5000, width=1000)
