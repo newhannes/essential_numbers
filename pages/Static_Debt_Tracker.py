@@ -50,7 +50,7 @@ html = f"""
 <html>
 <head>
     <center>
-        <img src="../inputs/HBR_Logo_Primary.png" width="500" align = "middle">
+        <img src="inputs/HBR_Logo_Primary.png" width="500" align = "middle">
     </center> 
     <title>Debt Tracker</title>
     <style>
@@ -117,10 +117,10 @@ html = f"""
             <img src={cdm.temp_dir+"/debt_increase.png"}>
             <h2>CBO Projections</h2>
             <p>{cdm.random_html}</p>
-            <img src={cdm.temp_dir+"/cbo_projections.png"}?
+            <img src={cdm.temp_dir+"/cbo_projections.png"}>
             <h2>GDP Growth vs Debt Growth</h2>
             <p>{cdm.text_gdp_debt}</p>
-            <img src={cdm.temp_dir+"/gdp_debt.png"}
+            <img src={cdm.temp_dir+"/gdp_debt.png"}>
         </div>
     </div>
 </body>
