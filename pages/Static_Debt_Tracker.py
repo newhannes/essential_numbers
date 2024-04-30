@@ -50,7 +50,7 @@ html = f"""
 <html>
 <head>
     <center>
-        <img src="inputs/HBR_Logo_Primary.png" width="500" align = "middle">
+        <img src="../inputs/HBR_Logo_Primary.png" width="500" align = "middle">
     </center> 
     <title>Debt Tracker</title>
     <style>
