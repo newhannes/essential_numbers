@@ -46,9 +46,9 @@ most_recent_debt = round(debt_to_assets['Total Debt'].iloc[-1] / 1e6, 2)
 most_recent_assets = round(debt_to_assets['Financial Assets'].iloc[-1]/1e6, 2)
 text_debt_to_assets = f"""
 <ul>
-    <li>For {most_recent_quarter} {most_recent_year}, the gross federal debt was ${most_recent_debt:,} trillion and the federal asset level was ${most_recent_assets} trillion, a debt to assets ratio of {most_recent}.</li>
-    <li>Since 1966, the debt to assets ratio has averaged {average}.</li>
-    <li>The current ratio is {round((most_recent - average)/average *100)}% above the average for this period.</li>
+    <li>For {most_recent_quarter} {most_recent_year}, the gross federal debt was ${most_recent_debt:,} trillion and the federal asset level was ${most_recent_assets} trillion, a debt to assets ratio of <b>{most_recent}</b>.</li>
+    <li>Since 1966, the debt to assets ratio has averaged <b>{average}</b>.</li>
+    <li>The current ratio is <b>{round((most_recent - average)/average *100)}%</b> above the average for this period.</li>
 </ul>
 """
 
@@ -131,9 +131,9 @@ earliest_difference = round((earliest_debt - earliest_wages) / 1e12, 2)
 most_recent_difference = round((most_recent_debt - most_recent_wages) / 1e12, 2)
 text_debt_to_wages = f"""
 <ul>
-    <li>In {earliest_year}, the gross debt exceeded total wages paid to U.S. workers by ${earliest_difference} trillion and the debt to wage ratio was {round(earliest, 2)}.</li>
-    <li>As of {most_recent_year}, the gross debt exceeded total wages by ${most_recent_difference} trillion and the debt to wage ratio was {round(most_recent, 2)}, a {round((most_recent - earliest)/earliest *100)}% increase since {earliest_year}.</li>
-    <li>Since {earliest_year}, the debt to wage ratio has averaged {average}, the current debt to wage ratio is {round((most_recent - average)/average *100)}% above the average for this period.</li>
+    <li>In {earliest_year}, the gross debt exceeded total wages paid to U.S. workers by <b>${earliest_difference} trillion </b> and the debt to wage ratio was <b>{round(earliest, 2)}</b>.</li>
+    <li>As of {most_recent_year}, the gross debt exceeded total wages by <b>${most_recent_difference} trillion</b> and the debt to wage ratio was <b>{round(most_recent, 2)}</b>, a <b>{round((most_recent - earliest)/earliest *100)}%</b> increase since {earliest_year}.</li>
+    <li>Since {earliest_year}, the debt to wage ratio has averaged {average}, the current debt to wage ratio is <b>{round((most_recent - average)/average *100)}%</b> above the average for this period.</li>
     
 </ul>
 """
@@ -175,10 +175,10 @@ mortgage_before = round(mortgage_calculator(house_before_biden, before, 30))
 mortgage_now = round(mortgage_calculator(house_now, most_recent, 30))
 text_mortgage_rate = f"""
 <ul>
-    <li>The 30 year fixed mortgage rate when Biden took office was {before}%.</li>
-    <li>As of {most_recent_date}, the 30 year fixed mortgage rate is {most_recent}%, a {round((most_recent - before)/before *100)}% increase under Biden.</li>
-    <li>Before Biden took office, the median sales price of a house was ${house_before_biden:,}, now it is ${house_now:,}, a {round((house_now-house_before_biden)/house_before_biden*100)}% increase under Biden</li>
-    <li>For a typical mortgage before Biden the monthly payment was ${mortgage_before:,}. Now, a typical mortgage payment would be ${mortgage_now:,}, an increase of ${mortgage_now-mortgage_before:,}.</li>
+    <li>The 30 year fixed mortgage rate when Biden took office was <b>{before}%</b>.</li>
+    <li>The 30 year fixed mortgage rate is now <b>{most_recent}%</b>, a <b>{round((most_recent - before)/before *100)}%</b> increase under Biden.</li>
+    <li>Before Biden took office, the median sales price of a house was <b>${house_before_biden:,}</b>, now it is <b>${house_now:,}</b>, a <b>{round((house_now-house_before_biden)/house_before_biden*100)}%</b> increase under Biden</li>
+    <li>For a typical mortgage before Biden the monthly payment was <b>${mortgage_before:,}</b>. Now, a typical mortgage payment would be <b>${mortgage_now:,}</b>, an increase of <b>${mortgage_now-mortgage_before:,}</b>.</li>
 </ul>
 """
 ## -- Plot Time -- ##
@@ -238,10 +238,10 @@ hbc_latest = round(df.query(f"source == 'HBC' & year == {latest_year}")['debt_gd
 
 comparison_html = f"""
 <ul>
-    <li>In {earliest_year}, the debt to GDP ratio was {earliest}%.</li>
-    <li>In {current_year}, the debt to GDP ratio was {current}%.</li>
-    <li>Under the President's Budget, the debt to GDP ratio will be {biden_latest}% in {latest_year}, an increase of {biden_latest-current} percentage points since {current_year}.</li>
-    <li>Under the House Republican Budget, the debt to GDP ratio will be {hbc_latest}% in {latest_year}, a decrease of {abs(hbc_latest-current)} percentage points since {current_year}</li>
+    <li>In {earliest_year}, the gross debt to GDP ratio was <b>{earliest}%</b>.</li>
+    <li>In {current_year}, the gross debt to GDP ratio was <b>{current}%</b>.</li>
+    <li>Under the President's Budget, the gross debt to GDP ratio will be <b>{biden_latest}%</b> in {latest_year}, an increase of {biden_latest-current} percentage points since {current_year}.</li>
+    <li>Under the House Republican Budget, the gross debt to GDP ratio will be <b>{hbc_latest}%</b> in {latest_year}, a decrease of {abs(hbc_latest-current)} percentage points since {current_year}</li>
 </ul>
 """
 ## -- Plot Time -- ##
@@ -273,6 +273,7 @@ plt.savefig(temp_dir+"/budget_comparison.png", dpi=600, bbox_inches='tight')
 
 #### ---- RATE OF INCREASE ---- ####
 # MARK: RATE OF INCREASE
+###NOTE: I make a call to the debt to penny dataset in debt tracker. Not sure if I can consolidate to one call or not. 
 ## Treasury API ##
 # Get debt data
 treasury_link = 'https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/accounting/od/debt_to_penny?page[size]=10000'
@@ -297,14 +298,12 @@ most_recent = round(debt_df['second_increase'].iloc[-1])
 most_recent_date = debt_df['record_date'].iloc[-1].strftime('%B %d, %Y')
 earliest = debt_df['second_increase'].iloc[0]
 earliest_date = debt_df['record_date'].iloc[0].strftime('%B %d, %Y')
-peak = round(debt_df['second_increase'].max())
-peak_date = pd.to_datetime(debt_df['record_date'][debt_df['second_increase'] == peak].values[0]).strftime('%B %d, %Y')
 pre_pandemic = round(debt_df[debt_df['record_date']==pd.to_datetime('2020-02-10')]['second_increase'].values[0])
 rate_increase_html = f"""
 <ul>
-    <li>As of {most_recent_date}, the gross debt is increasing by ${most_recent:,} per second.</li>
-    <li>Since {earliest_date}, the average increase in the gross debt every second has been ${average:,}.</li>
-    <li>The current rate is {round((most_recent - average)/average *100)}% above the average for this period and {round((most_recent-pre_pandemic)/pre_pandemic*100)}% above the pre-pandemic rate of ${pre_pandemic:,} per second.</li>
+    <li>The gross debt is increasing by <b>${most_recent:,}</b> per second.</li>
+    <li>Since {earliest_date}, the average increase in the gross debt every second has been <b>${average:,}</b>.</li>
+    <li>The current rate is <b>{round((most_recent - average)/average *100)}%</b> above the average for this period and <b>{round((most_recent-pre_pandemic)/pre_pandemic*100)}%</b> above the pre-pandemic rate of ${pre_pandemic:,} per second.</li>
 </ul>
 """
 sns.set_style("white")
@@ -336,12 +335,18 @@ cbo_ltbo['value'] = round(cbo_ltbo['value'])
 combined = pd.concat([gross_debt_to_gdp, cbo_ltbo], axis=0)
 combined['date'] = combined['date'].astype(str)
 ## -- Textual Analysis -- ##
+current_year = 2023
 earliest_year = combined['date'].iloc[0]
 latest_year = combined['date'].iloc[-1]
 latest = round(combined[combined['date'] == latest_year]['value'].values[0])
+peak = round(combined['value'].max())
+peak_year = combined[combined['value'] == peak]['date'].values[0]
+average = round(combined.query(f"date < {current_year}")['value'].mean())
 random_html = f"""
 <ul>
-    <li> Under current law, CBO projects our debt to GDP will reach {latest}% in {latest_year} </li>
+    <li> The gross debt to GDP ratio peaked at {peak}% in {peak_year}.</li>
+    <li> The gross debt to GDP ratio averaged {average}% from {earliest_year} to {current_year}.</li>
+    <li> Under current law, CBO projects our debt to GDP will reach <b>{latest}%</b> in {latest_year}. This is <b>{round((latest-average)/average * 100)}</b> above the historical average since {earliest_year}.</li>
 </ul>
 """
 ## -- Plot Time -- ##
@@ -349,8 +354,9 @@ sns.set_style("white")
 plt.rcParams["font.family"] = "Playfair Display"
 plt.figure(figsize=(12, 4))
 plt.fill_between(combined['date'], combined['value'], color="#84AE95", alpha=0.8)
-
+plt.title("Gross Debt to GDP, Historical and Projected", fontsize=18, fontweight='bold', color="black", loc="left")
 plt.xticks(combined['date'][::10])
+plt.xlabel('Gross Debt to GDP')
 plt.gca().yaxis.set_major_formatter(ticker.StrMethodFormatter('{x:,.0f}%'))
 sns.despine()
 # Add the annotations
@@ -384,9 +390,9 @@ debt_increase = debt['Debt'].iloc[-1] - debt['Debt'].iloc[0]
 debt_day = debt_increase / 365
 text_gdp_debt = f"""
 <ul>
-    <li>In 2023, GDP grew by ${gdp_increase/1e12:.2f} trillion and gross debt grew by ${debt_increase/1e12:.2f} trillion.</li>
-    <li>This equates to a ${gdp_day/1e9:,.2f} billion increase in GDP every day and ${debt_day/1e9:,.2f} billion increase in debt every day in 2023.</li>
-    <li>In 2023, the growth in the gross debt was {round((debt_increase/gdp_increase)*100)}% higher than the growth in GDP.</li>
+    <li>In 2023, GDP grew by <b>${gdp_increase/1e12:.2f}</b> trillion and gross debt grew by <b>${debt_increase/1e12:.2f}</b> trillion.</li>
+    <li>This equates to a <b>${gdp_day/1e9:,.2f} billion</b> increase in GDP every day and <b>${debt_day/1e9:,.2f} billion </b> increase in debt every day in 2023.</li>
+    <li>In 2023, the growth in the gross debt was <b>{round((debt_increase/gdp_increase)*100)}%</b> higher than the growth in GDP.</li>
 </ul>
 """
 ## -- Chart Time -- ##
