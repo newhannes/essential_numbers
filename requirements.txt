@@ -9,4 +9,3 @@ openpyxl
 pdfkit
 kaleido
 seaborn
-os
