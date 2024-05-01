@@ -17,7 +17,7 @@ with st.columns(1)[0]:
                 st.markdown(f"- **\${debt_tracker.debt_per_child:,}** per child")
                 
         with cols1[1]:
-                st.write("Debt is better understood in context of the economy. Comparing the historic debt to GDP ratio to our current and projected ratios shows the unprecedented nature of our current situation.")
+                #st.write("Debt is better understood in context of the economy. Comparing the historic debt to GDP ratio to our current and projected ratios shows the unprecedented nature of our current situation.")
                 st.plotly_chart(debt_visuals.fig)
 
 row2 = st.columns(1)
@@ -37,7 +37,7 @@ with row2[0]:
                 st.markdown(f"- **${debt_tracker.biden_debt_per_min:,} million** in new debt per minute")
                 st.markdown(f"- **${debt_tracker.biden_debt_per_sec:,}** in new debt per second")
         with cols2[1]:
-                st.write("President Biden's FY25 budget doubled down on his disregard for the national debt. The HBCR budget offers a return to the fiscal sanity.")
+                #st.write("President Biden's FY25 budget doubled down on his disregard for the national debt. The HBCR budget offers a return to the fiscal sanity.")
                 st.plotly_chart(debt_visual2.fig)
 
 row3 = st.columns(1)
@@ -53,7 +53,7 @@ with row3[0]:
                 st.markdown(f"- **${debt_tracker.last_year_debt_per_min:,} million** in new debt per minute")
                 st.markdown(f"- **${debt_tracker.last_year_debt_per_sec:,}** in new debt per second")
         with cols3[1]:
-                st.write("The rate of increase in recent years is mad crazy dawg.")
+                #st.write("The rate of increase in recent years is mad crazy dawg.")
                 st.plotly_chart(debt_visual3.fig)
 
         

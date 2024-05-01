@@ -1,11 +1,12 @@
 ###### ------------------ STATIC MAIN FILE, PRODUCES HTML AND PDFS ------------------ ######
-
+import streamlit as st
 import static_debt_tracker.static_cool_debt_metrics as cdm
 from workhorses import debt_tracker as dt
 import pdfkit
-import streamlit as st
 import streamlit.components.v1 as components
 import shutil
+
+
 #write the house budget header from inputs/HBR_Logo_Primary.png to the temp directory
 # Define the source and destination paths
 source_path = 'inputs/HBR_Logo_Primary.png'

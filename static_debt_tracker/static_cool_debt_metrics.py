@@ -297,7 +297,7 @@ average = round(debt_df['second_increase'].mean())
 most_recent = round(debt_df['second_increase'].iloc[-1])
 most_recent_date = debt_df['record_date'].iloc[-1].strftime('%B %d, %Y')
 earliest = debt_df['second_increase'].iloc[0]
-earliest_date = debt_df['record_date'].iloc[0].strftime('%B %d, %Y')
+earliest_date = debt_df['record_date'].iloc[0].strftime('%Y')
 pre_pandemic = round(debt_df[debt_df['record_date']==pd.to_datetime('2020-02-10')]['second_increase'].values[0])
 rate_increase_html = f"""
 <ul>
@@ -339,14 +339,14 @@ current_year = "2023"
 earliest_year = combined['date'].iloc[0]
 latest_year = combined['date'].iloc[-1]
 latest = round(combined[combined['date'] == latest_year]['value'].values[0])
-peak = round(combined['value'].max())
-peak_year = combined[combined['value'] == peak]['date'].values[0]
+peak_actual = round(gross_debt_to_gdp['value'].max())
+peak_year = combined[gross_debt_to_gdp['value'] == peak_actual]['date'].values[0]
 average = round(combined.query(f"date < '{current_year}'")['value'].mean())
 random_html = f"""
 <ul>
-    <li> The gross debt to GDP ratio peaked at {peak}% in {peak_year}.</li>
+    <li> The gross debt to GDP ratio peaked at {peak_actual}% in {peak_year}.</li>
     <li> The gross debt to GDP ratio averaged {average}% from {earliest_year} to {current_year}.</li>
-    <li> Under current law, CBO projects our debt to GDP will reach <b>{latest}%</b> in {latest_year}. This is <b>{round((latest-average)/average * 100)}</b> above the historical average since {earliest_year}.</li>
+    <li> Under current law, CBO projects our debt to GDP will reach <b>{latest}%</b> in {latest_year}. This is <b>{round(latest-average)} percentage points</b> above the historical average since {earliest_year}.</li>
 </ul>
 """
 ## -- Plot Time -- ##
@@ -397,7 +397,7 @@ text_gdp_debt = f"""
 """
 ## -- Chart Time -- ##
 # Data
-categories = ['GDP Increase', 'Debt Increase']
+categories = ['GDP Added', 'Debt Added']
 values = [gdp_increase/1e12, debt_increase/1e12]
 # Plot
 sns.set_style("white")
@@ -406,12 +406,13 @@ plt.figure(figsize=(12, 4))
 # Create horizontal bar chart
 bars = plt.barh(categories, values, color=[gold, emerald])
 # Add data values inside the bars
-for bar in bars:
+for bar, category in zip(bars, categories):
     width = bar.get_width()
     plt.text(width - 0.07, bar.get_y() + bar.get_height() / 2, f'${width:.2f} trillion', ha='right', va='center', color='white', fontweight='bold', fontsize=14)
-
+    plt.text(width + 0.05, bar.get_y() + bar.get_height() / 2, category, ha='left', va='center', color='white', fontsize=14)
 plt.title('GDP Added vs Debt Added in 2023', fontsize=18, fontweight='bold', color="black", loc="left")
 plt.xlabel('')
+plt.yticks([])
 plt.xticks([])
 sns.despine(left=True, bottom=True)
 plt.savefig(temp_dir+"/gdp_debt.png", dpi=600, bbox_inches='tight')
