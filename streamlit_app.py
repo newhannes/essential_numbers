@@ -15,9 +15,6 @@ show_pages(
 # rd_file_path = "README.md"
 
 # st.title("Essential Numbers")
-# st.write("A dashboard to store essential numbers used by the House Budget Committee. Work in progress.")
-
-
 
 
     

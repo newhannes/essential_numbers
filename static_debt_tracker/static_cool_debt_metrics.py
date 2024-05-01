@@ -340,11 +340,13 @@ earliest_year = combined['date'].iloc[0]
 latest_year = combined['date'].iloc[-1]
 latest = round(combined[combined['date'] == latest_year]['value'].values[0])
 peak_actual = round(gross_debt_to_gdp['value'].max())
-peak_year = combined[gross_debt_to_gdp['value'] == peak_actual]['date'].values[0]
+peak_year = combined[combined['value'] == peak_actual]['date'].values[0]
+peak_before = round(combined.query(f"date < '{peak_year}'")['value'].max())
+peak_before_year = combined[combined['value'] == peak_before]['date'].values[0]
 average = round(combined.query(f"date < '{current_year}'")['value'].mean())
 random_html = f"""
 <ul>
-    <li> The gross debt to GDP ratio peaked at {peak_actual}% in {peak_year}.</li>
+    <li> The gross debt to GDP ratio peaked at {peak_actual}% in {peak_year}. This was the highest level since {peak_before}% in {peak_before_year}.</li>
     <li> The gross debt to GDP ratio averaged {average}% from {earliest_year} to {current_year}.</li>
     <li> Under current law, CBO projects our debt to GDP will reach <b>{latest}%</b> in {latest_year}. This is <b>{round(latest-average)} percentage points</b> above the historical average since {earliest_year}.</li>
 </ul>
