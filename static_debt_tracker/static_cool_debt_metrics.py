@@ -335,7 +335,7 @@ cbo_ltbo['value'] = round(cbo_ltbo['value'])
 combined = pd.concat([gross_debt_to_gdp, cbo_ltbo], axis=0)
 combined['date'] = combined['date'].astype(str)
 ## -- Textual Analysis -- ##
-current_year = 2023
+current_year = "2023"
 earliest_year = combined['date'].iloc[0]
 latest_year = combined['date'].iloc[-1]
 latest = round(combined[combined['date'] == latest_year]['value'].values[0])
