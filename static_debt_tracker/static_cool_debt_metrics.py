@@ -341,7 +341,7 @@ latest_year = combined['date'].iloc[-1]
 latest = round(combined[combined['date'] == latest_year]['value'].values[0])
 peak = round(combined['value'].max())
 peak_year = combined[combined['value'] == peak]['date'].values[0]
-average = round(combined.query(f"date < {current_year}")['value'].mean())
+average = round(combined.query(f"date < '{current_year}'")['value'].mean())
 random_html = f"""
 <ul>
     <li> The gross debt to GDP ratio peaked at {peak}% in {peak_year}.</li>
