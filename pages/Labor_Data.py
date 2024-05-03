@@ -46,7 +46,7 @@ jobs_data["Avg Hourly Earnings Growth YoY"] = jobs_data["Avg Hourly Earnings Gro
 jobs_data = jobs_data.set_index('date')
 
 ### --- Streamlit --- ###
-st.title("Labor Data")
+st.title("Employment and Wages")
 for i in jobs_data.columns:
 
 
