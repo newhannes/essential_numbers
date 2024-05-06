@@ -1,6 +1,6 @@
 import streamlit as st
 from workhorses.debt_tracker import debt_tracker_main
-from workhorses import debt_visuals, debt_visual2, debt_visual3
+#from workhorses import debt_visuals, debt_visual2, debt_visual3
 
 
 dt = debt_tracker_main()

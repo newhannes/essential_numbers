@@ -49,7 +49,7 @@ def main():
     text_debt_to_assets = f"""
     <ul>
         <li>For {most_recent_quarter} {most_recent_year}, the gross federal debt was ${most_recent_debt:,} trillion and the federal asset level was ${most_recent_assets} trillion, a debt to assets ratio of <b>{most_recent}</b>.</li>
-        <li>Since 1966, the debt to assets ratio has averaged <b>{average}</b>.</li>
+        <li>Since {startdate[:4]}, the debt to assets ratio has averaged <b>{average}</b>.</li>
         <li>The current ratio is <b>{round((most_recent - average)/average *100)}%</b> above the average for this period.</li>
     </ul>
     """
@@ -63,7 +63,7 @@ def main():
     plt.figure(figsize=(12, 4))
     ax = sns.lineplot(x='date_total_debt', y='debt_to_assets', data=debt_to_assets, linewidth=3, color=emerald)
     # Set the title and labels
-    plt.title('Ratio of Gross Debt to Federal Assets Since 1966', fontsize=18, loc="left", fontweight='bold', color="black")
+    plt.title(f'Ratio of Gross Debt to Federal Assets Since {startdate[:4]}', fontsize=18, loc="left", fontweight='bold', color="black")
     plt.xlabel('')
     plt.ylabel("Ratio")
     plt.grid(axis="y", alpha=0.3)
@@ -239,6 +239,7 @@ def main():
     hbc_latest = round(df.query(f"source == 'HBC' & year == {latest_year}")['debt_gdp'].values[0])
 
     comparison_html = f"""
+    President Biden's disregard for the debt crisis is reinforced by his proposed budget. Rather than address the rampant debt that exceeds the country's GDP by <b>{current}</b> in {current_year}, the President's Budget presses onward with increased spending that exacerbates this imbalance. The House Republican Budget offers a return to fiscal sanity.
     <ul>
         <li>In {earliest_year}, the gross debt to GDP ratio was <b>{earliest}%</b>.</li>
         <li>In {current_year}, the gross debt to GDP ratio was <b>{current}%</b>.</li>
@@ -302,10 +303,10 @@ def main():
     earliest_date = debt_df['record_date'].iloc[0].strftime('%Y')
     pre_pandemic = round(debt_df[debt_df['record_date']==pd.to_datetime('2020-02-10')]['second_increase'].values[0])
     rate_increase_html = f"""
+    Since {earliest_date}, the average increase in the gross debt every second has been <b>${average:,}</b>.
     <ul>
-        <li>The gross debt is increasing by <b>${most_recent:,}</b> per second.</li>
-        <li>Since {earliest_date}, the average increase in the gross debt every second has been <b>${average:,}</b>.</li>
-        <li>The current rate is <b>{round((most_recent - average)/average *100)}%</b> above the average for this period and <b>{round((most_recent-pre_pandemic)/pre_pandemic*100)}%</b> above the pre-pandemic rate of ${pre_pandemic:,} per second.</li>
+        <li>The current rate is <b>{round((most_recent - average)/average *100)}%</b> above the average for this period.</li>
+        <li>The current rate is <b>{round((most_recent-pre_pandemic)/pre_pandemic*100)}%</b> above the pre-pandemic rate of ${pre_pandemic:,} per second.</li>
     </ul>
     """
     ## -- Plot Time -- ##
@@ -362,7 +363,7 @@ def main():
     plt.fill_between(combined['date'], combined['value'], color="#84AE95", alpha=0.8)
     plt.title("Gross Debt to GDP, Historical and Projected", fontsize=18, fontweight='bold', color="black", loc="left")
     plt.xticks(combined['date'][::10])
-    plt.ylabel('Gross Debt to GDP')
+    plt.ylabel('Gross Debt as Percentage of GDP')
     plt.gca().yaxis.set_major_formatter(ticker.StrMethodFormatter('{x:,.0f}%'))
     sns.despine()
     # Add the annotations
@@ -415,7 +416,7 @@ def main():
     for bar, category in zip(bars, categories):
         width = bar.get_width()
         plt.text(width - 0.07, bar.get_y() + bar.get_height() / 2, f'${width:.2f} trillion', ha='right', va='center', color='white', fontweight='bold', fontsize=14)
-        plt.text(width + 0.05, bar.get_y() + bar.get_height() / 2, category, ha='left', va='center', color='white', fontsize=14)
+        plt.text(bar.get_x() + 0.05, bar.get_y() + bar.get_height() / 2, category, ha='left', va='center', color='white', fontweight="bold", fontsize=14)
     plt.title('GDP Added vs Debt Added in 2023', fontsize=18, fontweight='bold', color="black", loc="left")
     plt.xlabel('')
     plt.yticks([])
@@ -423,6 +424,35 @@ def main():
     sns.despine(left=True, bottom=True)
     plt.savefig(temp_dir+"/gdp_debt.png", dpi=600, bbox_inches='tight')
     
+
+    ##### -------- Basic Debt Graph -------- ##### 
+    ### --- FRED Data --- ###
+    start_date = '2000-01-01'
+    working_df = fred.get_series_df('GFDEBTN', observation_start=start_date, observation_end=today, frequency="a").drop(columns=['realtime_start', 'realtime_end'])
+    working_df['value'] = pd.to_numeric(working_df['value'])
+    working_df['date'] = pd.to_datetime(working_df['date'])
+    working_df["value"] = working_df["value"] / 1e6 # Convert to trillions
+    working_df['year'] = working_df['date'].dt.year
+
+    ### --- Chart Time 2 --- ###
+
+    sns.set_style("white")
+    plt.rcParams['font.family'] = "Playfair Display"
+    plt.figure(figsize=(12, 4))
+    sns.lineplot(data=working_df, x="year", y="value", linewidth=3.5, color=gold)
+    ymin, ymax = plt.gca().get_ylim()
+    plt.fill_between(working_df['year'], working_df["value"], color=gold, alpha=0.85)
+    plt.ylim(0, ymax)
+    plt.grid(axis="y", alpha=0.3)
+    plt.title(f"Gross Federal Debt Since {start_date[:4]} ", fontdict={ 'fontsize': 18, 'weight': 'bold'})
+    plt.xlabel('')
+    plt.ylabel('Trillions of Dollars', color='white')
+    plt.gca().yaxis.set_major_formatter('${:,.0f}'.format)
+    sns.despine()
+    plt.savefig(temp_dir+"/basic_debt.png", dpi=600, bbox_inches='tight')
+
+
+
     # ---- RETURN ---- #
     return temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, today
 

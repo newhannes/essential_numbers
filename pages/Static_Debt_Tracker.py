@@ -1,6 +1,6 @@
 ###### ------------------ STATIC MAIN FILE, PRODUCES HTML AND PDFS ------------------ ######
 import streamlit as st
-import static_debt_tracker.static_cool_debt_metrics as cdm
+import workhorses.static_cool_debt_metrics as cdm
 from workhorses.debt_tracker import debt_tracker_main
 import pdfkit
 import streamlit.components.v1 as components
