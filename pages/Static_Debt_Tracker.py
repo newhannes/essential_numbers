@@ -112,9 +112,6 @@ html = f"""
     </div>
     <div class="container">
         <div class="content">
-            <h2>Debt to Federal Assets</h2>
-            <p>{cdm.text_debt_to_assets}</p>
-            <img src={cdm.temp_dir+"/debt_to_assets.png"}>
             <h2>Debt to Wages</h2>
             <p>{cdm.text_debt_to_wages}</p>
             <img src={cdm.temp_dir+"/debt_to_wages.png"}>
@@ -122,20 +119,31 @@ html = f"""
             <h2>Mortgage Rates</h2>
             <p>{cdm.text_mortgage_rate}</p>
             <img src={cdm.temp_dir+"/mortgage_rate.png"}>
-            <h2>Our Budget vs President's Budget</h2>
-            <p>{cdm.comparison_html}</p>
-            <img src={cdm.temp_dir+"/budget_comparison.png"}>
             <h2>Rate of Increase</h2>
             <p>{cdm.rate_increase_html}</p>
             <img src={cdm.temp_dir+"/debt_increase.png"}>
-            <h2>CBO Projections</h2>
-            <p>{cdm.random_html}</p>
-            <img src={cdm.temp_dir+"/cbo_projections.png"}>
             <h2>GDP Growth vs Debt Growth</h2>
             <p>{cdm.text_gdp_debt}</p>
             <img src={cdm.temp_dir+"/gdp_debt.png"}>
+            <h2>Debt to Federal Assets</h2>
+            <p>{cdm.text_debt_to_assets}</p>
+            <img src={cdm.temp_dir+"/debt_to_assets.png"}>
         </div>
     </div>
+    <div class="header">
+        <h1>Looking Forward</h1>
+    </div>
+    <div class="container">
+        <div class="content">
+        <h2>CBO Projections</h2>
+            <p>{cdm.random_html}</p>
+            <img src={cdm.temp_dir+"/cbo_projections.png"}>
+        <h2>Our Budget vs President's Budget</h2>
+            <p>{cdm.comparison_html}</p>
+            <img src={cdm.temp_dir+"/budget_comparison.png"}>
+        </div>
+    </div>
+
 </body>
 </html>
 """
