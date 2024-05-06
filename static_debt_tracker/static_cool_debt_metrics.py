@@ -420,6 +420,11 @@ def main():
     plt.xticks([])
     sns.despine(left=True, bottom=True)
     plt.savefig(temp_dir+"/gdp_debt.png", dpi=600, bbox_inches='tight')
+    
+    # ---- RETURN ---- #
+    return temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt
 
-main()
+
+###### -------- RUN THE SCRIPT -------- ######
+temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt = main()
 print("Cool Debt Metrics script complete.")
