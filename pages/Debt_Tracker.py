@@ -38,8 +38,8 @@ with row2[0]:
                 st.write("The rate of debt accumulation during the Biden Administration has equaled:")
                 st.markdown(f"- **${dt['biden_debt_per_day_rounded']:,} billion** in new debt per day")
                 st.markdown(f"- **${dt['biden_debt_per_hour']:,} million** in new debt per hour")
-                st.markdown(f"- **${['biden_debt_per_min']:,} million** in new debt per minute")
-                st.markdown(f"- **${['biden_debt_per_sec']:,}** in new debt per second")
+                st.markdown(f"- **${dt['biden_debt_per_min']:,} million** in new debt per minute")
+                st.markdown(f"- **${dt['biden_debt_per_sec']:,}** in new debt per second")
         #with cols2[1]:
                 #st.write("President Biden's FY25 budget doubled down on his disregard for the national debt. The HBCR budget offers a return to the fiscal sanity.")
          #       st.plotly_chart(debt_visual2.fig)
