@@ -106,7 +106,7 @@ html = f"""
 </div>
 {basic_debt_html}
     <div class="header">
-        <h1>Understanding the Debt</h1>
+        <h1>Debt in Perspective</h1>
     </div>
     <div class="container">
         <div class="content">
@@ -168,7 +168,7 @@ st.image(cdm.temp_dir + "/HBR_Logo_Primary.png")
 st.markdown("<h1 style='text-align: center;'>Debt Tracker</h1>", unsafe_allow_html=True)
 st.markdown(basic_debt_html, unsafe_allow_html=True)
 #understanding the debt
-st.markdown("<h1 style='text-align: center;'>Understanding the Debt</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;'>Debt in Perspective</h1>", unsafe_allow_html=True)
 #debt to wages
 section_write("Debt to Wages", cdm.text_debt_to_wages, cdm.temp_dir + "/debt_to_wages.png")
 #mortgage rates

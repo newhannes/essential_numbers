@@ -308,13 +308,15 @@ def main():
         <li>The current rate is <b>{round((most_recent - average)/average *100)}%</b> above the average for this period and <b>{round((most_recent-pre_pandemic)/pre_pandemic*100)}%</b> above the pre-pandemic rate of ${pre_pandemic:,} per second.</li>
     </ul>
     """
+    ## -- Plot Time -- ##
+    debt_df['second_increase'] = debt_df['second_increase'] / 1000
     sns.set_style("white")
     plt.rcParams["font.family"] = "Playfair Display"
     plt.figure(figsize=(12, 4))
     sns.lineplot(x='record_date', y='second_increase', data=debt_df, linewidth=3, color=emerald)
     plt.title('Rate of Debt Accumulation Since 1994', fontsize=18, fontweight='bold', color="black", loc="left")
     plt.xlabel('')
-    plt.gca().yaxis.set_major_formatter('${x:,.0f}')
+    plt.gca().yaxis.set_major_formatter('${x:,.0f}k')
     plt.ylabel('Debt Increase per Second')
     plt.grid(axis='y', alpha=0.3)
     sns.despine()
