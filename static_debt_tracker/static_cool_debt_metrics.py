@@ -362,7 +362,7 @@ def main():
     plt.fill_between(combined['date'], combined['value'], color="#84AE95", alpha=0.8)
     plt.title("Gross Debt to GDP, Historical and Projected", fontsize=18, fontweight='bold', color="black", loc="left")
     plt.xticks(combined['date'][::10])
-    plt.xlabel('Gross Debt to GDP')
+    plt.ylabel('Gross Debt to GDP')
     plt.gca().yaxis.set_major_formatter(ticker.StrMethodFormatter('{x:,.0f}%'))
     sns.despine()
     # Add the annotations
