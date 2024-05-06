@@ -159,8 +159,26 @@ st.download_button(
     mime="application/octet-stream"
 )
 
-st.image("inputs/HBR_Logo_Primary.png")
-st.markdown(html, unsafe_allow_html=True)
+
+# Write out the text and images using streamlit
+st.image(cdm.temp_dir + "/HBR_Logo_Primary.png")
+st.markdown("<h1>Debt Tracker</h1>", unsafe_allow_html=True)
+st.markdown(basic_debt_html, unsafe_allow_html=True)
+st.markdown(cdm.text_debt_to_wages, unsafe_allow_html=True)
+st.image(cdm.temp_dir+"/debt_to_wages.png")
+st.markdown(cdm.text_mortgage_rate, unsafe_allow_html=True)
+st.image(cdm.temp_dir+"/mortgage_rate.png")
+st.markdown(cdm.rate_increase_html, unsafe_allow_html=True)
+st.image(cdm.temp_dir+"/debt_increase.png")
+st.markdown(cdm.text_gdp_debt, unsafe_allow_html=True)
+st.image(cdm.temp_dir+"/gdp_debt.png")
+st.markdown(cdm.text_debt_to_assets, unsafe_allow_html=True)
+st.image(cdm.temp_dir+"/debt_to_assets.png")
+st.markdown(cdm.random_html, unsafe_allow_html=True)
+st.image(cdm.temp_dir+"/cbo_projections.png")
+st.markdown(cdm.comparison_html, unsafe_allow_html=True)
+st.image(cdm.temp_dir+"/budget_comparison.png")
+
 #st.image(cdm.temp_dir+"/debt_increase.png")
 
 #components.html(html, scrolling=True, height=5000, width=1000)
