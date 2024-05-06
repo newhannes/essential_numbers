@@ -21,39 +21,37 @@ shutil.copy(source_path, destination_path)
 
 basic_debt_html = f"""
 <div class="container">
-<div class="content">
-    <h2>Current Debt</h2>
-    <p>The gross national debt is currently <strong>${dt['current_debt_rounded']:,} trillion</strong>. This equates to:</p>
-    <ul>
-        <li><strong>${dt['debt_per_person']:,}</strong> per person</li>
-        <li><strong>${dt['debt_per_household']:,}</strong> per household</li>
-        <li><strong>${dt['debt_per_child']:,}</strong> per child</li>
-    </ul>
-
-    <h2>Debt Accumulation under President Biden</h2>
-    <p>When President Biden took office total gross debt was <strong>${dt['biden_start_debt_rounded']:,} trillion</strong>, meaning he has increased the national debt by <strong>${dt['biden_debt_rounded']:,} trillion</strong>. This equates to:</p>
-    <ul>
-        <li><strong>${dt['biden_debt_per_person']:,}</strong> more debt per person</li>
-        <li><strong>${dt['biden_debt_per_household']:,}</strong> more debt per household</li>
-        <li><strong>${dt['biden_debt_per_child']:,}</strong> more debt per child</li>
-    </ul>
-    <p>The rate of debt accumulation during the Biden Administration has equaled:</p>
-    <ul>
-        <li><strong>${dt['biden_debt_per_day_rounded']:,} billion</strong> in new debt per day</li>
-        <li><strong>${dt['biden_debt_per_hour']:,} million</strong> in new debt per hour</li>
-        <li><strong>${dt['biden_debt_per_min']:,} million</strong> in new debt per minute</li>
-        <li><strong>${dt['biden_debt_per_sec']:,}</strong> in new debt per second</li>
-    </ul>
-
-    <h2>Debt Accumulation in Past Year</h2>
-    <p>The debt one year ago was <strong>${dt['debt_year_ago_rounded']:,} trillion</strong>, meaning that the debt has increased by <strong>${dt['debt_increase_from_year_ago_rounded']:,} trillion</strong> over the past 12 months. This rate of increase equates to:</p>
-    <ul>
-        <li><strong>${dt['last_year_debt_per_day_rounded']:,} billion</strong> in new debt per day</li>
-        <li><strong>${dt['last_year_debt_per_hour']:,} million</strong> in new debt per hour</li>
-        <li><strong>${dt['last_year_debt_per_min']:,} million</strong> in new debt per minute</li>
-        <li><strong>${dt['last_year_debt_per_sec']:,}</strong> in new debt per second</li>
-    </ul>
-</div>
+    <div class="content">
+        <h2>Current Debt</h2>
+        <p>The gross national debt is currently <strong>${dt['current_debt_rounded']:,} trillion</strong>. This equates to:</p>
+        <ul>
+            <li><strong>${dt['debt_per_person']:,}</strong> per person</li>
+            <li><strong>${dt['debt_per_household']:,}</strong> per household</li>
+            <li><strong>${dt['debt_per_child']:,}</strong> per child</li>
+        </ul>
+        <h2>Debt Accumulation under President Biden</h2>
+        <p>When President Biden took office total gross debt was <strong>${dt['biden_start_debt_rounded']:,} trillion</strong>, meaning he has increased the national debt by <strong>${dt['biden_debt_rounded']:,} trillion</strong>. This equates to:</p>
+        <ul>
+            <li><strong>${dt['biden_debt_per_person']:,}</strong> more debt per person</li>
+            <li><strong>${dt['biden_debt_per_household']:,}</strong> more debt per household</li>
+            <li><strong>${dt['biden_debt_per_child']:,}</strong> more debt per child</li>
+        </ul>
+        <p>The rate of debt accumulation during the Biden Administration has equaled:</p>
+        <ul>
+            <li><strong>${dt['biden_debt_per_day_rounded']:,} billion</strong> in new debt per day</li>
+            <li><strong>${dt['biden_debt_per_hour']:,} million</strong> in new debt per hour</li>
+            <li><strong>${dt['biden_debt_per_min']:,} million</strong> in new debt per minute</li>
+            <li><strong>${dt['biden_debt_per_sec']:,}</strong> in new debt per second</li>
+        </ul>
+        <h2>Debt Accumulation in Past Year</h2>
+        <p>The debt one year ago was <strong>${dt['debt_year_ago_rounded']:,} trillion</strong>, meaning that the debt has increased by <strong>${dt['debt_increase_from_year_ago_rounded']:,} trillion</strong> over the past 12 months. This rate of increase equates to:</p>
+        <ul>
+            <li><strong>${dt['last_year_debt_per_day_rounded']:,} billion</strong> in new debt per day</li>
+            <li><strong>${dt['last_year_debt_per_hour']:,} million</strong> in new debt per hour</li>
+            <li><strong>${dt['last_year_debt_per_min']:,} million</strong> in new debt per minute</li>
+            <li><strong>${dt['last_year_debt_per_sec']:,}</strong> in new debt per second</li>
+        </ul>
+    </div>
 </div>
 """
 
@@ -159,25 +157,32 @@ st.download_button(
     mime="application/octet-stream"
 )
 
+def section_write(section_title, section_text, section_image):
+    st.markdown(f"<h2>{section_title}</h2>", unsafe_allow_html=True)
+    st.markdown(section_text, unsafe_allow_html=True)
+    st.image(section_image)
+
 
 # Write out the text and images using streamlit
 st.image(cdm.temp_dir + "/HBR_Logo_Primary.png")
-st.markdown("<h1>Debt Tracker</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;'>Debt Tracker</h1>", unsafe_allow_html=True)
 st.markdown(basic_debt_html, unsafe_allow_html=True)
-st.markdown(cdm.text_debt_to_wages, unsafe_allow_html=True)
-st.image(cdm.temp_dir+"/debt_to_wages.png")
-st.markdown(cdm.text_mortgage_rate, unsafe_allow_html=True)
-st.image(cdm.temp_dir+"/mortgage_rate.png")
-st.markdown(cdm.rate_increase_html, unsafe_allow_html=True)
-st.image(cdm.temp_dir+"/debt_increase.png")
-st.markdown(cdm.text_gdp_debt, unsafe_allow_html=True)
-st.image(cdm.temp_dir+"/gdp_debt.png")
-st.markdown(cdm.text_debt_to_assets, unsafe_allow_html=True)
-st.image(cdm.temp_dir+"/debt_to_assets.png")
-st.markdown(cdm.random_html, unsafe_allow_html=True)
-st.image(cdm.temp_dir+"/cbo_projections.png")
-st.markdown(cdm.comparison_html, unsafe_allow_html=True)
-st.image(cdm.temp_dir+"/budget_comparison.png")
+#debt to wages
+section_write("Debt to Wages", cdm.text_debt_to_wages, cdm.temp_dir + "/debt_to_wages.png")
+#mortgage rates
+section_write("Mortgage Rates", cdm.text_mortgage_rate, cdm.temp_dir + "/mortgage_rate.png")
+#rate of increase
+section_write("Rate of Increase", cdm.rate_increase_html, cdm.temp_dir + "/debt_increase.png")
+#gdp vs debt
+section_write("GDP Growth vs Debt Growth", cdm.text_gdp_debt, cdm.temp_dir + "/gdp_debt.png")
+#debt to federal assets
+section_write("Debt to Federal Assets", cdm.text_debt_to_assets, cdm.temp_dir + "/debt_to_assets.png")
+#cbo projections
+section_write("CBO Projections", cdm.random_html, cdm.temp_dir + "/cbo_projections.png")
+#budget comparison
+section_write("Our Budget vs President's Budget", cdm.comparison_html, cdm.temp_dir + "/budget_comparison.png")
+
+
 
 #st.image(cdm.temp_dir+"/debt_increase.png")
 
