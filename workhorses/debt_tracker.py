@@ -74,3 +74,26 @@ def debt_tracker_main():
     last_year_debt_per_hour = round(last_year_debt_per_day/1e+6 / 24) #in millions
     last_year_debt_per_min = round(last_year_debt_per_day/1e+6 /(60*24), 2) #in millions
     last_year_debt_per_sec = round(last_year_debt_per_day / (60*60*24)) #in millions
+
+    #Store all variables in a dictionary
+    debt_dict = {"today":today,
+                'current_debt_rounded':current_debt_rounded,
+                'debt_per_person':debt_per_person,
+                'debt_per_household':debt_per_household,
+                'debt_per_child':debt_per_child,
+                'biden_start_debt_rounded':biden_start_debt_rounded,
+                'biden_debt_rounded':biden_debt_rounded,
+                'biden_debt_per_person':biden_debt_per_person,
+                'biden_debt_per_household':biden_debt_per_household,
+                'biden_debt_per_child':biden_debt_per_child,
+                'biden_debt_per_day_rounded':biden_debt_per_day_rounded,
+                'biden_debt_per_hour':biden_debt_per_hour,
+                'biden_debt_per_min':biden_debt_per_min,
+                'biden_debt_per_sec':biden_debt_per_sec,
+                'debt_year_ago_rounded':debt_year_ago_rounded,
+                'debt_increase_from_year_ago_rounded':debt_increase_from_year_ago_rounded,
+                'last_year_debt_per_day_rounded':last_year_debt_per_day_rounded,
+                'last_year_debt_per_hour':last_year_debt_per_hour,
+                'last_year_debt_per_min':last_year_debt_per_min,
+                'last_year_debt_per_sec':last_year_debt_per_sec}
+    return debt_dict
