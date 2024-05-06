@@ -31,7 +31,7 @@ with row2[0]:
         with cols2[0]:       
                 #st.header('Biden Debt')
                 st.write(f"When President Biden took office total gross debt was **\${dt['biden_start_debt_rounded']:,} trillion**, meaning he has increased the national debt by **${dt['biden_debt_rounded']:,} trillion**. This equates to:")
-                st.markdown(f"- **${dt["biden_debt_per_person"]:,}** more debt per person")
+                st.markdown(f"- **${dt['biden_debt_per_person']:,}** more debt per person")
                 st.markdown(f"- **${dt['biden_debt_per_household']:,}** more debt per household")
                 st.markdown(f"- **${dt['biden_debt_per_child']:,}** more debt per child")
                 
