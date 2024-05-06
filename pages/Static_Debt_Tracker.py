@@ -167,6 +167,8 @@ def section_write(section_title, section_text, section_image):
 st.image(cdm.temp_dir + "/HBR_Logo_Primary.png")
 st.markdown("<h1 style='text-align: center;'>Debt Tracker</h1>", unsafe_allow_html=True)
 st.markdown(basic_debt_html, unsafe_allow_html=True)
+#understanding the debt
+st.markdown("<h1 style='text-align: center;'>Understanding the Debt</h1>", unsafe_allow_html=True)
 #debt to wages
 section_write("Debt to Wages", cdm.text_debt_to_wages, cdm.temp_dir + "/debt_to_wages.png")
 #mortgage rates
@@ -177,10 +179,11 @@ section_write("Rate of Increase", cdm.rate_increase_html, cdm.temp_dir + "/debt_
 section_write("GDP Growth vs Debt Growth", cdm.text_gdp_debt, cdm.temp_dir + "/gdp_debt.png")
 #debt to federal assets
 section_write("Debt to Federal Assets", cdm.text_debt_to_assets, cdm.temp_dir + "/debt_to_assets.png")
+st.markdown("<h1 style='text-align: center;'>Looking Forward</h1>", unsafe_allow_html=True)
 #cbo projections
 section_write("CBO Projections", cdm.random_html, cdm.temp_dir + "/cbo_projections.png")
 #budget comparison
-section_write("Our Budget vs President's Budget", cdm.comparison_html, cdm.temp_dir + "/budget_comparison.png")
+section_write("House Budget Committee vs President's Budget", cdm.comparison_html, cdm.temp_dir + "/budget_comparison.png")
 
 
 
