@@ -151,8 +151,6 @@ html = f"""
 # Convert the HTML file to a PDF
 pdf = pdfkit.from_string(html, False, options={"enable-local-file-access": ""})
 
-st.title("Static Debt Tracker")
-
 # Add a button to download the PDF
 st.download_button(
     "⬇️ Download PDF",
@@ -161,6 +159,8 @@ st.download_button(
     mime="application/octet-stream"
 )
 
-st.image(cdm.temp_dir+"/debt_increase.png")
 st.image("inputs/HBR_Logo_Primary.png")
+st.markdown(html, unsafe_allow_html=True)
+#st.image(cdm.temp_dir+"/debt_increase.png")
+
 #components.html(html, scrolling=True, height=5000, width=1000)
