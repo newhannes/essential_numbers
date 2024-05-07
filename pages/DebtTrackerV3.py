@@ -10,7 +10,10 @@ from datetime import datetime
 #cdm = importlib.import_module("static_debt_tracker.static_cool_debt_metrics")
 
 dt = debt_tracker_main()
-    #Reload the module
+if dt['today'] != datetime.today().strftime('%Y-%m-%d'):
+    with st.spinner("Updating Debt Tracker..."):
+        debt_tracker_main.clear_cache()
+        dt = debt_tracker_main()
     
 
 

@@ -1,6 +1,6 @@
 import streamlit as st
 #### GET DEBT ####
-#@st.cache_data
+@st.cache_data
 def debt_tracker_main():
     import pandas as pd
     from datetime import date

@@ -5,11 +5,13 @@ from workhorses.debt_tracker import debt_tracker_main
 import pdfkit
 import streamlit.components.v1 as components
 import shutil
-
-#import importlib
-#cdm = importlib.import_module("static_debt_tracker.static_cool_debt_metrics")
+from datetime import datetime
 
 dt = debt_tracker_main()
+if dt['today'] != datetime.today().strftime('%Y-%m-%d'):
+    with st.spinner("Updating Debt Tracker..."):
+        debt_tracker_main.clear_cache()
+        dt = debt_tracker_main()
 
 #write the house budget header from inputs/HBR_Logo_Primary.png to the temp directory
 # Define the source and destination paths
@@ -185,8 +187,3 @@ section_write("CBO Projections", cdm.random_html, cdm.temp_dir + "/cbo_projectio
 #budget comparison
 section_write("House Budget Committee vs President's Budget", cdm.comparison_html, cdm.temp_dir + "/budget_comparison.png")
 
-
-
-#st.image(cdm.temp_dir+"/debt_increase.png")
-
-#components.html(html, scrolling=True, height=5000, width=1000)

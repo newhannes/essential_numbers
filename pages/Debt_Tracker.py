@@ -1,9 +1,14 @@
 import streamlit as st
 from workhorses.debt_tracker import debt_tracker_main
 #from workhorses import debt_visuals, debt_visual2, debt_visual3
-
+from datetime import datetime
 
 dt = debt_tracker_main()
+if dt['today'] != datetime.today().strftime('%Y-%m-%d'):
+        with st.spinner("Updating Debt Tracker..."):
+                debt_tracker_main.clear_cache()
+                dt = debt_tracker_main()
+
 
 st.markdown("<h1 style='text-align: center; color: black;'>Debt Tracker</h1>", unsafe_allow_html=True)
 st.markdown(f"<h3 style='text-align: center; color: black;'> As of {dt['today']}</h3>", unsafe_allow_html=True)
