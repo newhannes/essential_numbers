@@ -174,7 +174,7 @@ if st.checkbox("Static Report"):
         st.success("Report copied to clipboard")
     # Summary analysis
     st.write("### Summary and Biden")
-    st.write(f"Year-over-year CPI inflation as of {combined.index[-1]} is **{cpi_current}%**")
+    st.write(f"Year-over-year CPI inflation as of {combined.index[-1].strftime("%B %Y")} is **{cpi_current}%**")
     st.write(f"Since President Biden took office, prices have increased by **{biden_inflation}%**.")
     st.write(f"- This means that the average family of four is paying an additional **\${kole_inc:,.0f}** per year or **${mon_kole_inc:,.0f}** per month to purchase the same goods and services as in January 2021.")
     st.write(f"- Food prices have increased by **{food_biden:.0f}%**, energy prices have increased by **{energy_biden:.0f}%**, and housing prices have increased by **{housing_biden:.0f}%** since January 2021.")
