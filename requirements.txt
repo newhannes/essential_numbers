@@ -9,3 +9,5 @@ openpyxl
 pdfkit
 kaleido
 seaborn
+html2text
+pyperclip
