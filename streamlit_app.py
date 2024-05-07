@@ -8,6 +8,7 @@ show_pages(
         Page("pages/Static_Debt_Tracker.py", "Static Debt Tracker"),
         Page("pages/DebtTrackerV3.py", "Debt Tracker V3"),
         Page("pages/Labor_Data.py", "Employment and Wages"),
+        Page("pages/Inflation.py", "Inflation"),
         Page("pages/About.py", "About")
     ]
 )
