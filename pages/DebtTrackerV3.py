@@ -1,15 +1,19 @@
 ###### ------------------ STATIC MAIN FILE, PRODUCES HTML AND PDFS ------------------ ######
 import streamlit as st
-import workhorses.static_cool_debt_metrics as cdm
+import workhorses.cool_debt_metrics_forV3 as cdm
 from workhorses.debt_tracker import debt_tracker_main
 import pdfkit
 import streamlit.components.v1 as components
 import shutil
-
-#import importlib
+import importlib
+from datetime import datetime
 #cdm = importlib.import_module("static_debt_tracker.static_cool_debt_metrics")
 
 dt = debt_tracker_main()
+    #Reload the module
+    
+
+
 
 #write the house budget header from inputs/HBR_Logo_Primary.png to the temp directory
 # Define the source and destination paths
@@ -25,9 +29,9 @@ basic_debt_html = f"""
                 <h2 style="text-align: center;">Current Debt</h2>
                 <p style="text-align: center;">The gross national debt is currently <strong>${dt['current_debt_rounded']:,} trillion</strong>. This equates to:</p>
                 <ul style="text-align: center;">
-                        <li><strong>${dt['debt_per_person']:,}</strong> per person</li>
-                        <li><strong>${dt['debt_per_household']:,}</strong> per household</li>
-                        <li><strong>${dt['debt_per_child']:,}</strong> per child</li>
+                        <strong>${dt['debt_per_person']:,}</strong> per person
+                        <strong>${dt['debt_per_household']:,}</strong> per household
+                        <strong>${dt['debt_per_child']:,}</strong> per child
                 </ul>
                 
                 <h2 style="text-align: center;">Debt Accumulation under President Biden</h2>
