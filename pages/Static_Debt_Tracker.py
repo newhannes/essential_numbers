@@ -10,7 +10,7 @@ from datetime import datetime
 dt = debt_tracker_main()
 if dt['today'] != datetime.today().strftime('%Y-%m-%d'):
     with st.spinner("Updating Debt Tracker..."):
-        debt_tracker_main.clear_cache()
+        debt_tracker_main.clear()
         dt = debt_tracker_main()
 
 #write the house budget header from inputs/HBR_Logo_Primary.png to the temp directory
