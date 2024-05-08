@@ -40,7 +40,7 @@ basic_debt_html = f"""
                         <strong>${dt['debt_per_child']:,}</strong> per child
                 </ul>
                 <img src={cdm.temp_dir+"/debt_timeline.png"} align = "middle">
-                <h2 style="text-align: center;">Debt Accumulation under President Biden</h2>
+                <h2>Debt Accumulation under President Biden</h2>
                 <div>
                         <p>When President Biden took office total gross debt was <strong>${dt['biden_start_debt_rounded']:,} trillion</strong>, meaning he has increased the national debt by <strong>${dt['biden_debt_rounded']:,} trillion</strong>. This equates to:</p>
                         <ul>
@@ -64,7 +64,7 @@ basic_debt_html = f"""
                 <img src={cdm.temp_dir+"/budget_comparison.png"}>
                 
 
-                <h2 style="text-align: center;">Debt Accumulation in Past Year</h2>
+                <h2>Debt Accumulation in Past Year</h2>
                 <div>
                 <p>The debt one year ago was <strong>${dt['debt_year_ago_rounded']:,} trillion</strong>, meaning that the debt has increased by <strong>${dt['debt_increase_from_year_ago_rounded']:,} trillion</strong> over the past 12 months. This rate of increase equates to:</p>
                 <ul>

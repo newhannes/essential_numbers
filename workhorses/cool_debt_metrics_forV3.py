@@ -240,10 +240,8 @@ def main():
     hbc_latest = round(df.query(f"source == 'HBC' & year == {latest_year}")['debt_gdp'].values[0])
 
     comparison_html = f"""
-    President Biden's disregard for the debt crisis is reinforced by his proposed budget. Rather than address the rampant debt that exceeds the country's GDP by <b>{current}</b> in {current_year}, the President's Budget exacerbates this imbalance. The House Republican Budget offers a return to fiscal sanity.
+    Rather than address the rampant debt that exceeds the country's GDP by <b>{current}</b>% in {current_year}, President Biden's budget exacerbates this imbalance. The House Republican Budget offers a return to fiscal sanity.
     <ul>
-        <li>In {earliest_year}, the gross debt to GDP ratio was <b>{earliest}%</b>.</li>
-        <li>In {current_year}, the gross debt to GDP ratio was <b>{current}%</b>.</li>
         <li>Under the President's Budget, the gross debt to GDP ratio will be <b>{biden_latest}%</b> in {latest_year}, an increase of {biden_latest-current} percentage points since {current_year}.</li>
         <li>Under the House Republican Budget, the gross debt to GDP ratio will be <b>{hbc_latest}%</b> in {latest_year}, a decrease of {abs(hbc_latest-current)} percentage points since {current_year}</li>
     </ul>
@@ -300,8 +298,9 @@ def main():
     average = round(debt_df['second_increase'].mean())
     most_recent = round(debt_df['second_increase'].iloc[-1])
     most_recent_date = debt_df['record_date'].iloc[-1].strftime('%B %d, %Y')
-    earliest = debt_df['second_increase'].iloc[0]
-    earliest_date = debt_df['record_date'].iloc[0].strftime('%Y')
+    #earliest = debt_df['second_increase'].dropna().iloc[0]
+    #earliest_date = debt_df['record_date'].iloc[0].strftime('%Y')
+    earliest_date = debt_df.dropna()['record_date'].iloc[0].strftime('%Y')
     pre_pandemic = round(debt_df[debt_df['record_date']==pd.to_datetime('2020-02-10')]['second_increase'].values[0])
     rate_increase_html = f"""
     Since {earliest_date}, the average increase in the gross debt every second has been <b>${average:,}</b>.
@@ -479,7 +478,7 @@ def main():
     plt.rcParams['font.family'] = 'Garet'
     sns.lineplot(data=historic_debt, x='record_date', y='debt_trillions', linewidth=4.5, color=emerald)
     plt.fill_between(historic_debt["record_date"], historic_debt['debt_trillions'], color=emerald, alpha=0.99)
-    plt.title('Our Debt Across History', fontsize=18, pad=15)
+    plt.title('Our Debt Across History', fontsize=18, pad=15, fontweight='bold', loc='left')
     plt.xlabel("")
     plt.ylabel("Debt Outstanding (Trillions)", labelpad=8)
     # Customize xticks (date range)
