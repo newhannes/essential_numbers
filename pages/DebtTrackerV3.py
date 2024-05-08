@@ -14,7 +14,10 @@ if dt['today'] != datetime.today().strftime('%Y-%m-%d'):
     with st.spinner("Updating Debt Tracker..."):
         debt_tracker_main.clear()
         dt = debt_tracker_main()
-    
+if cdm.today != datetime.today().strftime('%Y-%m-%d'):
+    with st.spinner("Updating Cool Debt Metrics..."):
+        cdm.clear()
+        cdm = importlib.import_module("workhorses.cool_debt_metrics_forV3")
 
 
 
