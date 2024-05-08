@@ -141,15 +141,25 @@ html = f"""
             <p>{cdm.text_debt_to_wages}</p>
             <img src={cdm.temp_dir+"/debt_to_wages.png"}>
             <br> </br>
-            <h2>Mortgage Rates</h2>
-            <p>{cdm.text_mortgage_rate}</p>
-            <img src={cdm.temp_dir+"/mortgage_rate.png"}>
             <h2>GDP Growth vs Debt Growth</h2>
             <p>{cdm.text_gdp_debt}</p>
             <img src={cdm.temp_dir+"/gdp_debt.png"}>
             <h2>Debt to Federal Assets</h2>
             <p>{cdm.text_debt_to_assets}</p>
             <img src={cdm.temp_dir+"/debt_to_assets.png"}>
+        </div>
+    </div>
+    <div class="header">
+        <h1>Why It Matters</h1>
+    </div>
+    <div class="container">
+        <div class="content">
+            <h2>Mortgage Rates</h2>
+            <p>{cdm.text_mortgage_rate}</p>
+            <img src={cdm.temp_dir+"/mortgage_rate.png"}>
+            <h2>Credit Cards</h2>
+            <p>{cdm.html_credit_card}</p>
+            <img src={cdm.temp_dir+"/credit_card.png"}>
         </div>
     </div>
     <div class="header">

@@ -1,13 +1,25 @@
 ##### ------------ COOL DEBT METRICS STATIC ------------ #####
 import streamlit as st
+from full_fred.fred import Fred
+import pandas as pd
+FRED_API_KEY = st.secrets["FRED_API_KEY"]
+fred = Fred()
 st.cache_data
+def get_fred_data(series_id, nickname, start_date=None, end_date=None, frequency=None, units=None, to_datetime=False, to_numeric=False, to_float=False, errors="raise"):
+        data = fred.get_series_df(series_id, observation_start=start_date, observation_end=end_date, frequency=frequency, units=units)
+        data = data.drop(columns=['realtime_start', 'realtime_end']).rename(columns={'value': nickname})
+        if to_datetime:
+            data["date"] = pd.to_datetime(data['date'])
+        if to_numeric:
+            data[nickname] = pd.to_numeric(data[nickname], errors=errors)
+        if to_float:
+            data[nickname] = data[nickname].replace('.', float('nan')).astype(float, errors=errors)
+        return data
 def main():
-    import pandas as pd
     import matplotlib.pyplot as plt
     import seaborn as sns
     import matplotlib.dates as mdates
     from matplotlib import ticker
-    from full_fred.fred import Fred
     from datetime import date
     from datetime import datetime
     import requests 
@@ -21,6 +33,7 @@ def main():
     jade = "#84AE95"
     emerald = "#004647"
     darker_emerald = "#002F2F"
+
 
     # Create a temporary directory
     temp_dir = tempfile.mkdtemp()
@@ -522,10 +535,57 @@ def main():
     # Save
     plt.savefig(temp_dir+"/debt_timeline.png", dpi=900, bbox_inches='tight')
 
+
+    ####### ------- Credit Card Stuff ------- #######
+    ## -- API Calls -- ##
+    deliquent_30 = get_fred_data('RCCCBACTDPD30P', '30_days', start_date="2019-10-01", to_datetime=True, to_numeric=True)
+    num_accounts = get_fred_data('RCCCBNUMACT', 'num_accounts', start_date="2019-10-01", to_datetime=True, to_numeric=True)
+    apr = get_fred_data('TERMCBCCALLNS', 'APR', to_datetime=True, to_float=True).dropna()
+    biden = pd.to_datetime('2021-01-20')
+    quarter_b4_biden = pd.to_datetime('2020-10-01')
+    ## -- Textual Analysis -- ##
+    # Deliquency and accounts number
+    current_del = deliquent_30['30_days'].iloc[-1]
+    current_acc = num_accounts['num_accounts'].iloc[-1]
+    before_biden_del = deliquent_30.query("date == @quarter_b4_biden")['30_days'].values[0]
+    before_biden_acc = num_accounts.query("date == @quarter_b4_biden")['num_accounts'].values[0]
+    # Calculate the number of accounts that are deliquent
+    current_del_acc = current_del/100 * current_acc
+    before_biden_del_acc = before_biden_del/100 * before_biden_acc
+    # APR rates
+    apr_current = apr['APR'].iloc[-1]
+    apr_before_biden = apr.query("date < @biden")['APR'].iloc[-1]
+
+    html_credit_card = f"""
+    <ul>
+    <li>Before Biden took office the APR for credit cards was <b>{apr_before_biden:.2f}%</b> and the percentage of deliquent credit card accounts was <b>{before_biden_del:.2f}%</b>. </li> 
+    <li>Now, the APR is <b>{apr_current:.2f}%</b> and the percentage of deliquent credit card accounts is <b>{current_del:.2f}%</b>.</li>
+    <li>The APR has increased by <b>{apr_current - apr_before_biden:.2f}</b> percentage points and the deliquency rate has increased by <b>{current_del - before_biden_del:.2f}</b> percentage points.</li>
+    <li>Since {quarter_b4_biden.year} there have been <b>{current_del_acc - before_biden_del_acc:.1f} million</b> more credit card accounts that are deliquent.</li>
+    </ul>
+    """
+    ### ---- Chart Time ---- ###
+    # Chart data
+    chart_data = apr.query("date >= @quarter_b4_biden")
+    plt.figure(figsize=(12, 4))
+    sns.set_style("white")
+    plt.rcParams['font.family'] = "Playfair Display"
+    sns.lineplot(data=chart_data, x='date', y='APR', color=emerald, linewidth=3.5)
+    plt.xlabel("")
+    plt.ylabel("APR")
+    #plt.xticks(chart_data["date"][::4])
+    plt.gca().yaxis.set_major_formatter(ticker.PercentFormatter(decimals=0))
+    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))
+    plt.title(f"Credit Card Rates Since {chart_data['date'].iloc[0].strftime('%B %Y')}", fontsize=18, fontweight='bold', loc="left")
+    plt.grid(axis='y', alpha=0.3)
+    sns.despine()
+    plt.savefig(temp_dir+"/credit_card.png", dpi=900, bbox_inches='tight')
+
+
     # ---- RETURN ---- #
-    return temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, today
+    return temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, html_credit_card, today
 
 
 ###### -------- RUN THE SCRIPT -------- ######
-temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, today = main()
+temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, html_credit_card, today = main()
 print("Cool Debt Metrics script complete.")
