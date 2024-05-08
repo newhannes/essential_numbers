@@ -9,6 +9,7 @@ def main():
     from matplotlib import ticker
     from full_fred.fred import Fred
     from datetime import date
+    from datetime import datetime
     import requests 
     import json
     import tempfile
@@ -452,6 +453,91 @@ def main():
 
 
 
+    ##### ------- Debt Timeline ------- #####
+    # MARK: DEBT TIMELINE
+    ### Treasury API ###
+    # Get and clean HISTORICAL debt data
+    fields = 'record_date, record_fiscal_year, debt_outstanding_amt'
+    treasury_link = f'https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/accounting/od/debt_outstanding?fields={fields}&page[size]=10000'
+    p = requests.get(treasury_link)
+    data = p.json()
+    historic_debt = pd.DataFrame(data['data'])
+    historic_debt['debt_outstanding_amt'] = historic_debt['debt_outstanding_amt'].astype(float)
+    historic_debt['record_date'] = pd.to_datetime(historic_debt['record_date'])
+    historic_debt["debt_trillions"] = historic_debt["debt_outstanding_amt"] / 1e12 # Convert to trillions
+    # Get and clean CURRENT debt data
+    fields = 'record_date, tot_pub_debt_out_amt'
+    treasury_link = f'https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/accounting/od/debt_to_penny?fields={fields}&filter=record_date:gte:2024-01-01&page[size]=10000'
+    p = requests.get(treasury_link)
+    data = p.json()
+    current = pd.DataFrame(data['data'])
+    current['tot_pub_debt_out_amt'] = current['tot_pub_debt_out_amt'].astype(float)
+    current["in trillions"] = current["tot_pub_debt_out_amt"] / 1e12 # Convert to trillions
+    current['record_date'] = pd.to_datetime(current['record_date'])
+    ###### ------ Chart Time ------ ######
+    plt.figure(figsize=(12,4))
+    sns.set_style("white")
+    plt.rcParams['font.family'] = 'Garet'
+    sns.lineplot(data=historic_debt, x='record_date', y='debt_trillions', linewidth=4.5, color=emerald)
+    plt.fill_between(historic_debt["record_date"], historic_debt['debt_trillions'], color=emerald, alpha=0.99)
+    plt.title('Our Debt Across History', fontsize=18, pad=15, loc='left')
+    plt.xlabel("")
+    plt.ylabel("Debt Outstanding (Trillions)", labelpad=8)
+    # Customize xticks (date range)
+    start, end = pd.to_datetime('1800'), pd.to_datetime('2020')
+    years = pd.date_range(start, end, freq='50YE').year
+    plt.xticks(ticks=[pd.to_datetime(year, format='%Y') for year in years], labels=years)
+    plt.gca().yaxis.set_major_formatter(ticker.StrMethodFormatter('${x:,.0f}T'))
+    sns.despine(left=True, bottom=True)
+
+    # Add annotations
+    start_date = historic_debt.iloc[0, 0] # First date in dataset
+    start_debt_actual = historic_debt.iloc[0, 2] # First debt in dataset, actual
+    start_debt = historic_debt.iloc[0, 3] # First debt in dataset, in trillions
+    plt.annotate(f"${start_debt_actual/1e6:,.0f} million in {start_date.year}", xy=(start_date, start_debt), xytext=(datetime(1790,1,1), 3.2), fontsize=9,
+                arrowprops=dict(color='black', arrowstyle='->'))
+    billion_date = datetime(1863,1,7)
+    bil_text_date = datetime(1850,1,1)
+    plt.annotate(f"$1 Billion in {billion_date.year}", xy=(billion_date, .001), xytext=(bil_text_date, 3.2),
+                arrowprops=dict(color='black', arrowstyle='->'), fontsize=9)
+    trillion_date = historic_debt.query("debt_trillions >= 1").iloc[0, 0] # First time debt exceeds $1 trillion, date
+    tril_text_date = datetime(1940,1,1) # Used to position text
+    plt.annotate(f"$1 Trillion in {trillion_date.year}", xy=(trillion_date, 1), xytext=(tril_text_date, 3.2),
+                arrowprops=dict(color='black', arrowstyle='->'), fontsize=9)
+    ten_trillion_date = historic_debt.query("debt_trillions >= 10").iloc[0, 0] # First time debt exceeds $10 trillion, date
+    ten_tril_text_date = datetime(1961,1,1) # Used to position text
+    plt.annotate(f"$10 Trillion in {ten_trillion_date.year}", xy=(ten_trillion_date, 10), xytext=(ten_tril_text_date, 10),
+                arrowprops=dict(color='black', arrowstyle='->'), fontsize=9)
+    twenty_trillion_date = historic_debt.query("debt_trillions >= 20").iloc[0, 0] # First time debt exceeds $20 trillion, date
+    twenty_tril_text_date = datetime(1970,1,1) # Used to position text
+    plt.annotate(f"$20 Trillion in {twenty_trillion_date.year}", xy=(twenty_trillion_date, 20), xytext=(twenty_tril_text_date, 20),
+                arrowprops=dict(color='black', arrowstyle='->'), fontsize=9)
+    # Add level before biden
+    biden_date = datetime(2021,1,20)
+    biden_text_date = datetime(1950,1,1)
+    debt_before_biden_date = historic_debt.query("record_date < @biden_date").iloc[-1,0]
+    debt_before_biden_debt = historic_debt.query("record_date < @biden_date").iloc[-1,3] #in trillions
+    plt.annotate(f"Debt Before Biden: ${debt_before_biden_debt:.0f} Trillion", xy=(debt_before_biden_date, debt_before_biden_debt), xytext=(biden_text_date, debt_before_biden_debt),
+                arrowprops=dict(color='black', arrowstyle='->'), fontsize=9)
+
+    plt.text(current.iloc[-1]['record_date'] - pd.Timedelta(weeks=140), current.iloc[-1]['in trillions']*1.01, f"Debt Now: ${current.iloc[-1]['in trillions']:.2f} Trillion", fontsize=12, fontweight="bold",ha="center")
+    # Save
+    plt.savefig(temp_dir+"/debt_timeline.png", dpi=900, bbox_inches='tight')
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     # ---- RETURN ---- #
     return temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, today
 

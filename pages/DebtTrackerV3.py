@@ -32,13 +32,13 @@ basic_debt_html = f"""
                 <h2 style="text-align: center;">Current Debt</h2>
                 <p style="text-align: center;">The gross national debt is currently <strong>${dt['current_debt_rounded']:,} trillion</strong>. This equates to:</p>
                 <ul style="text-align: center;">
-                        <strong>${dt['debt_per_person']:,}</strong> per person
-                        <strong>${dt['debt_per_household']:,}</strong> per household
+                        <strong>${dt['debt_per_person']:,}</strong> per person <br/>
+                        <strong>${dt['debt_per_household']:,}</strong> per household <br/>
                         <strong>${dt['debt_per_child']:,}</strong> per child
                 </ul>
-                
+                <img src={cdm.temp_dir+"/debt_timeline.png"} align = "middle">
                 <h2 style="text-align: center;">Debt Accumulation under President Biden</h2>
-                <div style="text-align: left;">
+                <div>
                         <p>When President Biden took office total gross debt was <strong>${dt['biden_start_debt_rounded']:,} trillion</strong>, meaning he has increased the national debt by <strong>${dt['biden_debt_rounded']:,} trillion</strong>. This equates to:</p>
                         <ul>
                                 <li><strong>${dt['biden_debt_per_person']:,}</strong> more debt per person</li>
@@ -54,15 +54,15 @@ basic_debt_html = f"""
                                 <li><strong>${dt['biden_debt_per_sec']:,}</strong> in new debt per second</li>
                         </ul>
                 </div>
-                <div style="text-align: right;">
+                <div>
                 <p>{cdm.comparison_html}</p>
                 </div>
-                <center>
+                
                 <img src={cdm.temp_dir+"/budget_comparison.png"}>
-                </center>
+                
 
                 <h2 style="text-align: center;">Debt Accumulation in Past Year</h2>
-                <div style="text-align: left;">
+                <div>
                 <p>The debt one year ago was <strong>${dt['debt_year_ago_rounded']:,} trillion</strong>, meaning that the debt has increased by <strong>${dt['debt_increase_from_year_ago_rounded']:,} trillion</strong> over the past 12 months. This rate of increase equates to:</p>
                 <ul>
                         <li><strong>${dt['last_year_debt_per_day_rounded']:,} billion</strong> in new debt per day</li>
@@ -71,12 +71,10 @@ basic_debt_html = f"""
                         <li><strong>${dt['last_year_debt_per_sec']:,}</strong> in new debt per second</li>
                 </ul>
                 </div>
-                <div style="text-align: right;">
+                <div>
                 <p>{cdm.rate_increase_html}</p>
                 </div>
-                <center>
                 <img src={cdm.temp_dir+"/debt_increase.png"}>
-                </center>
         </div>
 </div>
 """
