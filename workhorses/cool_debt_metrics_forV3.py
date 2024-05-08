@@ -240,7 +240,7 @@ def main():
     hbc_latest = round(df.query(f"source == 'HBC' & year == {latest_year}")['debt_gdp'].values[0])
 
     comparison_html = f"""
-    President Biden's disregard for the debt crisis is reinforced by his proposed budget. Rather than address the rampant debt that exceeds the country's GDP by <b>{current}</b> in {current_year}, the President's Budget presses onward with increased spending that exacerbates this imbalance. The House Republican Budget offers a return to fiscal sanity.
+    President Biden's disregard for the debt crisis is reinforced by his proposed budget. Rather than address the rampant debt that exceeds the country's GDP by <b>{current}</b> in {current_year}, the President's Budget exacerbates this imbalance. The House Republican Budget offers a return to fiscal sanity.
     <ul>
         <li>In {earliest_year}, the gross debt to GDP ratio was <b>{earliest}%</b>.</li>
         <li>In {current_year}, the gross debt to GDP ratio was <b>{current}%</b>.</li>
