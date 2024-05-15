@@ -491,7 +491,7 @@ def main():
     plt.rcParams['font.family'] = 'Garet'
     sns.lineplot(data=historic_debt, x='record_date', y='debt_trillions', linewidth=4.5, color=emerald)
     plt.fill_between(historic_debt["record_date"], historic_debt['debt_trillions'], color=emerald, alpha=0.99)
-    plt.title('Our Debt Across History', fontsize=18, pad=15, fontweight='bold', loc='left')
+    plt.title('History of the Debt', fontsize=18, pad=15, fontweight='bold', loc='left')
     plt.xlabel("")
     plt.ylabel("Debt Outstanding (Trillions)", labelpad=8)
     # Customize xticks (date range)
@@ -537,6 +537,7 @@ def main():
 
 
     ####### ------- Credit Card Stuff ------- #######
+    #MARK: CREDIT CARD
     ## -- API Calls -- ##
     deliquent_30 = get_fred_data('RCCCBACTDPD30P', '30_days', start_date="2019-10-01", to_datetime=True, to_numeric=True)
     num_accounts = get_fred_data('RCCCBNUMACT', 'num_accounts', start_date="2019-10-01", to_datetime=True, to_numeric=True)
@@ -561,7 +562,7 @@ def main():
     <li>Before Biden took office the APR for credit cards was <b>{apr_before_biden:.2f}%</b> and the percentage of deliquent credit card accounts was <b>{before_biden_del:.2f}%</b>. </li> 
     <li>Now, the APR is <b>{apr_current:.2f}%</b> and the percentage of deliquent credit card accounts is <b>{current_del:.2f}%</b>.</li>
     <li>The APR has increased by <b>{apr_current - apr_before_biden:.2f}</b> percentage points and the deliquency rate has increased by <b>{current_del - before_biden_del:.2f}</b> percentage points.</li>
-    <li>Since {quarter_b4_biden.year} there have been <b>{current_del_acc - before_biden_del_acc:.1f} million</b> more credit card accounts that are deliquent.</li>
+    <li>Since {quarter_b4_biden.year} there are <b>{current_del_acc - before_biden_del_acc:.1f} million</b> more deliquent credit card accounts.</li>
     </ul>
     """
     ### ---- Chart Time ---- ###
