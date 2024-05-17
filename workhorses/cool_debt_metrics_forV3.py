@@ -88,7 +88,7 @@ def main():
     plt.ylabel("Ratio")
     plt.grid(axis="y", alpha=0.3)
     sns.despine()
-    plt.savefig(temp_dir+"/debt_to_assets.png", dpi=600, bbox_inches='tight')
+    plt.savefig(temp_dir+"/debt_to_assets.png", dpi=900, bbox_inches='tight')
 
 
     #### -------- RATIO OF DEBT TO TOTAL WAGES -------- ####
@@ -170,15 +170,15 @@ def main():
     plt.ylabel('Debt to Wages')
     sns.despine()
     plt.grid(axis='y', alpha=0.3)
-    plt.savefig(temp_dir+"/debt_to_wages.png", dpi=600, bbox_inches='tight')
+    plt.savefig(temp_dir+"/debt_to_wages.png", dpi=900, bbox_inches='tight')
 
 
     #### -------- MORTGAGE RATES/HOUSING PRICES SINCE JAN 2021 -------- ####
     # MARK: MORTGAGE
     ## -- FRED Data -- ##
-    mortgage_rate = fred.get_series_df("MORTGAGE30US", observation_start="2021-01-20", observation_end=today).drop(columns={'realtime_start', 'realtime_end'}).rename(columns={"value": "Mortgage Rate"})
+    mortgage_rate = fred.get_series_df("MORTGAGE30US", observation_start="2021-01-20").drop(columns={'realtime_start', 'realtime_end'}).rename(columns={"value": "Mortgage Rate"})
     mortgage_rate['Mortgage Rate'] = mortgage_rate['Mortgage Rate'].astype(float)
-    median_sales = fred.get_series_df("MSPUS", observation_start="2021-01-20", observation_end=today).drop(columns={'realtime_start', 'realtime_end'}).rename(columns={"value": "Median Sales Price"})
+    median_sales = fred.get_series_df("MSPUS", observation_start="2021-01-20").drop(columns={'realtime_start', 'realtime_end'}).rename(columns={"value": "Median Sales Price"})
     median_sales['Median Sales Price'] = median_sales['Median Sales Price'].astype(float)
     ## -- Textual Analysis -- ##
     average = mortgage_rate['Mortgage Rate'].mean()
@@ -216,7 +216,7 @@ def main():
     plt.ylabel('Mortgage Rate (%)')
     plt.grid(axis='y', alpha=0.3)
     sns.despine()
-    plt.savefig(temp_dir+"/mortgage_rate.png", dpi=600, bbox_inches='tight')
+    plt.savefig(temp_dir+"/mortgage_rate.png", dpi=900, bbox_inches='tight')
 
 
     ### --- OUR BUDGET VS PRESIDENT BUDGET --- ###
@@ -288,7 +288,7 @@ def main():
     plt.ylabel('Gross Debt as Percentage of GDP')
     plt.grid(axis='y', alpha=0.3)
     sns.despine()
-    plt.savefig(temp_dir+"/budget_comparison.png", dpi=600, bbox_inches='tight')
+    plt.savefig(temp_dir+"/budget_comparison.png", dpi=900, bbox_inches='tight')
 
 
 
@@ -340,7 +340,7 @@ def main():
     plt.ylabel('Debt Increase per Second')
     plt.grid(axis='y', alpha=0.3)
     sns.despine()
-    plt.savefig(temp_dir+"/debt_increase.png", dpi=600, bbox_inches='tight')
+    plt.savefig(temp_dir+"/debt_increase.png", dpi=900, bbox_inches='tight')
 
 
     #### ---- CBO Projections ---- ####
