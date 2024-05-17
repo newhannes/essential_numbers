@@ -180,7 +180,10 @@ html = f"""
         <h2>CBO Projections</h2>
             <p>{random_html}</p>
             <img src={temp_dir+"/cbo_projections.png"}>
+            <p>{household_html}</p>
+            <img src={temp_dir+"/household_debt.png"}>
         </div>
+        
     </div>
 
 </body>
