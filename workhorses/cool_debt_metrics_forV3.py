@@ -655,13 +655,13 @@ def main():
     ## -- Textual Analysis -- ##
     current_year = 2023
     current = data.loc[data["Year"] == current_year, "Gross Debt per Household"].values[0]
-    projected = data.iloc[-1]["Gross Debt per Household"]
+    projected = data.iloc[-1]["Gross Debt per Household"] 
     projected_year = data.iloc[-1]["Year"]
 
-    household_html = f""""
+    household_html = f"""
     <ul>
-        <li> In {current_year}, the gross federal debt per household was ${current:,.0f} thousank.</li>
-        <li> By {projected_year}, the gross federal debt per household is projected to be ${projected:,.0f}.</li>
+        <li> In {current_year}, the gross federal debt per household was <b>${current:,.0f} thousand</b>.</li>
+        <li> By {projected_year}, the gross federal debt per household is projected to be <b>${projected/1000:,.0f} million</b>.</li>
     </ul>
     """
     ## -- Plot -- ##
@@ -688,12 +688,12 @@ def main():
     last_debt = last["Gross Debt per Household"].values[0]
     plt.annotate(f"Projected, {last_year} : ${last_debt/1000:,.2f} million per household",
                     xy=(last_year, last_debt), 
-                    xytext=(2030, 1050), fontsize=12, color=hunter, fontweight="bold",
+                    xytext=(2020, 1000), fontsize=12, color=hunter, fontweight="bold",
                     arrowprops=dict(arrowstyle="-", color=hunter, lw=1.5))
 
     plt.gca().yaxis.set_major_formatter(ticker.StrMethodFormatter("${x:,.0f}K"))
     sns.despine(bottom=True, left=True)
-    plt.savefig(temp_dir+"/household_debt.png", dpi=900, bbox_inches='tight')
+    plt.savefig(temp_dir+"/household_debt.png", dpi=600, bbox_inches='tight')
 
     # ---- RETURN ---- #
     return temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, html_credit_card, new_orders_html, household_html, today
