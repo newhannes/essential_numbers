@@ -1,4 +1,5 @@
 ##### ------------ COOL DEBT METRICS STATIC ------------ #####
+# MARK: ##COOL DEBT METRICS##
 import streamlit as st
 from full_fred.fred import Fred
 import pandas as pd
@@ -39,6 +40,7 @@ def main():
     jade = "#84AE95"
     emerald = "#004647"
     darker_emerald = "#002F2F"
+    hunter = "#002829"
 
 
     # Create a temporary directory
@@ -641,8 +643,60 @@ def main():
 
 
 
+    #### ----- HOUSEHOLD DEBT PROJECTIONS ----- ####
+    # MARK: HOUSEHOLD DEBT
+    ## -- Load data -- ##
+    data = pd.read_excel("data/051624 gross federal debt per household.xlsx", header=1).rename(columns={"Unnamed: 0":"Year"})
+    data.columns = ["Year", "Gross Debt per Household"]
+    data = data.dropna()
+    data["Gross Debt per Household"] = data["Gross Debt per Household"] /1000
+    data["Year"] = pd.to_numeric(data["Year"])
+
+    ## -- Textual Analysis -- ##
+    current_year = 2023
+    current = data.loc[data["Year"] == current_year, "Gross Debt per Household"].values[0]
+    projected = data.iloc[-1]["Gross Debt per Household"]
+    projected_year = data.iloc[-1]["Year"]
+
+    household_html = f""""
+    <ul>
+        <li> In {current_year}, the gross federal debt per household was ${current:,.0f} thousank.</li>
+        <li> By {projected_year}, the gross federal debt per household is projected to be ${projected:,.0f}.</li>
+    </ul>
+    """
+    ## -- Plot -- ##
+    plt.figure(figsize=(12,4))
+    sns.set_style("white")
+    plt.rcParams["font.family"] = "Playfair Display"
+    plt.grid(axis="y", alpha=0.3)
+    sns.lineplot(x="Year", y="Gross Debt per Household", data=data, color=emerald, linewidth=1)
+    plt.fill_between(data["Year"], data["Gross Debt per Household"], color=emerald, alpha=0.99)
+    plt.title("Gross Federal Debt Per Household, 2000-2054", fontsize=18, fontweight="bold", pad=20, loc="left")
+    plt.xlabel("")
+    # Add annotations
+    current = data[data.Year == 2023]
+    current_year = current["Year"].values[0]
+    current_debt = current["Gross Debt per Household"].values[0]
+
+    plt.annotate(f"Actual, {current_year} : ${current_debt:,.0f}K per household", 
+                xy=(current_year, current_debt), 
+                xytext=(2012, 425), fontsize=12, color=hunter, fontweight="bold",
+                arrowprops=dict(arrowstyle="-", color=hunter, lw=1.5))
+
+    last = data[data.Year == 2054]
+    last_year = last["Year"].values[0]
+    last_debt = last["Gross Debt per Household"].values[0]
+    plt.annotate(f"Projected, {last_year} : ${last_debt/1000:,.2f} million per household",
+                    xy=(last_year, last_debt), 
+                    xytext=(2030, 1050), fontsize=12, color=hunter, fontweight="bold",
+                    arrowprops=dict(arrowstyle="-", color=hunter, lw=1.5))
+
+    plt.gca().yaxis.set_major_formatter(ticker.StrMethodFormatter("${x:,.0f}K"))
+    sns.despine(bottom=True, left=True)
+    plt.savefig(temp_dir+"/household_debt.png", dpi=900, bbox_inches='tight')
+
     # ---- RETURN ---- #
-    return temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, html_credit_card, new_orders_html, today
+    return temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, html_credit_card, new_orders_html, household_html, today
 
 
 ###### -------- RUN THE SCRIPT -------- ######

@@ -17,7 +17,7 @@ fred = Fred()
 
 #### ---- FETCH DATA FROM THE WORKHORSES ---- ####
 dt = debt_tracker_main()
-temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, html_credit_card, new_orders_html, cdm_today = cdm_main()
+temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, html_credit_card, new_orders_html, household_html, cdm_today = cdm_main()
 if dt['today'] != datetime.today().strftime('%Y-%m-%d'):
     with st.spinner("Updating Debt Tracker..."):
         debt_tracker_main.clear()
@@ -25,7 +25,7 @@ if dt['today'] != datetime.today().strftime('%Y-%m-%d'):
 if cdm_today != datetime.today().strftime('%Y-%m-%d'):
     with st.spinner("Updating Cool Debt Metrics..."):
         cdm_main.clear()
-        temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, html_credit_card, new_orders_html, cdm_today = cdm_main()
+        temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, html_credit_card, new_orders_html, household_html, cdm_today = cdm_main()
 
 
 #write the house budget header from inputs/HBR_Logo_Primary.png to the temp directory
