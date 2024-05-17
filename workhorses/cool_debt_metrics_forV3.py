@@ -627,7 +627,7 @@ def main():
     plt.axvline(line_date, color=gold, linestyle="-", linewidth=2.5)
 
     # Add a label to the vertical line
-    plt.annotate('Fed begins rate hikes', xy=(line_date, 0), xytext=(-100, 190), textcoords='offset points')
+    plt.annotate('Fed begins rate hikes', xy=(line_date, 0), xytext=(200, 190), textcoords='offset points')
 
     plt.ylabel("Annual Growth")
     plt.gca().yaxis.set_major_formatter(ticker.StrMethodFormatter("{x:.0f}%"))
