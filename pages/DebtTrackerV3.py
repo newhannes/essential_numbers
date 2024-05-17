@@ -187,7 +187,7 @@ html = f"""
 </html>
 """
 
-# Convert the HTML file to a PDF
+# Convert the HTML string to a PDF
 pdf = pdfkit.from_string(html, False, options={"enable-local-file-access": ""})
 
 # Add a button to download the PDF

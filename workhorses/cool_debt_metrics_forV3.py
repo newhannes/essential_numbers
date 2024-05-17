@@ -642,5 +642,5 @@ def main():
 
 
 ###### -------- RUN THE SCRIPT -------- ######
-temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, html_credit_card, new_orders_html, today = main()
+#temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, html_credit_card, new_orders_html, today = main()
 print("Cool Debt Metrics script complete.")
