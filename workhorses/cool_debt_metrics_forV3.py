@@ -661,7 +661,7 @@ def main():
     household_html = f"""
     <ul>
         <li> In {current_year}, the gross federal debt per household was <b>${current:,.0f} thousand</b>.</li>
-        <li> By {projected_year}, the gross federal debt per household is projected to be <b>${projected/1000:,.0f} million</b>.</li>
+        <li> By {str(projected_year)}, the gross federal debt per household is projected to be <b>${projected/1000:,.0f} million</b>.</li>
     </ul>
     """
     ## -- Plot -- ##
@@ -671,7 +671,7 @@ def main():
     plt.grid(axis="y", alpha=0.3)
     sns.lineplot(x="Year", y="Gross Debt per Household", data=data, color=emerald, linewidth=1)
     plt.fill_between(data["Year"], data["Gross Debt per Household"], color=emerald, alpha=0.99)
-    plt.title("Gross Federal Debt Per Household, 2000-2054", fontsize=18, fontweight="bold", pad=20, loc="left")
+    plt.title("Gross Debt Per Household, 2000-2054", fontsize=18, fontweight="bold", pad=20, loc="left")
     plt.xlabel("")
     # Add annotations
     current = data[data.Year == 2023]
@@ -688,7 +688,7 @@ def main():
     last_debt = last["Gross Debt per Household"].values[0]
     plt.annotate(f"Projected, {last_year} : ${last_debt/1000:,.2f} million per household",
                     xy=(last_year, last_debt), 
-                    xytext=(2020, 1000), fontsize=12, color=hunter, fontweight="bold",
+                    xytext=(2025, 1000), fontsize=12, color=hunter, fontweight="bold",
                     arrowprops=dict(arrowstyle="-", color=hunter, lw=1.5))
 
     plt.gca().yaxis.set_major_formatter(ticker.StrMethodFormatter("${x:,.0f}K"))
