@@ -616,7 +616,7 @@ def main():
     plt.rcParams['font.family'] = 'Playfair Display'
     sns.lineplot(data=chart_data, x=chart_data.index, y="New Capital Orders YoY", color=emerald, linewidth=3.5)
 
-    plt.title(f"New Orders for Nondefense Capital Goods Excluding Aircraft Since {chart_data.iloc[0].name.strftime("%B %Y")}", 
+    plt.title(f"""New Orders for Nondefense Capital Goods Excluding Aircraft Since {chart_data.iloc[0].name.strftime("%B %Y")}""", 
             fontsize=18, fontweight='bold', loc="left", pad=15)
     # Add a vertical line at a specific date
     line_date = pd.Timestamp("2022-02-01")
