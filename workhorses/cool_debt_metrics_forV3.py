@@ -213,7 +213,7 @@ def main():
     ax = sns.lineplot(x='date', y='Mortgage Rate', data=mortgage_rate, linewidth=3, color=emerald)
     plt.title('30 Year Fixed Mortgage Rate Since January 2021', fontsize=18, fontweight='bold', color="black", loc="left")
     plt.xlabel('')
-    ax.xaxis.set_major_locator(mdates.MonthLocator(interval=5))
+    #ax.xaxis.set_major_locator(mdates.MonthLocator(interval=5))
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))
     plt.ylabel('Mortgage Rate (%)')
     plt.grid(axis='y', alpha=0.3)
@@ -342,7 +342,7 @@ def main():
     plt.ylabel('Debt Increase per Second')
     plt.grid(axis='y', alpha=0.3)
     sns.despine()
-    plt.savefig(temp_dir+"/debt_increase.png", dpi=900, bbox_inches='tight')
+    plt.savefig(temp_dir+"/debt_increase.png", dpi=600, bbox_inches='tight')
 
 
     #### ---- CBO Projections ---- ####
@@ -661,7 +661,7 @@ def main():
     household_html = f"""
     <ul>
         <li> In {current_year}, the gross federal debt per household was <b>${current:,.0f} thousand</b>.</li>
-        <li> By {str(projected_year)}, the gross federal debt per household is projected to be <b>${projected/1000:,.0f} million</b>.</li>
+        <li> By {int(projected_year)}, the gross federal debt per household is projected to be <b>${projected/1000:,.0f} million</b>.</li>
     </ul>
     """
     ## -- Plot -- ##
