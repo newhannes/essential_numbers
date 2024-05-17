@@ -1,29 +1,37 @@
 ###### ------------------ STATIC MAIN FILE, PRODUCES HTML AND PDFS ------------------ ######
 import streamlit as st
-import workhorses.cool_debt_metrics_forV3 as cdm
+#import workhorses.cool_debt_metrics_forV3 as cdm
 from workhorses.debt_tracker import debt_tracker_main
+from workhorses.cool_debt_metrics_forV3 import main as cdm_main
+from workhorses.cool_debt_metrics_forV3 import get_fred_data
 import pdfkit
 import streamlit.components.v1 as components
 import shutil
 import importlib
 from datetime import datetime
-#cdm = importlib.import_module("static_debt_tracker.static_cool_debt_metrics")
+import streamlit as st
+from full_fred.fred import Fred
+import pandas as pd
+FRED_API_KEY = st.secrets["FRED_API_KEY"]
+fred = Fred()
 
+#### ---- FETCH DATA FROM THE WORKHORSES ---- ####
 dt = debt_tracker_main()
+temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, html_credit_card, new_orders_html, cdm_today = cdm_main()
 if dt['today'] != datetime.today().strftime('%Y-%m-%d'):
     with st.spinner("Updating Debt Tracker..."):
         debt_tracker_main.clear()
         dt = debt_tracker_main()
-if cdm.today != datetime.today().strftime('%Y-%m-%d'):
+if cdm_today != datetime.today().strftime('%Y-%m-%d'):
     with st.spinner("Updating Cool Debt Metrics..."):
-        cdm = importlib.import_module("workhorses.cool_debt_metrics_forV3")
-
+        cdm_main.clear()
+        temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, html_credit_card, new_orders_html, cdm_today = cdm_main()
 
 
 #write the house budget header from inputs/HBR_Logo_Primary.png to the temp directory
 # Define the source and destination paths
 source_path = 'inputs/HBR_Logo_Primary.png'
-destination_path = cdm.temp_dir + '/HBR_Logo_Primary.png'
+destination_path = temp_dir + '/HBR_Logo_Primary.png'
 
 # Copy the file
 shutil.copy(source_path, destination_path)
@@ -38,7 +46,7 @@ basic_debt_html = f"""
                         <strong>${dt['debt_per_household']:,}</strong> per household <br/>
                         <strong>${dt['debt_per_child']:,}</strong> per child
                 </ul>
-                <img src={cdm.temp_dir+"/debt_timeline.png"} align = "middle">
+                <img src={temp_dir+"/debt_timeline.png"} align = "middle">
                 <h2>Debt Accumulation under President Biden</h2>
                 <div>
                         <p>When President Biden took office total gross debt was <strong>${dt['biden_start_debt_rounded']:,} trillion</strong>, meaning he has increased the national debt by <strong>${dt['biden_debt_rounded']:,} trillion</strong>. This equates to:</p>
@@ -57,10 +65,10 @@ basic_debt_html = f"""
                         </ul>
                 </div>
                 <div>
-                <p>{cdm.comparison_html}</p>
+                <p>{comparison_html}</p>
                 </div>
                 
-                <img src={cdm.temp_dir+"/budget_comparison.png"}>
+                <img src={temp_dir+"/budget_comparison.png"}>
                 
 
                 <h2>Debt Accumulation in Past Year</h2>
@@ -74,9 +82,9 @@ basic_debt_html = f"""
                 </ul>
                 </div>
                 <div>
-                <p>{cdm.rate_increase_html}</p>
+                <p>{rate_increase_html}</p>
                 </div>
-                <img src={cdm.temp_dir+"/debt_increase.png"}>
+                <img src={temp_dir+"/debt_increase.png"}>
         </div>
 </div>
 """
@@ -87,7 +95,7 @@ html = f"""
 <html>
 <head>
     <center>
-        <img src={cdm.temp_dir + "/HBR_Logo_Primary.png"} width="500" align = "middle">
+        <img src={temp_dir + "/HBR_Logo_Primary.png"} width="500" align = "middle">
     </center> 
     <title>Debt Tracker</title>
     <style>
@@ -137,15 +145,15 @@ html = f"""
     <div class="container">
         <div class="content">
             <h2>Debt to Wages</h2>
-            <p>{cdm.text_debt_to_wages}</p>
-            <img src={cdm.temp_dir+"/debt_to_wages.png"}>
+            <p>{text_debt_to_wages}</p>
+            <img src={temp_dir+"/debt_to_wages.png"}>
             <br> </br>
             <h2>GDP Growth vs Debt Growth</h2>
-            <p>{cdm.text_gdp_debt}</p>
-            <img src={cdm.temp_dir+"/gdp_debt.png"}>
+            <p>{text_gdp_debt}</p>
+            <img src={temp_dir+"/gdp_debt.png"}>
             <h2>Debt to Federal Assets</h2>
-            <p>{cdm.text_debt_to_assets}</p>
-            <img src={cdm.temp_dir+"/debt_to_assets.png"}>
+            <p>{text_debt_to_assets}</p>
+            <img src={temp_dir+"/debt_to_assets.png"}>
         </div>
     </div>
     <div class="header">
@@ -154,11 +162,14 @@ html = f"""
     <div class="container">
         <div class="content">
             <h2>Mortgage Rates</h2>
-            <p>{cdm.text_mortgage_rate}</p>
-            <img src={cdm.temp_dir+"/mortgage_rate.png"}>
+            <p>{text_mortgage_rate}</p>
+            <img src={temp_dir+"/mortgage_rate.png"}>
             <h2>Credit Cards</h2>
-            <p>{cdm.html_credit_card}</p>
-            <img src={cdm.temp_dir+"/credit_card.png"}>
+            <p>{html_credit_card}</p>
+            <img src={temp_dir+"/credit_card.png"}>
+            <h2>Capital Investments</h2>
+            <p>{new_orders_html}</p>
+            <img src={temp_dir+"/new_orders.png"}>
         </div>
     </div>
     <div class="header">
@@ -167,8 +178,8 @@ html = f"""
     <div class="container">
         <div class="content">
         <h2>CBO Projections</h2>
-            <p>{cdm.random_html}</p>
-            <img src={cdm.temp_dir+"/cbo_projections.png"}>
+            <p>{random_html}</p>
+            <img src={temp_dir+"/cbo_projections.png"}>
         </div>
     </div>
 
@@ -183,10 +194,10 @@ pdf = pdfkit.from_string(html, False, options={"enable-local-file-access": ""})
 st.download_button(
     "⬇️ Download PDF",
     data=pdf,
-    file_name=f"Debt Tracking Report {cdm.today}.pdf",
+    file_name=f"Debt Tracking Report {cdm_today}.pdf",
     mime="application/octet-stream"
 )
 
 
-st.image(cdm.temp_dir + "/HBR_Logo_Primary.png")
+st.image(temp_dir + "/HBR_Logo_Primary.png")
 st.markdown("<h1 style='text-align: center;'>Debt Tracker V3</h1>", unsafe_allow_html=True)

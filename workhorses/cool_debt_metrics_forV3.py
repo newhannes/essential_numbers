@@ -15,6 +15,7 @@ def get_fred_data(series_id, nickname, start_date=None, end_date=None, frequency
         if to_float:
             data[nickname] = data[nickname].replace('.', float('nan')).astype(float, errors=errors)
         return data
+st.cache_data
 def main():
     import matplotlib.pyplot as plt
     import seaborn as sns
@@ -559,8 +560,8 @@ def main():
 
     html_credit_card = f"""
     <ul>
-    <li>Before Biden took office the APR for credit cards was <b>{apr_before_biden:.2f}%</b> and the percentage of deliquent credit card accounts was <b>{before_biden_del:.2f}%</b>. </li> 
-    <li>Now, the APR is <b>{apr_current:.2f}%</b> and the percentage of deliquent credit card accounts is <b>{current_del:.2f}%</b>.</li>
+    <li>Before Biden took office the APR for credit cards was <b>{apr_before_biden:.2f}%</b> and the percentage of credit card accounts deliquent was <b>{before_biden_del:.2f}%</b>. </li> 
+    <li>Now, the APR is <b>{apr_current:.2f}%</b> and the percentage of credit card accounts deliquent is <b>{current_del:.2f}%</b>.</li>
     <li>The APR has increased by <b>{apr_current - apr_before_biden:.2f}</b> percentage points and the deliquency rate has increased by <b>{current_del - before_biden_del:.2f}</b> percentage points.</li>
     <li>Since {quarter_b4_biden.year} there are <b>{current_del_acc - before_biden_del_acc:.1f} million</b> more deliquent credit card accounts.</li>
     </ul>
@@ -583,10 +584,63 @@ def main():
     plt.savefig(temp_dir+"/credit_card.png", dpi=900, bbox_inches='tight')
 
 
+    #### ---- Manufacturers New Orders ---- ####
+    # MARK: NEW ORDERS
+    ### --- Query FRED API for Data --- ###
+    start = "1974-01-01"
+    # Manufacturers' New Orders: Nondefense Capital Goods Excluding Aircraft
+    new_orders = get_fred_data("NEWORDER", "New Capital Orders", start_date=start, to_datetime=True, to_numeric=True, yoy=True)
+    new_orders.set_index("date", inplace=True)
+    new_orders.dropna(inplace=True)
+    ### --- Textual Analysis --- ###
+    current = new_orders.iloc[-1]
+    #dollars = current["New Capital Orders"]
+    yoy = current["New Capital Orders YoY"]
+    before_biden = new_orders.loc["2021-01-01"]
+    yoy_bb = before_biden["New Capital Orders YoY"]
+    #dollars_bb = before_biden["New Capital Orders"]
+    past_yr_avg = new_orders.iloc[-12:]["New Capital Orders YoY"].mean()
+
+    new_orders_html = f"""
+    <ul>
+        <li> When Biden took office in January 2021, annual growth in new capital investments was <strong>{yoy_bb}%</strong>. </li>
+        <li> Now, annual growth in new capital investments is <strong>{yoy}%</strong>. </li>
+        <li> Over the past year, annual growth in new capital investments has averaged <strong>{past_yr_avg}%</strong>. </li>
+    </ul>
+    """
+    ### --- Chart Time --- ###
+    # Chart Data
+    chart_data = new_orders.loc["2021-01-01":]
+    plt.figure(figsize=(12, 4))
+    sns.set_style("white")
+    plt.rcParams['font.family'] = 'Playfair Display'
+    sns.lineplot(data=chart_data, x=chart_data.index, y="New Capital Orders YoY", color=emerald, linewidth=3.5)
+
+    plt.title(f"New Orders for Nondefense Capital Goods Excluding Aircraft Since {chart_data.iloc[0].name.strftime("%B %Y")}", 
+            fontsize=18, fontweight='bold', loc="left", pad=15)
+    # Add a vertical line at a specific date
+    line_date = pd.Timestamp("2022-02-01")
+    plt.axvline(line_date, color=gold, linestyle="-", linewidth=2.5)
+
+    # Add a label to the vertical line
+    plt.annotate('Fed begins rate hikes', xy=(line_date, 0), xytext=(-100, 190), textcoords='offset points')
+
+    plt.ylabel("Annual Growth")
+    plt.gca().yaxis.set_major_formatter(ticker.StrMethodFormatter("{x:.0f}%"))
+    plt.xlabel("")
+    plt.xticks()
+    plt.grid(axis="y", alpha=0.3)
+    #Show the x axis as Month and Year
+    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%b %Y"))
+    sns.despine()
+    plt.savefig(temp_dir+"/new_orders.png", dpi=900, bbox_inches='tight')
+
+
+
     # ---- RETURN ---- #
-    return temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, html_credit_card, today
+    return temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, html_credit_card, new_orders_html, today
 
 
 ###### -------- RUN THE SCRIPT -------- ######
-temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, html_credit_card, today = main()
+temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, html_credit_card, new_orders_html, today = main()
 print("Cool Debt Metrics script complete.")
