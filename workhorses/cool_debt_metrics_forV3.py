@@ -5,16 +5,21 @@ import pandas as pd
 FRED_API_KEY = st.secrets["FRED_API_KEY"]
 fred = Fred()
 st.cache_data
-def get_fred_data(series_id, nickname, start_date=None, end_date=None, frequency=None, units=None, to_datetime=False, to_numeric=False, to_float=False, errors="raise"):
-        data = fred.get_series_df(series_id, observation_start=start_date, observation_end=end_date, frequency=frequency, units=units)
-        data = data.drop(columns=['realtime_start', 'realtime_end']).rename(columns={'value': nickname})
-        if to_datetime:
-            data["date"] = pd.to_datetime(data['date'])
-        if to_numeric:
-            data[nickname] = pd.to_numeric(data[nickname], errors=errors)
-        if to_float:
-            data[nickname] = data[nickname].replace('.', float('nan')).astype(float, errors=errors)
-        return data
+def get_fred_data(series_id, nickname, start_date=None, end_date=None, frequency=None, units=None, to_datetime=False, to_numeric=False, to_float=False, errors="raise", yoy=False, mom=False):
+    data = fred.get_series_df(series_id, observation_start=start_date, observation_end=end_date, frequency=frequency, units=units)
+    data = data.drop(columns=['realtime_start', 'realtime_end']).rename(columns={'value': nickname})
+    if to_datetime:
+        data["date"] = pd.to_datetime(data['date'])
+    if to_numeric:
+        data[nickname] = pd.to_numeric(data[nickname], errors=errors)
+    if to_float:
+        data[nickname] = data[nickname].replace('.', float('nan')).astype(float, errors=errors)
+    if yoy:
+        data[f"{nickname} YoY"] = round(data[nickname].pct_change(periods=12) * 100, 1)
+    if mom:
+        data[f"{nickname} MoM"] = round(data[nickname].pct_change() * 100, 1)
+    return data
+
 st.cache_data
 def main():
     import matplotlib.pyplot as plt
