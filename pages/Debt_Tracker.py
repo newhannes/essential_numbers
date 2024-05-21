@@ -70,6 +70,9 @@ basic_debt_html = f"""
 """
 st.markdown(basic_debt_html, unsafe_allow_html=True)
 
+
+to_replace = f"""<h1 style='text-align: center;'>Debt Tracker</h1>
+<h3 style='text-align: center;'> As of {today_string}</h3>"""
 html_for_pdf = f"""
 <!DOCTYPE html>
 <html>
@@ -110,13 +113,18 @@ html_for_pdf = f"""
     <center>
         <img src={temp_dir + "/HBR_Logo_Primary.png"} width="500" align = "middle">
     </center> 
-        {basic_debt_html}
+    <div class="header">
+    <h1>Debt Tracker</h1>
+    <h3 style='text-align: center;'> As of {today_string}</h3>
+    </div>
+        {basic_debt_html.replace(to_replace, "")}
 </html>
 """
 # Convert the HTML file to a PDF
 pdf = pdfkit.from_string(html_for_pdf, False, options={"enable-local-file-access": ""})
 
 # Add a button to download the PDF
+
 st.download_button(
     "⬇️ Download PDF",
     data=pdf,
