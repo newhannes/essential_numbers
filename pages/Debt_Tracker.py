@@ -68,6 +68,8 @@ basic_debt_html = f"""
     </div>
 </div>
 """
+
+st.image(temp_dir + '/HBR_Logo_Primary.png')
 st.markdown(basic_debt_html, unsafe_allow_html=True)
 
 
