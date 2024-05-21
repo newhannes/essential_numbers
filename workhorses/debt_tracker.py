@@ -1,17 +1,15 @@
 import streamlit as st
+import pandas as pd
+from datetime import date
+import requests
+from full_fred.fred import Fred
 #### GET DEBT ####
+
 @st.cache_data
 def debt_tracker_main():
-    import pandas as pd
-    from datetime import date
-    import requests
-    from full_fred.fred import Fred
-    
-
+    ### SETUP ###
     FRED_API_KEY = st.secrets["FRED_API_KEY"]
     fred = Fred()
-
-    ### SETUP ###
     today = date.today()
     biden_start = date(2021,1,20)
     biden_start_str = '2021-01-20'

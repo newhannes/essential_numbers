@@ -1,34 +1,29 @@
 ###### ------------------ STATIC MAIN FILE, PRODUCES HTML AND PDFS ------------------ ######
 import streamlit as st
-#import workhorses.cool_debt_metrics_forV3 as cdm
 from workhorses.debt_tracker import debt_tracker_main
 from workhorses.cool_debt_metrics_forV3 import main as cdm_main
-from workhorses.cool_debt_metrics_forV3 import get_fred_data
 import pdfkit
-import streamlit.components.v1 as components
 import shutil
-import importlib
 from datetime import datetime
-import streamlit as st
-from full_fred.fred import Fred
-import pandas as pd
-FRED_API_KEY = st.secrets["FRED_API_KEY"]
-fred = Fred()
 
 #### ---- FETCH DATA FROM THE WORKHORSES ---- ####
 with st.spinner("Running Debt Tracker..."):
     dt = debt_tracker_main()
+    st.session_state.dt_today = dt['today']
 with st.spinner("Running Cool Debt Metrics..."):
     temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, html_credit_card, new_orders_html, household_html, cdm_today = cdm_main()
-if dt['today'] != datetime.today().strftime('%Y-%m-%d'):
+    st.session_state.cdm_today = cdm_today
+
+if st.session_state.dt_today != datetime.today():
     with st.spinner("Updating Debt Tracker..."):
         debt_tracker_main.clear()
         dt = debt_tracker_main()
-if cdm_today != datetime.today().strftime('%Y-%m-%d'):
+        st.session_state.dt_today = dt['today']
+if st.session_state.cdm_today != datetime.today():
     with st.spinner("Updating Cool Debt Metrics..."):
         cdm_main.clear()
         temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, html_credit_card, new_orders_html, household_html, cdm_today = cdm_main()
-
+        st.session_state.cdm_today = cdm_today
 
 #write the house budget header from inputs/HBR_Logo_Primary.png to the temp directory
 # Define the source and destination paths

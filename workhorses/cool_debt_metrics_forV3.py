@@ -1,10 +1,20 @@
 ##### ------------ COOL DEBT METRICS STATIC ------------ #####
 # MARK: # COOL DEBT METRICS #
 import streamlit as st
+import matplotlib.pyplot as plt
+import seaborn as sns
+import matplotlib.dates as mdates
+from matplotlib import ticker
+from datetime import date
+from datetime import datetime
+import requests 
+import json
+import tempfile
 from full_fred.fred import Fred
 import pandas as pd
 FRED_API_KEY = st.secrets["FRED_API_KEY"]
 fred = Fred()
+
 st.cache_data
 def get_fred_data(series_id, nickname, start_date=None, end_date=None, frequency=None, units=None, to_datetime=False, to_numeric=False, to_float=False, errors="raise", yoy=False, mom=False):
     data = fred.get_series_df(series_id, observation_start=start_date, observation_end=end_date, frequency=frequency, units=units)
@@ -23,19 +33,8 @@ def get_fred_data(series_id, nickname, start_date=None, end_date=None, frequency
 
 st.cache_data
 def main():
-    import matplotlib.pyplot as plt
-    import seaborn as sns
-    import matplotlib.dates as mdates
-    from matplotlib import ticker
-    from datetime import date
-    from datetime import datetime
-    import requests 
-    import json
-    import tempfile
-    FRED_API_KEY = st.secrets["FRED_API_KEY"]
     BLS_API_KEY = st.secrets["BLS_API_KEY"]
-    fred = Fred()
-    today = date.today().strftime("%Y-%m-%d")
+    today = date.today()
     gold = "#967D4A"
     jade = "#84AE95"
     emerald = "#004647"
@@ -601,6 +600,7 @@ def main():
     plt.ylabel("APR")
     # Formatting 
     #plt.xticks(chart_data["date"][::4])
+    plt.ylim(0, apr['APR'].max()*1.1) # make axis zero-bound
     plt.gca().yaxis.set_major_formatter(ticker.PercentFormatter(decimals=0))
     plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))
     plt.grid(axis='y', alpha=0.3)
