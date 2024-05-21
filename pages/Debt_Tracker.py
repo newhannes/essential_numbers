@@ -53,7 +53,7 @@ today_string = day_string_formatter(dt['today'])
 
         
 basic_debt_html = f"""
-<img src={'inputs/HBR_Logo_Primary.png'} width="500" align = "middle">
+<img src={'../inputs/HBR_Logo_Primary.png'} width="500" align = "middle">
 <h1 style='text-align: center; color: black;'>Debt Tracker</h1>
 <h3 style='text-align: center; color: black;'> As of {today_string}</h3>
 <div class="container">
