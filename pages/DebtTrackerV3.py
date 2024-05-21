@@ -16,8 +16,10 @@ FRED_API_KEY = st.secrets["FRED_API_KEY"]
 fred = Fred()
 
 #### ---- FETCH DATA FROM THE WORKHORSES ---- ####
-dt = debt_tracker_main()
-temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, html_credit_card, new_orders_html, household_html, cdm_today = cdm_main()
+with st.spinner("Running Debt Tracker..."):
+    dt = debt_tracker_main()
+with st.spinner("Running Cool Debt Metrics..."):
+    temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, html_credit_card, new_orders_html, household_html, cdm_today = cdm_main()
 if dt['today'] != datetime.today().strftime('%Y-%m-%d'):
     with st.spinner("Updating Debt Tracker..."):
         debt_tracker_main.clear()

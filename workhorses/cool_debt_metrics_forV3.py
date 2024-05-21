@@ -1,5 +1,5 @@
 ##### ------------ COOL DEBT METRICS STATIC ------------ #####
-# MARK: ##COOL DEBT METRICS##
+# MARK: # COOL DEBT METRICS #
 import streamlit as st
 from full_fred.fred import Fred
 import pandas as pd
@@ -76,20 +76,22 @@ def main():
     </ul>
     """
 
-    ## DEBT TO ASSETS PLOT ##
     ## --- Chart Time --- ##
+    # Set up
     sns.set_style("white")
     plt.rcParams["font.family"] = "Playfair Display"
-
-    # Create the plot
     plt.figure(figsize=(12, 4))
+    # Plot
     ax = sns.lineplot(x='date_total_debt', y='debt_to_assets', data=debt_to_assets, linewidth=3, color=emerald)
-    # Set the title and labels
+    # Labels
     plt.title(f'Ratio of Gross Debt to Federal Assets Since {startdate[:4]}', fontsize=18, loc="left", fontweight='bold', color="black")
     plt.xlabel('')
     plt.ylabel("Ratio")
+    # Formatting
+    plt.ylim(0, debt_to_assets['debt_to_assets'].max()*1.1) # make axis zero-bound
     plt.grid(axis="y", alpha=0.3)
     sns.despine()
+    # Show/Save
     plt.savefig(temp_dir+"/debt_to_assets.png", dpi=900, bbox_inches='tight')
 
 
@@ -162,16 +164,22 @@ def main():
     </ul>
     """
     ### --- Plot --- ###
+    # Set up
     sns.set_style("white")
     plt.rcParams["font.family"] = "Playfair Display"
     plt.figure(figsize=(12, 4))
+    # Plot
     sns.lineplot(x='year', y='debt_to_wages', data=debt_to_wage, linewidth=3, color=emerald)
+    # Labels
     plt.title(f'Ratio of Gross Debt to Total Wages Since {earliest_year}', fontsize=18, fontweight='bold', color="black", loc="left")
     plt.xlabel('')
-    plt.xticks(debt_to_wage['year'][::4])
     plt.ylabel('Debt to Wages')
-    sns.despine()
+    # Formatting
+    plt.ylim(0, debt_to_wage['debt_to_wages'].max()*1.1) # make axis zero-bound
+    plt.xticks(debt_to_wage['year'][::4])
     plt.grid(axis='y', alpha=0.3)
+    sns.despine()
+    # Show/Save
     plt.savefig(temp_dir+"/debt_to_wages.png", dpi=900, bbox_inches='tight')
 
 
@@ -206,18 +214,24 @@ def main():
     </ul>
     """
     ## -- Plot Time -- ##
+    # Set up
     mortgage_rate['date'] = pd.to_datetime(mortgage_rate['date'])
     sns.set_style("white")
     plt.rcParams["font.family"] = "Playfair Display"
     plt.figure(figsize=(12, 4))
+    # Plot
     ax = sns.lineplot(x='date', y='Mortgage Rate', data=mortgage_rate, linewidth=3, color=emerald)
+    # Labels
     plt.title('30 Year Fixed Mortgage Rate Since January 2021', fontsize=18, fontweight='bold', color="black", loc="left")
     plt.xlabel('')
+    plt.ylabel('Mortgage Rate (%)')
+    # Formatting
     #ax.xaxis.set_major_locator(mdates.MonthLocator(interval=5))
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))
-    plt.ylabel('Mortgage Rate (%)')
+    plt.ylim(0, mortgage_rate['Mortgage Rate'].max()*1.1) # make axis zero-bound
     plt.grid(axis='y', alpha=0.3)
     sns.despine()
+    # Show/Save
     plt.savefig(temp_dir+"/mortgage_rate.png", dpi=900, bbox_inches='tight')
 
 
@@ -574,20 +588,24 @@ def main():
     </ul>
     """
     ### ---- Chart Time ---- ###
-    # Chart data
+    # Set up
     chart_data = apr.query("date >= @quarter_b4_biden")
     plt.figure(figsize=(12, 4))
     sns.set_style("white")
     plt.rcParams['font.family'] = "Playfair Display"
+    # Plot
     sns.lineplot(data=chart_data, x='date', y='APR', color=emerald, linewidth=3.5)
+    # Labels
+    plt.title(f"Credit Card Rates Since {chart_data['date'].iloc[0].strftime('%B %Y')}", fontsize=18, fontweight='bold', loc="left")
     plt.xlabel("")
     plt.ylabel("APR")
+    # Formatting 
     #plt.xticks(chart_data["date"][::4])
     plt.gca().yaxis.set_major_formatter(ticker.PercentFormatter(decimals=0))
     plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))
-    plt.title(f"Credit Card Rates Since {chart_data['date'].iloc[0].strftime('%B %Y')}", fontsize=18, fontweight='bold', loc="left")
     plt.grid(axis='y', alpha=0.3)
     sns.despine()
+    # Show/Save
     plt.savefig(temp_dir+"/credit_card.png", dpi=900, bbox_inches='tight')
 
 
