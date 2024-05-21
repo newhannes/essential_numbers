@@ -21,12 +21,12 @@ if dt['today'] != datetime.today():
 
 today_string = day_string_formatter(dt['today'])
 
-# # Create a temporary directory
-# temp_dir = tempfile.mkdtemp()
-# source_path = 'inputs/HBR_Logo_Primary.png'
-# destination_path = temp_dir + '/HBR_Logo_Primary.png'
-# # Copy the file
-# shutil.copy(source_path, destination_path)
+# Create a temporary directory
+temp_dir = tempfile.mkdtemp()
+source_path = 'inputs/HBR_Logo_Primary.png'
+destination_path = temp_dir + '/HBR_Logo_Primary.png'
+# Copy the file
+shutil.copy(source_path, destination_path)
 
 
 basic_debt_html = f"""
@@ -107,8 +107,9 @@ html_for_pdf = f"""
             margin-top: 20px;
         }}
     </style>
-    <h1 style='text-align: center; color: black;'>Debt Tracker</h1>
-        <h3 style='text-align: center; color: black;'> As of {today_string}</h3>
+    <center>
+        <img src={temp_dir + "/HBR_Logo_Primary.png"} width="500" align = "middle">
+    </center> 
         {basic_debt_html}
 </html>
 """
