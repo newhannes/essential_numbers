@@ -32,9 +32,40 @@ today_string = day_string_formatter(dt['today'])
 basic_debt_html = f"""
 <!DOCTYPE html>
 <html>
-<head>
-<img src="inputs/HBR_Logo_Primary.png" alt="House Budget Committee Logo" style="width: 100%; max-width: 300px; margin: 0 auto; display: block;">
-</head>
+    <style>
+        body {{
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }}
+        .container {{
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }}
+        .header {{
+            background-color: #004647;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }}
+        .content {{
+            background-color: white;
+            padding: 20px;
+            margin-top: 20px;
+        }}
+        .content h2 {{
+            color: #004647;
+        }}
+        .content p {{
+            color: #333;
+        }}
+        .content img {{
+            width: 100%;
+            margin-top: 20px;
+        }}
+    </style>
 <h1 style='text-align: center; color: black;'>Debt Tracker</h1>
 <h3 style='text-align: center; color: black;'> As of {today_string}</h3>
 <div class="container">
@@ -72,6 +103,7 @@ basic_debt_html = f"""
         </ul>
     </div>
 </div>
+</html>
 """
 st.markdown(basic_debt_html, unsafe_allow_html=True)
 
