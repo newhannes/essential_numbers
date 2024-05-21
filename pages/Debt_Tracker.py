@@ -9,9 +9,9 @@ if dt['today'] != datetime.today():
                 debt_tracker_main.clear()
                 dt = debt_tracker_main()
 
-
+today_string = dt['today'].strftime('%B %d, %Y')
 st.markdown("<h1 style='text-align: center; color: black;'>Debt Tracker</h1>", unsafe_allow_html=True)
-st.markdown(f"<h3 style='text-align: center; color: black;'> As of {dt['today'].strftime("%B %d, %Y")}</h3>", unsafe_allow_html=True)
+st.markdown(f"<h3 style='text-align: center; color: black;'> As of {today_string}</h3>", unsafe_allow_html=True)
 #st.write("In development.
 
 
