@@ -1,7 +1,7 @@
 import streamlit as st
 from workhorses.debt_tracker import debt_tracker_main
 from datetime import datetime
-
+import tempfile, shutil
 
 def day_string_formatter(date):
         day = int(date.strftime('%d'))
@@ -51,9 +51,17 @@ today_string = day_string_formatter(dt['today'])
 # st.markdown(f"- **${dt['last_year_debt_per_min']:,} million** in new debt per minute")
 # st.markdown(f"- **${dt['last_year_debt_per_sec']:,}** in new debt per second")
 
-        
+# Create a temporary directory
+temp_dir = tempfile.mkdtemp()
+source_path = 'inputs/HBR_Logo_Primary.png'
+destination_path = temp_dir + '/HBR_Logo_Primary.png'
+# Copy the file
+shutil.copy(source_path, destination_path)
+
+
+
 basic_debt_html = f"""
-<img src={'../inputs/HBR_Logo_Primary.png'} width="500" align = "middle">
+<img src={temp_dir + "/HBR_Logo_Primary.png"} width="500" align = "middle">
 <h1 style='text-align: center; color: black;'>Debt Tracker</h1>
 <h3 style='text-align: center; color: black;'> As of {today_string}</h3>
 <div class="container">
