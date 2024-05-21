@@ -111,7 +111,7 @@ html_for_pdf = f"""
         }}
     </style>
     
-    <img src={temp_dir + "/HBR_Logo_Primary.png"} align = "middle">
+    <img src={temp_dir + "/HBR_Logo_Primary.png"} width = 600 align = "middle">
     
     <div class="header">
     <h1>Debt Tracker</h1>
