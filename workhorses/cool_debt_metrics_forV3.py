@@ -411,7 +411,6 @@ def main():
     # MARK: GDP VS DEBT
     ## -- FRED GDP -- ##
     start = "2022-01-01"
-    today_quarter = quarter_dict[int(today[5:7])]
     gdp = fred.get_series_df("GDP", observation_start=start, observation_end=today).rename(columns={"value": "GDP"}).drop(columns=['realtime_start', 'realtime_end'])
     gdp['quarter'] = gdp['date'].apply(lambda x: f"{quarter_dict[int(x[5:7])]}")
     gdp['year'] = gdp['date'].apply(lambda x: x[:4])
