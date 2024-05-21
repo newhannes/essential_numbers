@@ -14,7 +14,7 @@ st.markdown("<h1 style='text-align: center; color: black;'>Debt Tracker</h1>", u
 st.markdown(f"<h3 style='text-align: center; color: black;'> As of {today_string}</h3>", unsafe_allow_html=True)
 
 # Current Debt
-st.markdown("<h2 style='text-align: center; color: black;'>Current Debt</h2>", unsafe_allow_html=True)
+st.markdown("<h2>Current Debt</h2>", unsafe_allow_html=True)
 st.write(f"The gross national debt is currently **${dt['current_debt_rounded']:,} trillion**. This equates to:")
 st.markdown(f""" - **\${dt['debt_per_person']:,}** per person""") 
 st.markdown(f"- **\${dt['debt_per_household']:,}** per household")
