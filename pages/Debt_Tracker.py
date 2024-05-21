@@ -107,12 +107,12 @@ html_for_pdf = f"""
         }}
         .content img {{
             width: 100%;
-            margin-top: 20px;
+            margin-top: 25px;
         }}
     </style>
-    <center>
-        <img src={temp_dir + "/HBR_Logo_Primary.png"} width="500" align = "middle">
-    </center> 
+    
+    <img src={temp_dir + "/HBR_Logo_Primary.png"} align = "middle">
+    
     <div class="header">
     <h1>Debt Tracker</h1>
     <h3 style='text-align: center;'> As of {today_string}</h3>
