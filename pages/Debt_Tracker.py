@@ -4,30 +4,27 @@ from workhorses.debt_tracker import debt_tracker_main
 from datetime import datetime
 
 dt = debt_tracker_main()
-if dt['today'] != datetime.today().strftime('%Y-%m-%d'):
+if dt['today'] != datetime.today():
         with st.spinner("Updating Debt Tracker..."):
                 debt_tracker_main.clear()
                 dt = debt_tracker_main()
 
 
 st.markdown("<h1 style='text-align: center; color: black;'>Debt Tracker</h1>", unsafe_allow_html=True)
-st.markdown(f"<h3 style='text-align: center; color: black;'> As of {dt['today']}</h3>", unsafe_allow_html=True)
+st.markdown(f"<h3 style='text-align: center; color: black;'> As of {dt['today'].strftime("%B %d, %Y")}</h3>", unsafe_allow_html=True)
 #st.write("In development.
 
 
 
 with st.columns(1)[0]:
         st.markdown("<h2 style='text-align: center; color: black;'>Current Debt</h2>", unsafe_allow_html=True)
-        cols1 = st.columns(2)
-        with cols1[0]:
-                st.write(f"The gross national debt is currently **${dt['current_debt_rounded']:,} trillion**. This equates to:")
-                st.markdown(f""" - **\${dt['debt_per_person']:,}** per person""") 
-                st.markdown(f"- **\${dt['debt_per_household']:,}** per household")
-                st.markdown(f"- **\${dt['debt_per_child']:,}** per child")
-                
-        #with cols1[1]:
-                #st.write("Debt is better understood in context of the economy. Comparing the historic debt to GDP ratio to our current and projected ratios shows the unprecedented nature of our current situation.")
-                #st.plotly_chart(debt_visuals.fig)
+        # cols1 = st.columns(2)
+        # with cols1[0]:
+        st.write(f"The gross national debt is currently **${dt['current_debt_rounded']:,} trillion**. This equates to:")
+        st.markdown(f""" - **\${dt['debt_per_person']:,}** per person""") 
+        st.markdown(f"- **\${dt['debt_per_household']:,}** per household")
+        st.markdown(f"- **\${dt['debt_per_child']:,}** per child")
+
 
 row2 = st.columns(1)
 with row2[0]:
@@ -41,6 +38,7 @@ with row2[0]:
                 st.markdown(f"- **${dt['biden_debt_per_child']:,}** more debt per child")
                 
                 st.write("The rate of debt accumulation during the Biden Administration has equaled:")
+                st.markdown(f"- **${dt['biden_debt_per_month']:,} billion** in new debt per month")
                 st.markdown(f"- **${dt['biden_debt_per_day_rounded']:,} billion** in new debt per day")
                 st.markdown(f"- **${dt['biden_debt_per_hour']:,} million** in new debt per hour")
                 st.markdown(f"- **${dt['biden_debt_per_min']:,} million** in new debt per minute")
@@ -57,6 +55,7 @@ with row3[0]:
                 #st.header('Debt Accumulation in Past Year')
                 st.write(f"""The debt one year ago was **\${dt['debt_year_ago_rounded']:,} trillion**, meaning that the debt has increased by **${dt['debt_increase_from_year_ago_rounded']:,} trillion**
                         over the past 12 months. This rate of increase equates to:""")
+                st.markdown(f"- **${dt['last_year_debt_per_month']:,} billion** in new debt per month")
                 st.markdown(f"- **${dt['last_year_debt_per_day_rounded']:,} billion** in new debt per day")
                 st.markdown(f"- **${dt['last_year_debt_per_hour']:,} million** in new debt per hour")
                 st.markdown(f"- **${dt['last_year_debt_per_min']:,} million** in new debt per minute")
