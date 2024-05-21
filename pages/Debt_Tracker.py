@@ -59,9 +59,8 @@ destination_path = temp_dir + '/HBR_Logo_Primary.png'
 shutil.copy(source_path, destination_path)
 
 
-st.image(temp_dir + "/HBR_Logo_Primary.png", width=500)
+st.image(source_path, width=500, )
 basic_debt_html = f"""
-<img src={temp_dir + "/HBR_Logo_Primary.png"} width="500" align = "middle">
 <h1 style='text-align: center; color: black;'>Debt Tracker</h1>
 <h3 style='text-align: center; color: black;'> As of {today_string}</h3>
 <div class="container">
