@@ -10,9 +10,7 @@ from datetime import datetime
 with st.spinner("Running Debt Tracker..."):
     dt = debt_tracker_main()
     st.session_state.dt_today = dt['today']
-#with st.spinner("Running Cool Debt Metrics..."):
-for i in range(101):
-    st.progress(i)    
+with st.spinner("Running Cool Debt Metrics..."):
     temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, html_credit_card, new_orders_html, household_html, cdm_today = cdm_main()
     st.session_state.cdm_today = cdm_today
 
