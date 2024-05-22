@@ -21,7 +21,7 @@ if st.session_state.dt_today != datetime.today():
         st.session_state.dt_today = dt['today']
 if st.session_state.cdm_today != datetime.today():
     with st.spinner("Updating Cool Debt Metrics..."):
-        cdm_main.clear()
+        #cdm_main.clear()
         temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, html_credit_card, new_orders_html, household_html, cdm_today = cdm_main()
         st.session_state.cdm_today = cdm_today
 

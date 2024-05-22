@@ -49,9 +49,11 @@ def main():
     # MARK: DEBT TO ASSETS
     ## --- Get Data from FRED --- ##
     # both are quarterly data 
-    startdate = "1966-01-01"
-    financial_assets = fred.get_series_df("FGTFASQ027S", observation_start=startdate, observation_end=today).rename(columns={"value": "Financial Assets"}).drop(columns=["realtime_start", "realtime_end"])
-    total_debt = fred.get_series_df("GFDEBTN", observation_start=startdate, observation_end=today).rename(columns={"value": "Total Debt"}).drop(columns=["realtime_start", "realtime_end"])
+    startdate = "1974-01-01"
+    #financial_assets = fred.get_series_df("FGTFASQ027S", observation_start=startdate, observation_end=today).rename(columns={"value": "Financial Assets"}).drop(columns=["realtime_start", "realtime_end"])
+    #total_debt = fred.get_series_df("GFDEBTN", observation_start=startdate, observation_end=today).rename(columns={"value": "Total Debt"}).drop(columns=["realtime_start", "realtime_end"])
+    financial_assets = get_fred_data("FGTFASQ027S", "Financial Assets", start_date=startdate)
+    total_debt = get_fred_data("GFDEBTN", "Total Debt", start_date=startdate)
     debt_to_assets = total_debt.join(financial_assets, how="inner",  lsuffix='_total_debt', rsuffix='_financial_assets')
     debt_to_assets[["Total Debt", "Financial Assets"]] = debt_to_assets[["Total Debt", "Financial Assets"]].apply(pd.to_numeric)
     debt_to_assets['debt_to_assets'] = debt_to_assets['Total Debt'] / debt_to_assets['Financial Assets']
@@ -102,7 +104,7 @@ def main():
     headers = {'Content-type': 'application/json'}
     startyear = "2004"
     endyear = "2023"
-
+    st.cache_data
     def bls_df(series, startyear, endyear):
         data = json.dumps({"seriesid": series, "startyear": startyear, "endyear": endyear, "catalog": True, "registrationkey": BLS_API_KEY, "annualaverage":True})
         p = requests.post("https://api.bls.gov/publicAPI/v2/timeseries/data/", data=data, headers=headers)
@@ -129,7 +131,8 @@ def main():
         df = pd.DataFrame(data)
         return df
     ### --- FRED DEBT per Year --- ###
-    annual_debt = fred.get_series_df("GFDEBTN", observation_start="2000-01-01", observation_end=today, frequency="a").drop(columns=['realtime_start', 'realtime_end']).rename(columns={"value": "Total Debt"})
+    #annual_debt = fred.get_series_df("GFDEBTN", observation_start="2000-01-01", observation_end=today, frequency="a").drop(columns=['realtime_start', 'realtime_end']).rename(columns={"value": "Total Debt"})
+    annual_debt = get_fred_data("GFDEBTN", "Total Debt", start_date="2000-01-01", frequency="a")
     annual_debt['Total Debt'] = annual_debt['Total Debt'].astype(float) * 1e6
     annual_debt['year'] = annual_debt['date'].str[:4]
     ### --- Retreieve and Clean BLS Data --- ###
@@ -185,10 +188,12 @@ def main():
     #### -------- MORTGAGE RATES/HOUSING PRICES SINCE JAN 2021 -------- ####
     # MARK: MORTGAGE
     ## -- FRED Data -- ##
-    mortgage_rate = fred.get_series_df("MORTGAGE30US", observation_start="2021-01-20").drop(columns={'realtime_start', 'realtime_end'}).rename(columns={"value": "Mortgage Rate"})
-    mortgage_rate['Mortgage Rate'] = mortgage_rate['Mortgage Rate'].astype(float)
-    median_sales = fred.get_series_df("MSPUS", observation_start="2021-01-20").drop(columns={'realtime_start', 'realtime_end'}).rename(columns={"value": "Median Sales Price"})
-    median_sales['Median Sales Price'] = median_sales['Median Sales Price'].astype(float)
+    #mortgage_rate = fred.get_series_df("MORTGAGE30US", observation_start="2021-01-20").drop(columns={'realtime_start', 'realtime_end'}).rename(columns={"value": "Mortgage Rate"})
+    #mortgage_rate['Mortgage Rate'] = mortgage_rate['Mortgage Rate'].astype(float)
+    mortgage_rate = get_fred_data("MORTGAGE30US", "Mortgage Rate", start_date="2021-01-20", to_float=True)
+    median_sales = get_fred_data("MSPUS", "Median Sales Price", start_date="2021-01-20", to_float=True)
+    #median_sales = fred.get_series_df("MSPUS", observation_start="2021-01-20").drop(columns={'realtime_start', 'realtime_end'}).rename(columns={"value": "Median Sales Price"})
+    #median_sales['Median Sales Price'] = median_sales['Median Sales Price'].astype(float)
     ## -- Textual Analysis -- ##
     average = mortgage_rate['Mortgage Rate'].mean()
     most_recent = mortgage_rate['Mortgage Rate'].iloc[-1]
@@ -243,23 +248,19 @@ def main():
     df_long = df.melt(id_vars='source', var_name='year', value_name='debt_gdp')
     df_long['debt_gdp'] = round(df_long['debt_gdp'] * 100)
     ## FRED Gross Debt to GDP ##
-    gross_debt_to_gdp = fred.get_series_df('GFDGDPA188S').drop(columns=['realtime_start', 'realtime_end'])
+    #gross_debt_to_gdp = fred.get_series_df('GFDGDPA188S').drop(columns=['realtime_start', 'realtime_end'])
+    gross_debt_to_gdp = get_fred_data('GFDGDPA188S', 'Gross Debt to GDP')
     gross_debt_to_gdp['date'] = gross_debt_to_gdp['date'].apply(lambda x: x[0:4])
     gross_debt_to_gdp['value'] = round(gross_debt_to_gdp['value'].astype(float))
     gross_debt_to_gdp = gross_debt_to_gdp.query('date >= "2000"')
     gross_debt_to_gdp = gross_debt_to_gdp.rename(columns={'date': 'year', 'value': 'debt_gdp'})
     gross_debt_to_gdp['source'] = "Actual"
 
-
-
     ## COMBINE DATA ##
     df = pd.concat([df_long, gross_debt_to_gdp], axis=0)
-
-
     historic_data_2023 = df[(df['year'] == "2023") & (df['source'] == 'Actual')]['debt_gdp'].values[0] # Get the 'Historic Data's 2023 debt_gdp value
     sources = df[df['source'] != 'Actual']['source'].unique() # Get the unique sources other than 'Historic Data'
     new_rows = [pd.DataFrame({'year': ["2023"], 'debt_gdp': [historic_data_2023], 'source': [source]}) for source in sources] # For each source, create a new row with the 'Historic Data's 2023 debt_gdp value
-
     df = pd.concat([df] + new_rows, ignore_index=True)
     df['year'] = pd.to_numeric(df['year'])
     df = df.sort_values(by='year')
@@ -272,7 +273,6 @@ def main():
     current = round(df.query(f"source == 'Actual' & year == {current_year}")["debt_gdp"].values[0])
     biden_latest = round(df.query(f"source == \"Biden's Budget\" & year == {latest_year}")['debt_gdp'].values[0])
     hbc_latest = round(df.query(f"source == 'HBC' & year == {latest_year}")['debt_gdp'].values[0])
-
     comparison_html = f"""
     Rather than address the rampant debt that exceeds the country's GDP by <b>{current}</b>% in {current_year}, President Biden's budget exacerbates this imbalance. The House Republican Budget offers a return to fiscal sanity.
     <ul>
@@ -280,16 +280,15 @@ def main():
         <li>Under the House Republican Budget, the gross debt to GDP ratio will be <b>{hbc_latest}%</b> in {latest_year}, a decrease of {abs(hbc_latest-current)} percentage points since {current_year}</li>
     </ul>
     """
+
     ## -- Plot Time -- ##
     colors = {'HBC': darker_emerald, 'Biden\'s Budget': gold, 'Actual': jade}
     sources = ["HBC", "Biden's Budget", "Actual"] # Get the unique sources
     # Set the style and font
     sns.set_style("white")
     plt.rcParams["font.family"] = "Playfair Display"
-
     # Create a new figure
     plt.figure(figsize=(12, 4))
-
     # For each source, add a trace to the figure
     for source in sources:
         df_source = df[df['source'] == source]
@@ -304,7 +303,6 @@ def main():
     plt.grid(axis='y', alpha=0.3)
     sns.despine()
     plt.savefig(temp_dir+"/budget_comparison.png", dpi=900, bbox_inches='tight')
-
 
 
     #### ---- RATE OF INCREASE ---- ####
@@ -361,7 +359,8 @@ def main():
     #### ---- CBO Projections ---- ####
     # MARK: CBO PROJECTIONS
     ### FRED Gross Debt to GDP ###
-    gross_debt_to_gdp = fred.get_series_df('GFDGDPA188S').drop(columns=['realtime_start', 'realtime_end'])
+    #gross_debt_to_gdp = fred.get_series_df('GFDGDPA188S').drop(columns=['realtime_start', 'realtime_end'])
+    gross_debt_to_gdp = get_fred_data('GFDGDPA188S', 'Gross Debt to GDP')
     gross_debt_to_gdp['date'] = gross_debt_to_gdp['date'].apply(lambda x: x[0:4])
     gross_debt_to_gdp['value'] = round(gross_debt_to_gdp['value'].astype(float))
     gross_debt_to_gdp = gross_debt_to_gdp.query('date > "1944"')
@@ -411,13 +410,15 @@ def main():
     # MARK: GDP VS DEBT
     ## -- FRED GDP -- ##
     start = "2022-01-01"
-    gdp = fred.get_series_df("GDP", observation_start=start, observation_end=today).rename(columns={"value": "GDP"}).drop(columns=['realtime_start', 'realtime_end'])
+    #gdp = fred.get_series_df("GDP", observation_start=start, observation_end=today).rename(columns={"value": "GDP"}).drop(columns=['realtime_start', 'realtime_end'])
+    gdp = get_fred_data("GDP", "GDP", start_date=start)
     gdp['quarter'] = gdp['date'].apply(lambda x: f"{quarter_dict[int(x[5:7])]}")
     gdp['year'] = gdp['date'].apply(lambda x: x[:4])
     gdp["GDP"] = gdp["GDP"].astype(float) * 1e9
     gdp = gdp.query("quarter == 'Q4'").drop(columns=['date', 'quarter'])
     ## -- FRED Debt -- ##
-    debt = fred.get_series_df("GFDEBTN", observation_start=start, observation_end=today).rename(columns={"value": "Debt"}).drop(columns=['realtime_start', 'realtime_end'])
+    #debt = fred.get_series_df("GFDEBTN", observation_start=start, observation_end=today).rename(columns={"value": "Debt"}).drop(columns=['realtime_start', 'realtime_end'])
+    debt = get_fred_data("GFDEBTN", "Debt", start_date=start)
     debt['quarter'] = debt['date'].apply(lambda x: f"{quarter_dict[int(x[5:7])]}")
     debt['year'] = debt['date'].apply(lambda x: x[:4])
     debt["Debt"] = debt["Debt"].astype(float) * 1e6
@@ -461,7 +462,8 @@ def main():
     ##### -------- Basic Debt Graph -------- ##### 
     ### --- FRED Data --- ###
     start_date = '2000-01-01'
-    working_df = fred.get_series_df('GFDEBTN', observation_start=start_date, observation_end=today, frequency="a").drop(columns=['realtime_start', 'realtime_end'])
+    #working_df = fred.get_series_df('GFDEBTN', observation_start=start_date, observation_end=today, frequency="a").drop(columns=['realtime_start', 'realtime_end'])
+    working_df = get_fred_data('GFDEBTN', 'Total Debt', start_date=start_date, frequency='a')
     working_df['value'] = pd.to_numeric(working_df['value'])
     working_df['date'] = pd.to_datetime(working_df['date'])
     working_df["value"] = working_df["value"] / 1e6 # Convert to trillions
