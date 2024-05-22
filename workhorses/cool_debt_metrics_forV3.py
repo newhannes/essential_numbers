@@ -251,9 +251,9 @@ def main():
     #gross_debt_to_gdp = fred.get_series_df('GFDGDPA188S').drop(columns=['realtime_start', 'realtime_end'])
     gross_debt_to_gdp = get_fred_data('GFDGDPA188S', 'Gross Debt to GDP')
     gross_debt_to_gdp['date'] = gross_debt_to_gdp['date'].apply(lambda x: x[0:4])
-    gross_debt_to_gdp['value'] = round(gross_debt_to_gdp['value'].astype(float))
+    gross_debt_to_gdp['Gross Debt to GDP'] = round(gross_debt_to_gdp['Gross Debt to GDP'].astype(float))
     gross_debt_to_gdp = gross_debt_to_gdp.query('date >= "2000"')
-    gross_debt_to_gdp = gross_debt_to_gdp.rename(columns={'date': 'year', 'value': 'debt_gdp'})
+    gross_debt_to_gdp = gross_debt_to_gdp.rename(columns={'date': 'year', 'Gross Debt to GDP': 'debt_gdp'})
     gross_debt_to_gdp['source'] = "Actual"
 
     ## COMBINE DATA ##
