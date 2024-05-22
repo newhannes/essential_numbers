@@ -360,7 +360,7 @@ def main():
     # MARK: CBO PROJECTIONS
     ### FRED Gross Debt to GDP ###
     #gross_debt_to_gdp = fred.get_series_df('GFDGDPA188S').drop(columns=['realtime_start', 'realtime_end'])
-    gross_debt_to_gdp = get_fred_data('GFDGDPA188S', 'Gross Debt to GDP')
+    gross_debt_to_gdp = get_fred_data('GFDGDPA188S', 'value')
     gross_debt_to_gdp['date'] = gross_debt_to_gdp['date'].apply(lambda x: x[0:4])
     gross_debt_to_gdp['value'] = round(gross_debt_to_gdp['value'].astype(float))
     gross_debt_to_gdp = gross_debt_to_gdp.query('date > "1944"')
