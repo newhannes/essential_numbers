@@ -197,6 +197,7 @@ def html_maker():
 if 'html' not in st.session_state:
     html = html_maker()
     st.session_state.html = html
+html = st.session_state.html
 # Convert the HTML string to a PDF
 pdf = pdfkit.from_string(html, False, options={"enable-local-file-access": ""})
 st.session_state.pdf = pdf
