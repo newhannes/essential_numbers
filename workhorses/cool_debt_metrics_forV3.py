@@ -104,7 +104,7 @@ def main():
     headers = {'Content-type': 'application/json'}
     startyear = "2004"
     endyear = "2023"
-    st.cache_data
+    #st.cache_data
     def bls_df(series, startyear, endyear):
         data = json.dumps({"seriesid": series, "startyear": startyear, "endyear": endyear, "catalog": True, "registrationkey": BLS_API_KEY, "annualaverage":True})
         p = requests.post("https://api.bls.gov/publicAPI/v2/timeseries/data/", data=data, headers=headers)
