@@ -10,20 +10,22 @@ from datetime import datetime
 with st.spinner("Running Debt Tracker..."):
     dt = debt_tracker_main()
     st.session_state.dt_today = dt['today']
-with st.spinner("Running Cool Debt Metrics..."):
+#with st.spinner("Running Cool Debt Metrics..."):
+for i in range(101):
+    st.progress(i)    
     temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, html_credit_card, new_orders_html, household_html, cdm_today = cdm_main()
     st.session_state.cdm_today = cdm_today
 
-if st.session_state.dt_today != datetime.today():
-    with st.spinner("Updating Debt Tracker..."):
-        debt_tracker_main.clear()
-        dt = debt_tracker_main()
-        st.session_state.dt_today = dt['today']
-if st.session_state.cdm_today != datetime.today():
-    with st.spinner("Updating Cool Debt Metrics..."):
+# if st.session_state.dt_today != datetime.today():
+#     with st.spinner("Updating Debt Tracker..."):
+#         debt_tracker_main.clear()
+#         dt = debt_tracker_main()
+#         st.session_state.dt_today = dt['today']
+#if st.session_state.cdm_today != datetime.today():
+#    with st.spinner("Updating Cool Debt Metrics..."):
         #cdm_main.clear()
-        temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, html_credit_card, new_orders_html, household_html, cdm_today = cdm_main()
-        st.session_state.cdm_today = cdm_today
+#        temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, html_credit_card, new_orders_html, household_html, cdm_today = cdm_main()
+#        st.session_state.cdm_today = cdm_today
 
 #write the house budget header from inputs/HBR_Logo_Primary.png to the temp directory
 # Define the source and destination paths
