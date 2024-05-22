@@ -463,7 +463,7 @@ def main():
     ### --- FRED Data --- ###
     start_date = '2000-01-01'
     #working_df = fred.get_series_df('GFDEBTN', observation_start=start_date, observation_end=today, frequency="a").drop(columns=['realtime_start', 'realtime_end'])
-    working_df = get_fred_data('GFDEBTN', 'Total Debt', start_date=start_date, frequency='a')
+    working_df = get_fred_data('GFDEBTN', 'value', start_date=start_date, frequency='a')
     working_df['value'] = pd.to_numeric(working_df['value'])
     working_df['date'] = pd.to_datetime(working_df['date'])
     working_df["value"] = working_df["value"] / 1e6 # Convert to trillions
