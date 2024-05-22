@@ -205,7 +205,7 @@ st.session_state.pdf = pdf
 st.download_button(
     "⬇️ Download PDF",
     data=pdf,
-    file_name=f"Debt Tracking Report {cdm_today}.pdf",
+    file_name=f"Debt Tracking Report {st.session_state.cdm_today}.pdf",
     mime="application/octet-stream"
 )
 
