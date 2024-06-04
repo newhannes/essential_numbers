@@ -1,6 +1,7 @@
 ##### ----- Automate the update of stats for JCA ----- #####
 import pandas as pd
 import os
+import shutil
 from functools import reduce
 import streamlit as st
 from workhorses.debt_tracker import debt_tracker_main
@@ -132,7 +133,6 @@ lowest_before_pandemic_date = lowest_before_pandemic.name.strftime("%B %Y")
 pop = get_fred_data("CNP16OV", "Population", start_date=start_date, to_numeric=True, to_datetime=True).set_index('date') #BLS pop, monthly
 precov_pop =  pop.loc["2020-02-01"].values[0]
 adjusted_pop = round(((precov_pop)*(abs(lbfr_change) /100) /1000), 2)
-
 # HTML
 labor_html = f"""
 <ul>
@@ -189,12 +189,19 @@ basic_debt_html = f"""
 
 
 #### ==== FINAL HTML ==== ####
+# Image path
+temp_dir = os.path.join(os.getcwd(), "temp")
+source_path = 'inputs/HBR_Logo_Primary.png'
+destination_path = temp_dir + '/HBR_Logo_Primary.png'
+# Copy the file
+shutil.copy(source_path, destination_path)
+
 final_html = f"""
 <!DOCTYPE html>
     <html>
     <head>
         <center>
-            <img src="../../inputs/HBR_Logo_Primary.png" width="500" align = "middle">
+            <img src="HBR_Logo_Primary.png" width="500" align = "middle">
         </center> 
         <title>JCA Quick Stats</title>
         <style>
