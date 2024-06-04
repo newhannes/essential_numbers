@@ -191,7 +191,7 @@ basic_debt_html = f"""
 #### ==== FINAL HTML ==== ####
 # Image path
 st.write(os.getcwd())
-
+st.write(os.listdir())
 final_html = f"""
 <!DOCTYPE html>
     <html>
