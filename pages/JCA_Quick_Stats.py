@@ -190,11 +190,7 @@ basic_debt_html = f"""
 
 #### ==== FINAL HTML ==== ####
 # Image path
-temp_dir = os.path.join(os.getcwd(), "temp")
-source_path = 'inputs/HBR_Logo_Primary.png'
-destination_path = temp_dir + '/HBR_Logo_Primary.png'
-# Copy the file
-shutil.copy(source_path, destination_path)
+st.write(os.getcwd())
 
 final_html = f"""
 <!DOCTYPE html>
