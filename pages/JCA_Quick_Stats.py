@@ -1,6 +1,7 @@
 ##### ----- Automate the update of stats for JCA ----- #####
 import pandas as pd
 import os
+os.chdir("/mount/src/essential_numbers")
 import shutil
 from functools import reduce
 import streamlit as st
