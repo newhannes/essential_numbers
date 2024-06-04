@@ -58,11 +58,11 @@ mon_kole_inc = kole_inc / 12
     ####more than how many student loan payments
 inflation_html = f"""
 <ul>
-    <li><b>Topline Inflation:</b> {topline}%</li>
-    <li><b>Core Inflation:</b> {core}%</li>
-    <li><b>Peak Pandemic Inflation (June-2022):</b> {peak_pandemic}%</li>
-    <li><b>Cumulative Inflation under Biden:</b> {biden_inflation}%</li>
-    <li><b>Inflation costs per month (family of four):</b> ${mon_kole_inc:,.0f}</li>
+    <li>Topline Inflation: <strong>{topline}%</strong></li>
+    <li>Core Inflation: <strong>{core}%</strong></li>
+    <li>Peak Pandemic Inflation (June-2022): <strong>{peak_pandemic}%</strong></li>
+    <li>Cumulative Inflation under Biden: <strong>{biden_inflation}%</strong></li>
+    <li>Inflation costs per month (family of four): <strong>${mon_kole_inc:,.0f}</strong></li>
 </ul>
 """
 
@@ -190,7 +190,47 @@ basic_debt_html = f"""
 
 #### ==== FINAL HTML ==== ####
 final_html = f"""
-<h1 style='text-align: center;'>JCA Quick Stats</h1>
+<!DOCTYPE html>
+    <html>
+    <head>
+        <center>
+            <img src="inputs/HBR_Logo_Primary.png" width="500" align = "middle">
+        </center> 
+        <title>JCA Quick Stats</title>
+        <style>
+            body {{
+                font-family: 'Montserrat', sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f7f7f7;
+            }}
+            .container {{
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+            }}
+            .header {{
+                background-color: #004647;
+                color: white;
+                padding: 20px;
+                text-align: center;
+            }}
+            .content {{
+                background-color: white;
+                padding: 20px;
+                margin-top: 20px;
+            }}
+            .content h2 {{
+                color: #004647;
+            }}
+            .content p {{
+                color: #333;
+            }}
+            .content img {{
+                width: 100%;
+                margin-top: 20px;
+            }}
+        </style>
 <h2 style='text-align: center;'>{date.today().strftime("%B %d, %Y")}</h2>
 <div class="container">
     <div class="content">
@@ -200,7 +240,6 @@ final_html = f"""
         {interest_html}
         <h2>Labor Market</h2>
         {labor_html}
-        <h2>Debt</h2>
         {basic_debt_html}
     </div>
 </div>
