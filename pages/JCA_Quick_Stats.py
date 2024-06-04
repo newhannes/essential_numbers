@@ -150,8 +150,6 @@ dt = debt_tracker_main()
 basic_debt_html = f"""
 <h1 style='text-align: center;'>Debt Tracker</h1>
 <h3 style='text-align: center;'> As of {dt['today']}</h3>
-<div class="container">
-    <div class="content">
         <h2>Current Debt</h2>
         <p>The gross national debt is currently <strong>${dt['current_debt_rounded']:,} trillion</strong>. This equates to:</p>
         <ul>
@@ -183,8 +181,6 @@ basic_debt_html = f"""
             <li><strong>${dt['last_year_debt_per_min']:,} million</strong> in new debt per minute</li>
             <li><strong>${dt['last_year_debt_per_sec']:,}</strong> in new debt per second</li>
         </ul>
-    </div>
-</div>
 """
 
 
