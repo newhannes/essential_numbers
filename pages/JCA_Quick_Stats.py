@@ -202,7 +202,7 @@ style = f"""
     <html>
     <head>
         <center>
-            <img src={image_path} align = "middle">
+            <img src={image_path} width = "70%" align = "middle">
         </center> 
         <title>JCA Quick Stats</title>
         <style>
@@ -235,7 +235,7 @@ style = f"""
                 color: #333;
             }}
             .content img {{
-                width: 80%;
+                width: 90%;
                 margin-top: 20px;
             }}
         </style>
