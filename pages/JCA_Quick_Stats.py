@@ -196,13 +196,14 @@ basic_debt_html = f"""
 # os.chdir("inputs")
 # st.write(os.getcwd())
 # st.write(os.listdir())
-st.image(os.getcwd() + "/inputs/" + "HBR_Logo_Primary.png")
+image_path = os.getcwd() + "/inputs/" + "HBR_Logo_Primary.png"
+st.image(image_path)
 final_html = f"""
 <!DOCTYPE html>
     <html>
     <head>
         <center>
-            <img src="HBR_Logo_Primary.png" width="500" align = "middle">
+            <img src={image_path} width="500" align = "middle">
         </center> 
         <title>JCA Quick Stats</title>
         <style>
