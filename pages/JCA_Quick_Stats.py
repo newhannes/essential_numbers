@@ -86,12 +86,12 @@ interest_30 = 5.4
 
 interest_html = f"""
 <ul>
-    <li><b>30-year Fixed Rate Mortgage:</b> {mortgage_rate}%</li>
-    <li><b>10-year Treasury Yield:</b> {treasury_10}%</li>
-    <li><b>Federal Funds Rate:</b> {fed_fun}%</li>
-    <li><b>Interest projections on debt now (2024):</b> ${interest_now} billion</li>
-    <li><b>Interest projections on the debt in 10 years:</b> ${interest_10} trillion</li>
-    <li><b>Interest projections on the debt in 30 years:</b> ${interest_30} trillion</li>
+    <li><b>30-year Fixed Rate Mortgage:</b> <strong>{mortgage_rate}%</strong></li>
+    <li><b>10-year Treasury Yield:</b> <strong>{treasury_10}%</strong></li>
+    <li><b>Federal Funds Rate:</b> <strong>{fed_fun}%</strong></li>
+    <li><b>Interest projections on debt now (2024):</b> <strong>${interest_now} billion</strong></li>
+    <li><b>Interest projections on the debt in 10 years:</b> <strong>${interest_10} trillion</strong></li>
+    <li><b>Interest projections on the debt in 30 years:</b> <strong>${interest_30} trillion</strong></li>
 </ul>
 """
 
@@ -136,12 +136,12 @@ adjusted_pop = round(((precov_pop)*(abs(lbfr_change) /100) /1000), 2)
 # HTML
 labor_html = f"""
 <ul>
-    <li>Unemployment Rate: {unemployment}%</li>
-    <li>Job Openings: {job_openings/1000:,.0f} million</li>
-    <li>Relative to when President Biden took office in January 2021, real earnings are down {real_earnings_biden}%.</li>
-    <li>Labor Force Participation Rate {current_lfpr_date}: {current_lfpr}%</li>
-    <li>This is {abs(lbfr_change):.2f} percentage points lower than the pre-pandemic rate of {pre_covid_lfpr}% in {lowest_before_pandemic_date}.</li>
-    <li>This equates to approximately {adjusted_pop} million fewer Americans in the labor force when adjusting for population gains.</li>
+    <li>Unemployment Rate: <strong>{unemployment}%</strong></li>
+    <li>Job Openings: <strong>{job_openings/1000:,.1f} million</strong></li>
+    <li>Relative to when President Biden took office in January 2021, real earnings are down <strong>{real_earnings_biden}%</strong>.</li>
+    <li>Labor Force Participation Rate {current_lfpr_date}: <strong>{current_lfpr}%</strong></li>
+    <li>This is <strong>{abs(lbfr_change):.2f} percentage points</strong> lower than the pre-pandemic rate of {pre_covid_lfpr}% in {lowest_before_pandemic_date}.</li>
+    <li>This equates to approximately <strong>{adjusted_pop} million</strong> fewer Americans in the labor force when adjusting for population gains.</li>
 </ul>
 """
 
@@ -194,7 +194,7 @@ final_html = f"""
     <html>
     <head>
         <center>
-            <img src=inputs/HBR_Logo_Primary.png width="500" align = "middle">
+            <img src="../inputs/HBR_Logo_Primary.png" width="500" align = "middle">
         </center> 
         <title>JCA Quick Stats</title>
         <style>
