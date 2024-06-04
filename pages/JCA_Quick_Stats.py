@@ -86,12 +86,12 @@ interest_30 = 5.4
 
 interest_html = f"""
 <ul>
-    <li><b>30-year Fixed Rate Mortgage:</b> <strong>{mortgage_rate}%</strong></li>
-    <li><b>10-year Treasury Yield:</b> <strong>{treasury_10}%</strong></li>
-    <li><b>Federal Funds Rate:</b> <strong>{fed_fun}%</strong></li>
-    <li><b>Interest projections on debt now (2024):</b> <strong>${interest_now} billion</strong></li>
-    <li><b>Interest projections on the debt in 10 years:</b> <strong>${interest_10} trillion</strong></li>
-    <li><b>Interest projections on the debt in 30 years:</b> <strong>${interest_30} trillion</strong></li>
+    <li>30-year Fixed Rate Mortgage: <strong>{mortgage_rate}%</strong></li>
+    <li>10-year Treasury Yield: <strong>{treasury_10}%</strong></li>
+    <li>Federal Funds Rate: <strong>{fed_fun}%</strong></li>
+    <li>Interest projections on debt now (2024): <strong>${interest_now} billion</strong></li>
+    <li>Interest projections on the debt in 10 years: <strong>${interest_10} trillion</strong></li>
+    <li>Interest projections on the debt in 30 years: <strong>${interest_30} trillion</strong></li>
 </ul>
 """
 
@@ -194,7 +194,7 @@ final_html = f"""
     <html>
     <head>
         <center>
-            <img src="../inputs/HBR_Logo_Primary.png" width="500" align = "middle">
+            <img src="../../inputs/HBR_Logo_Primary.png" width="500" align = "middle">
         </center> 
         <title>JCA Quick Stats</title>
         <style>
@@ -241,6 +241,7 @@ final_html = f"""
         {interest_html}
         <h2>Labor Market</h2>
         {labor_html}
+        <br> </br>
         {basic_debt_html}
     </div>
 </div>
