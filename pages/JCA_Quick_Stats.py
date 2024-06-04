@@ -200,7 +200,9 @@ style = f"""
         <center>
             <img src={image_path} width = "70%" align = "middle">
         </center> 
+        <div class="header">
         <title>JCA Quick Stats</title>
+        </div>
         <style>
             body {{
                 font-family: 'Montserrat', sans-serif;
