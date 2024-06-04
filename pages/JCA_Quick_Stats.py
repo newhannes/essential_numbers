@@ -7,7 +7,7 @@ from workhorses.debt_tracker import debt_tracker_main
 #FRED
 from full_fred.fred import Fred
 from datetime import date
-FRED_API_KEY =st.secrets["FRED_API_KET"]
+FRED_API_KEY =st.secrets["FRED_API_KEY"]
 fred = Fred()
 @st.cache_data
 def get_fred_data(series_id, nickname, start_date=None, end_date=None, frequency=None, units=None, to_datetime=False, to_numeric=False, to_float=False, errors="raise", yoy=False, mom=False):
