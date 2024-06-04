@@ -194,7 +194,7 @@ final_html = f"""
     <html>
     <head>
         <center>
-            <img src="inputs/HBR_Logo_Primary.png" width="500" align = "middle">
+            <img src=inputs/HBR_Logo_Primary.png width="500" align = "middle">
         </center> 
         <title>JCA Quick Stats</title>
         <style>
@@ -231,6 +231,7 @@ final_html = f"""
                 margin-top: 20px;
             }}
         </style>
+<h1 style='text-align: center;'>JCA Quick Stats</h1>
 <h2 style='text-align: center;'>{date.today().strftime("%B %d, %Y")}</h2>
 <div class="container">
     <div class="content">
