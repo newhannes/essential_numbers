@@ -200,9 +200,7 @@ style = f"""
         <center>
             <img src={image_path} width = "70%" align = "middle">
         </center> 
-        <div class="header">
         <title>JCA Quick Stats</title>
-        </div>
         <style>
             body {{
                 font-family: 'Montserrat', sans-serif;
@@ -240,8 +238,10 @@ style = f"""
 """ 
 final_html = f"""
 {style}
-<h1 style='text-align: center;'>JCA Quick Stats</h1>
-<h2 style='text-align: center;'>{date.today().strftime("%B %d, %Y")}</h2>
+<div class="header">
+    <h1 style='text-align: center;'>JCA Quick Stats</h1>
+    <h2 style='text-align: center;'>{date.today().strftime("%B %d, %Y")}</h2>
+</div>
 <div class="container">
     <div class="content">
         <h2>Inflation</h2>
