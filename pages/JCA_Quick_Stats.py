@@ -148,10 +148,8 @@ labor_html = f"""
 #### ===== DEBT ===== ####
 dt = debt_tracker_main()
 basic_debt_html = f"""
-<div class = "header">
 <h1 style='text-align: center;'>Debt Tracker</h1>
 <h3 style='text-align: center;'> As of {dt['today']}</h3>
-</div>
         <h2>Current Debt</h2>
         <p>The gross national debt is currently <strong>${dt['current_debt_rounded']:,} trillion</strong>. This equates to:</p>
         <ul>
