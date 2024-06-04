@@ -190,12 +190,12 @@ basic_debt_html = f"""
 
 #### ==== FINAL HTML ==== ####
 # Image path
-st.write(os.getcwd())
-st.write(os.listdir())
-os.chdir("inputs")
-st.write(os.getcwd())
-st.write(os.listdir())
-st.image("HBR_Logo_Primary.png")
+# st.write(os.getcwd())
+# st.write(os.listdir())
+# os.chdir("inputs")
+# st.write(os.getcwd())
+# st.write(os.listdir())
+st.image(os.getwd() + "/inputs/" + "HBR_Logo_Primary.png")
 final_html = f"""
 <!DOCTYPE html>
     <html>
