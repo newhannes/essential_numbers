@@ -7,6 +7,7 @@ show_pages(
         Page("pages/Debt_Tracker.py", "Debt Tracker"),
         Page("pages/Static_Debt_Tracker.py", "Static Debt Tracker"),
         Page("pages/DebtTrackerV3.py", "Debt Tracker V3"),
+        Page("pages/JCA_Quick_Stats.py", "JCA Favorites"),
         Page("pages/Labor_Data.py", "Employment and Wages"),
         Page("pages/Inflation.py", "Inflation"),
         Page("pages/About.py", "About")
