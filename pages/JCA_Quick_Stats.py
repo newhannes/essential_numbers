@@ -203,7 +203,7 @@ final_html = f"""
     <html>
     <head>
         <center>
-            <img src={image_path} width="500" align = "middle">
+            <img src={image_path} align = "middle">
         </center> 
         <title>JCA Quick Stats</title>
         <style>
@@ -250,7 +250,6 @@ final_html = f"""
         {interest_html}
         <h2>Labor Market</h2>
         {labor_html}
-        <br> </br>
         {basic_debt_html}
     </div>
 </div>
