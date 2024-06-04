@@ -257,10 +257,10 @@ final_html = f"""
 </div>
 """
 
-st.markdown(final_html, unsafe_allow_html=True)
+st.markdown(final_html.replace(style,""), unsafe_allow_html=True)
 
 import pdfkit
-pdf = pdfkit.from_string(final_html.replace(style,""), False, options={"enable-local-file-access": ""})
+pdf = pdfkit.from_string(final_html, False, options={"enable-local-file-access": ""})
 # Add a button to download the PDF
 st.download_button(
     "⬇️ Download PDF",
