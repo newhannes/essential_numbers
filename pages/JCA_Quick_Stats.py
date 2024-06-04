@@ -196,7 +196,7 @@ basic_debt_html = f"""
 # os.chdir("inputs")
 # st.write(os.getcwd())
 # st.write(os.listdir())
-st.image(os.getwd() + "/inputs/" + "HBR_Logo_Primary.png")
+st.image(os.getcwd() + "/inputs/" + "HBR_Logo_Primary.png")
 final_html = f"""
 <!DOCTYPE html>
     <html>
