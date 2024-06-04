@@ -1,7 +1,6 @@
 ##### ----- Automate the update of stats for JCA ----- #####
 import pandas as pd
 import os
-os.chdir("/mount/src/essential_numbers")
 import shutil
 from functools import reduce
 import streamlit as st
@@ -196,9 +195,9 @@ basic_debt_html = f"""
 # os.chdir("inputs")
 # st.write(os.getcwd())
 # st.write(os.listdir())
-image_path = os.getcwd() + "/inputs/" + "HBR_Logo_Primary.png"
+image_path = "/mount/src/essential_numbers/inputs/HBR_Logo_Primary.png"
 st.image(image_path)
-final_html = f"""
+style = f"""
 <!DOCTYPE html>
     <html>
     <head>
@@ -240,6 +239,9 @@ final_html = f"""
                 margin-top: 20px;
             }}
         </style>
+""" 
+final_html = f"""
+{style}
 <h1 style='text-align: center;'>JCA Quick Stats</h1>
 <h2 style='text-align: center;'>{date.today().strftime("%B %d, %Y")}</h2>
 <div class="container">
@@ -258,7 +260,7 @@ final_html = f"""
 st.markdown(final_html, unsafe_allow_html=True)
 
 import pdfkit
-pdf = pdfkit.from_string(final_html, False, options={"enable-local-file-access": ""})
+pdf = pdfkit.from_string(final_html.replace(style,""), False, options={"enable-local-file-access": ""})
 # Add a button to download the PDF
 st.download_button(
     "⬇️ Download PDF",
