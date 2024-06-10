@@ -127,7 +127,8 @@ current_lfpr_date = lfpr["LFPR"].index[-1].strftime("%B %Y")
 pre_covid_lfpr = lfpr.loc["2020-02-01", "LFPR"]
 lbfr_change = current_lfpr - pre_covid_lfpr
 #outside of the pandemic, when was the last time the LFPR was this low?
-lowest_before_pandemic = lfpr.query("date < '2020-01-01' & LFPR < @current_lfpr").iloc[-1]["LFPR"]
+lowest_before_pandemic = lfpr.query("date < '2020-01-01' & LFPR < @current_lfpr").iloc[-1]
+lowest_before_pandemic_val = lowest_before_pandemic["LFPR"]
 lowest_before_pandemic_date = lowest_before_pandemic.name.strftime("%B %Y")
 #adjusting for population gains, not totally sure how this works
 pop = get_fred_data("CNP16OV", "Population", start_date=start_date, to_numeric=True, to_datetime=True).set_index('date') #BLS pop, monthly
@@ -141,7 +142,7 @@ labor_html = f"""
     <li>Relative to when President Biden took office in January 2021, real earnings are down <strong>{real_earnings_biden}%</strong>.</li>
     <li>Labor Force Participation Rate {current_lfpr_date}: <strong>{current_lfpr}%</strong></li>
     <li>This is <strong>{abs(lbfr_change):.2f} percentage points</strong> lower than the pre-pandemic rate of {pre_covid_lfpr}% in February 2020.</li>
-    <li>Outside of the pandemic, this is the lowest level since <b>{lowest_before_pandemic_date}</b> which was <b>{lowest_before_pandemic}%</b></li>
+    <li>Outside of the pandemic, this is the lowest level since <b>{lowest_before_pandemic_date}</b> which was <b>{lowest_before_pandemic_val}%</b></li>
     <li>This equates to approximately <strong>{adjusted_pop} million</strong> fewer Americans in the labor force when adjusting for population gains.</li>
 </ul>
 """
