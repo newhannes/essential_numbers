@@ -142,8 +142,8 @@ labor_html = f"""
     <li>Relative to when President Biden took office in January 2021, real earnings are down <strong>{real_earnings_biden}%</strong>.</li>
     <li>Labor Force Participation Rate {current_lfpr_date}: <strong>{current_lfpr}%</strong></li>
     <li>This is <strong>{abs(lbfr_change):.2f} percentage points</strong> lower than the pre-pandemic rate of {pre_covid_lfpr}% in February 2020.</li>
-    <li>Outside of the pandemic, this is the lowest level since <b>{lowest_before_pandemic_date}</b> which was <b>{lowest_before_pandemic_val}%</b></li>
     <li>This equates to approximately <strong>{adjusted_pop} million</strong> fewer Americans in the labor force when adjusting for population gains.</li>
+    <li>Outside of the pandemic, this is the lowest level since <b>{lowest_before_pandemic_date}</b> which was <b>{lowest_before_pandemic_val}%</b></li>
 </ul>
 """
 
