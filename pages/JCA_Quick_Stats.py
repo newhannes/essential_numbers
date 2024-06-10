@@ -108,6 +108,7 @@ job_openings = job_openings["Job Openings"].iloc[-1]
 earnings = get_fred_data("CES0500000011", "Earnings", to_numeric=True, yoy=False)
 earnings = earnings.merge(cpi, on="date", how="left")
 earnings["date"] = pd.to_datetime(earnings["date"], format="%Y-%m-%d")
+earnings = earnings.dropna() # drop missing values, this occurs when one data source is ahead of another
 earnings["YoY Increase"] = earnings["Earnings"].diff(periods=12)
 # Calculations
 earnings["CPI Multiplier"] = earnings["CPI"].iloc[-1] / earnings["CPI"]
@@ -117,8 +118,7 @@ biden_real_earn = earnings.loc[earnings["date"] == "2021-01-01", "Real Earnings,
 current_real_earn = earnings["Earnings"].iloc[-1]
 real_earn_change = round(((biden_real_earn/current_real_earn)-1)*100,2)
 real_earnings_biden = round(100 - ((current_real_earn / biden_real_earn) * 100), 1)
-##Relative to when President Biden took office in January 2021, real earnings are down {real_earnings_biden}%.
-# Labor markert
+# Labor market
 start_date = "1974-01-01"
 labor_level = get_fred_data("CLF16OV", "Labor Force Level", start_date=start_date, to_numeric=True)
 lfpr = get_fred_data("CIVPART", "LFPR", start_date=start_date, to_numeric=True, to_datetime=True).set_index("date")
@@ -140,7 +140,8 @@ labor_html = f"""
     <li>Job Openings: <strong>{job_openings/1000:,.1f} million</strong></li>
     <li>Relative to when President Biden took office in January 2021, real earnings are down <strong>{real_earnings_biden}%</strong>.</li>
     <li>Labor Force Participation Rate {current_lfpr_date}: <strong>{current_lfpr}%</strong></li>
-    <li>This is <strong>{abs(lbfr_change):.2f} percentage points</strong> lower than the pre-pandemic rate of {pre_covid_lfpr}% in {lowest_before_pandemic_date}.</li>
+    <li>This is <strong>{abs(lbfr_change):.2f} percentage points</strong> lower than the pre-pandemic rate of {pre_covid_lfpr}% in February 2020.</li>
+    <li>Outside of the pandemic, this is the lowest level since <b>{lowest_before_pandemic_date}</b> which was <b>{lowest_before_pandemic}%</b></li>
     <li>This equates to approximately <strong>{adjusted_pop} million</strong> fewer Americans in the labor force when adjusting for population gains.</li>
 </ul>
 """
@@ -185,12 +186,6 @@ basic_debt_html = f"""
 
 
 #### ==== FINAL HTML ==== ####
-# Image path
-# st.write(os.getcwd())
-# st.write(os.listdir())
-# os.chdir("inputs")
-# st.write(os.getcwd())
-# st.write(os.listdir())
 image_path = "/mount/src/essential_numbers/inputs/HBR_Logo_Primary.png"
 st.image(image_path)
 style = f"""
