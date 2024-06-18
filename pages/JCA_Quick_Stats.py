@@ -78,11 +78,8 @@ treasury_10 = treasury_10["10yr Treasury Yield"].iloc[-1]
 fed_fun = get_fred_data("FEDFUNDS", "Fed Funds Rate", to_numeric=True)
 fed_fun = fed_fun["Fed Funds Rate"].iloc[-1]
 # Interest Projections on the debt
-## Now
-interest_now = 870
-## 10 years
-interest_10 = 1.6
-## 30 years 
+interest_now = 892 # CBO June 2024 projection, 2024
+interest_10 = 1.7 # CBO June 2024 projection, 2034 
 interest_30 = 5.4
 
 interest_html = f"""
