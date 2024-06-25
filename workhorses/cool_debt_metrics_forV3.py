@@ -132,8 +132,8 @@ def main():
         return df
     ### --- FRED DEBT per Year --- ###
     #annual_debt = fred.get_series_df("GFDEBTN", observation_start="2000-01-01", observation_end=today, frequency="a").drop(columns=['realtime_start', 'realtime_end']).rename(columns={"value": "Total Debt"})
-    annual_debt = get_fred_data("GFDEBTN", "Total Debt", start_date="2000-01-01", frequency="a")
-    annual_debt['Total Debt'] = annual_debt['Total Debt'].astype(float) * 1e6
+    annual_debt = get_fred_data("GFDEBTN", "Total Debt", start_date="2000-01-01", frequency="a", to_float=True) # Treasury, millions, posted as quarterly
+    annual_debt['Total Debt'] = annual_debt['Total Debt'] * 1e6
     annual_debt['year'] = annual_debt['date'].str[:4]
     ### --- Retreieve and Clean BLS Data --- ###
     quarterly_wages = bls_df(["ENUUS00030010"], startyear, endyear)

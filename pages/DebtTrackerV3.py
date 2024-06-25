@@ -10,12 +10,12 @@ from datetime import datetime
 if 'dt_today' not in st.session_state:
     with st.spinner("Running Debt Tracker..."):
         dt = debt_tracker_main()
-        st.success("Debt Tracker has been updated!")
+        #st.success("Debt Tracker has been updated!")
         st.session_state.dt_today = dt['today']
 if ('cdm_today' not in st.session_state) or ('temp_dir' not in st.session_state):
     with st.spinner("Running Cool Debt Metrics..."):
         temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, html_credit_card, new_orders_html, household_html, cdm_today = cdm_main()
-        st.success("Cool Debt Metrics has been updated!")
+        #st.success("Cool Debt Metrics has been updated!")
         st.session_state.cdm_today = cdm_today
         st.session_state.temp_dir = temp_dir
 # for key in st.session_state:
