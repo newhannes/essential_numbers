@@ -7,19 +7,26 @@ import shutil
 from datetime import datetime
 
 #### ---- FETCH DATA FROM THE WORKHORSES ---- ####
-if 'dt_today' not in st.session_state:
-    with st.spinner("Running Debt Tracker..."):
-        dt = debt_tracker_main()
-        #st.success("Debt Tracker has been updated!")
-        st.session_state.dt_today = dt['today']
-if ('cdm_today' not in st.session_state) or ('temp_dir' not in st.session_state):
-    with st.spinner("Running Cool Debt Metrics..."):
-        temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, html_credit_card, new_orders_html, household_html, cdm_today = cdm_main()
-        #st.success("Cool Debt Metrics has been updated!")
-        st.session_state.cdm_today = cdm_today
-        st.session_state.temp_dir = temp_dir
+# if 'dt_today' not in st.session_state:
+#     with st.spinner("Running Debt Tracker..."):
+#         dt = debt_tracker_main()
+#         #st.success("Debt Tracker has been updated!")
+#         st.session_state.dt_today = dt['today']
+# if ('cdm_today' not in st.session_state) or ('temp_dir' not in st.session_state):
+#     with st.spinner("Running Cool Debt Metrics..."):
+#         temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, html_credit_card, new_orders_html, household_html, cdm_today = cdm_main()
+#         #st.success("Cool Debt Metrics has been updated!")
+#         st.session_state.cdm_today = cdm_today
+#         st.session_state.temp_dir = temp_dir
+
+
 # for key in st.session_state:
 #     st.write(key)
+with st.spinner("Running Debt Tracker..."):
+        dt = debt_tracker_main()
+        st.session_state.dt_today = dt['today']
+with st.spinner("Running Cool Debt Metrics..."):
+        temp_dir, text_debt_to_assets, text_debt_to_wages, text_mortgage_rate, comparison_html, rate_increase_html, random_html, text_gdp_debt, html_credit_card, new_orders_html, household_html, cdm_today = cdm_main()
 temp_dir = st.session_state.temp_dir
 # if st.session_state.dt_today != datetime.today():
 #     with st.spinner("Updating Debt Tracker..."):
@@ -34,11 +41,11 @@ temp_dir = st.session_state.temp_dir
 
 #write the house budget header from inputs/HBR_Logo_Primary.png to the temp directory
 # Define the source and destination paths
-source_path = 'inputs/HBR_Logo_Primary.png'
-destination_path = temp_dir + '/HBR_Logo_Primary.png'
-
+##source_path = 'inputs/HBR_Logo_Primary.png'
+##destination_path = temp_dir + '/HBR_Logo_Primary.png'
+image_path = "/mount/src/essential_numbers/inputs/HBR_Logo_Primary.png"
 # Copy the file
-shutil.copy(source_path, destination_path)
+##hutil.copy(source_path, destination_path)
 
 def html_maker():
     basic_debt_html = f"""
@@ -100,7 +107,7 @@ def html_maker():
     <html>
     <head>
         <center>
-            <img src={temp_dir + "/HBR_Logo_Primary.png"} width="500" align = "middle">
+            <img src={image_path} width="500" align = "middle">
         </center> 
         <title>Debt Tracker</title>
         <style>
@@ -214,5 +221,5 @@ st.download_button(
 )
 
 
-st.image(temp_dir + "/HBR_Logo_Primary.png")
+st.image(image_path)
 st.markdown("<h1 style='text-align: center;'>Debt Tracker V3</h1>", unsafe_allow_html=True)
