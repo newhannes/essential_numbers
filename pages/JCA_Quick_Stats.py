@@ -1,14 +1,14 @@
 ##### ----- Automate the update of stats for JCA ----- #####
+import pdfkit
 import pandas as pd
 import os
 import shutil
 from functools import reduce
 import streamlit as st
 from workhorses.debt_tracker import debt_tracker_main
-#FRED
 from full_fred.fred import Fred
 from datetime import date
-FRED_API_KEY =st.secrets["FRED_API_KEY"]
+FRED_API_KEY = st.secrets["FRED_API_KEY"]
 fred = Fred()
 
 def get_fred_data(series_id, nickname, start_date=None, end_date=None, frequency=None, units=None, to_datetime=False, to_numeric=False, to_float=False, errors="raise", yoy=False, mom=False):
@@ -239,18 +239,20 @@ final_html = f"""
     <div class="content">
         <h2>Inflation</h2>
         {inflation_html}
+        <div>
         <h2>Interest Rates</h2>
+        </div>
         {interest_html}
+        <div>
         <h2>Labor Market</h2>
+        </div>
         {labor_html}
         {basic_debt_html}
     </div>
 </div>
 """
 
-st.markdown(final_html.replace(style,""), unsafe_allow_html=True)
 
-import pdfkit
 pdf = pdfkit.from_string(final_html, False, options={"enable-local-file-access": ""})
 # Add a button to download the PDF
 st.download_button(
@@ -259,3 +261,5 @@ st.download_button(
     file_name=f"JCA Quick Stats {dt['today']}.pdf",
     mime="application/octet-stream"
 )
+
+st.markdown(final_html.replace(style,""), unsafe_allow_html=True)
