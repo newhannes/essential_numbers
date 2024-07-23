@@ -124,8 +124,9 @@ current_lfpr_date = lfpr["LFPR"].index[-1].strftime("%B %Y")
 pre_covid_lfpr = lfpr.loc["2020-02-01", "LFPR"]
 lbfr_change = current_lfpr - pre_covid_lfpr
 #outside of the pandemic, when was the last time the LFPR was this low?
-lowest_before_pandemic = lfpr.query("date < '2020-01-01' & LFPR < @current_lfpr").iloc[-1]
+lowest_before_pandemic = lfpr.query("date < '2020-01-01' & LFPR <= @current_lfpr").iloc[-1]
 lowest_before_pandemic_val = lowest_before_pandemic["LFPR"]
+lowest_before_pandemic_val = f"also {lowest_before_pandemic_val}%" if lowest_before_pandemic_val == current_lfpr else lowest_before_pandemic_val
 lowest_before_pandemic_date = lowest_before_pandemic.name.strftime("%B %Y")
 #adjusting for population gains, not totally sure how this works
 pop = get_fred_data("CNP16OV", "Population", start_date=start_date, to_numeric=True, to_datetime=True).set_index('date') #BLS pop, monthly
@@ -239,13 +240,9 @@ final_html = f"""
     <div class="content">
         <h2>Inflation</h2>
         {inflation_html}
-        <div>
         <h2>Interest Rates</h2>
-        </div>
         {interest_html}
-        <div>
         <h2>Labor Market</h2>
-        </div>
         {labor_html}
         {basic_debt_html}
     </div>
@@ -255,11 +252,13 @@ final_html = f"""
 
 pdf = pdfkit.from_string(final_html, False, options={"enable-local-file-access": ""})
 # Add a button to download the PDF
-st.download_button(
-    "⬇️ Download PDF",
-    data=pdf,
-    file_name=f"JCA Quick Stats {dt['today']}.pdf",
-    mime="application/octet-stream"
-)
+cols = st.columns([1, 1, 1])
+with cols[1]:
+    st.download_button(
+        "⬇️ Download PDF",
+        data=pdf,
+        file_name=f"JCA Quick Stats {dt['today']}.pdf",
+        mime="application/octet-stream"
+    )
 
 st.markdown(final_html.replace(style,""), unsafe_allow_html=True)
