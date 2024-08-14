@@ -8,7 +8,7 @@ import html2text
 from full_fred.fred import Fred
 FRED_API_KEY = st.secrets["FRED_API_KEY"]
 fred = Fred()
-@st.cache_data
+
 def get_fred_data(series_id, nickname, start_date=None, end_date=None, frequency=None, units=None, to_datetime=False, to_numeric=False, to_float=False, errors="raise", yoy=False, mom=False):
     data = fred.get_series_df(series_id, observation_start=start_date, observation_end=end_date, frequency=frequency, units=units)
     data = data.drop(columns=['realtime_start', 'realtime_end']).rename(columns={'value': nickname})
