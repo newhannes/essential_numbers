@@ -17,7 +17,7 @@ def get_fred_data(series_id, nickname, start_date=None, end_date=None, frequency
     if to_datetime:
         data["date"] = pd.to_datetime(data['date'])
     if to_numeric:
-        data[nickname] = pd.to_numeric(data[nickname], errors=errors)
+        data[nickname] = pd.to_numeric(data[nickname].replace('.', float('nan')), errors=errors)
     if to_float:
         data[nickname] = data[nickname].replace('.', float('nan')).astype(float, errors=errors)
     if yoy:
