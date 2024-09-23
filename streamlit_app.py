@@ -21,7 +21,10 @@ pg = st.navigation(
     [st.Page("functions/Home.py"),
      st.Page("functions/Debt_Tracker.py"),
      st.Page("functions/Inflation.py"),
-     st.Page("functions/Labor_Data.py")])
+     st.Page("functions/Labor_Data.py"),
+     st.Page("functions/JCA_Quick_Stats.py")
+     ]
+     )
 
 
 pg.run()

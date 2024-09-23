@@ -139,7 +139,7 @@ labor_html = f"""
     <li>Job Openings: <strong>{job_openings/1000:,.1f} million</strong></li>
     <li>Relative to when President Biden took office in January 2021, real earnings are down <strong>{real_earnings_biden}%</strong>.</li>
     <li>Labor Force Participation Rate {current_lfpr_date}: <strong>{current_lfpr}%</strong></li>
-    <li>This is <strong>{abs(lbfr_change):.2f} percentage points</strong> lower than the pre-pandemic rate of {pre_covid_lfpr}% in February 2020.</li>
+    <li>This is <strong>{abs(lbfr_change):.2f} percentage points</strong> {"lower" if lbfr_change<0 else "ERROR"} than the pre-pandemic rate of {pre_covid_lfpr}% in February 2020.</li>
     <li>This equates to approximately <strong>{adjusted_pop} million</strong> fewer Americans in the labor force when adjusting for population gains.</li>
     <li>Outside of the pandemic, this is the lowest level since <b>{lowest_before_pandemic_date}</b> which was <b>{lowest_before_pandemic_val}%</b></li>
 </ul>
@@ -157,14 +157,14 @@ basic_debt_html = f"""
             <li><strong>${dt['debt_per_household']:,}</strong> per household</li>
             <li><strong>${dt['debt_per_child']:,}</strong> per child</li>
         </ul>
-        <h2>Debt Accumulation under President Biden</h2>
-        <p>When President Biden took office total gross debt was <strong>${dt['biden_start_debt_rounded']:,} trillion</strong>, meaning he has increased the national debt by <strong>${dt['biden_debt_rounded']:,} trillion</strong>. This equates to:</p>
+        <h2>Debt Accumulation under Biden-Harris</h2>
+        <p>When President Biden and VP Harris took office total gross debt was <strong>${dt['biden_start_debt_rounded']:,} trillion</strong>, meaning they have increased the national debt by <strong>${dt['biden_debt_rounded']:,} trillion</strong>. This equates to:</p>
         <ul>
             <li><strong>${dt['biden_debt_per_person']:,}</strong> more debt per person</li>
             <li><strong>${dt['biden_debt_per_household']:,}</strong> more debt per household</li>
             <li><strong>${dt['biden_debt_per_child']:,}</strong> more debt per child</li>
         </ul>
-        <p>The rate of debt accumulation during the Biden Administration has equaled:</p>
+        <p>The rate of debt accumulation during the Biden-Harris Administration has equaled:</p>
         <ul>
             <li><strong>${dt['biden_debt_per_month']:,} billion</strong> in new debt per month</li>
             <li><strong>${dt['biden_debt_per_day_rounded']:,} billion</strong> in new debt per day</li>
@@ -261,4 +261,5 @@ with cols[1]:
         mime="application/octet-stream"
     )
 
-st.markdown(final_html.replace(style,""), unsafe_allow_html=True)
+#st.markdown(final_html.replace(style,""), unsafe_allow_html=True)
+st.html(final_html)

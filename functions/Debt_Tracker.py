@@ -14,19 +14,19 @@ def day_string_formatter(date):
 
 
 dt = debt_tracker_main()
-if dt['today'] != datetime.today():
-        with st.spinner("Updating Debt Tracker..."):
-                debt_tracker_main.clear()
-                dt = debt_tracker_main()
+# if dt['today'] != datetime.today():
+#         with st.spinner("Updating Debt Tracker..."):
+#                 debt_tracker_main.clear()
+#                 dt = debt_tracker_main()
 
 today_string = day_string_formatter(dt['today'])
 
-# Create a temporary directory
-temp_dir = tempfile.mkdtemp()
-source_path = 'inputs/HBR_Logo_Primary.png'
-destination_path = temp_dir + '/HBR_Logo_Primary.png'
-# Copy the file
-shutil.copy(source_path, destination_path)
+# # Create a temporary directory
+# temp_dir = tempfile.mkdtemp()
+# source_path = 'inputs/HBR_Logo_Primary.png'
+# destination_path = temp_dir + '/HBR_Logo_Primary.png'
+# # Copy the file
+# shutil.copy(source_path, destination_path)
 
 
 basic_debt_html = f"""
@@ -68,8 +68,8 @@ basic_debt_html = f"""
     </div>
 </div>
 """
-
-st.image(temp_dir + '/HBR_Logo_Primary.png')
+image_path = '/mount/src/essential_numbers/inputs/HBR_Logo_Primary.png'
+st.image(image_path)
 st.markdown(basic_debt_html, unsafe_allow_html=True)
 
 
@@ -113,7 +113,7 @@ html_for_pdf = f"""
         }}
     </style>
     <center>
-    <img src={temp_dir + "/HBR_Logo_Primary.png"} width = "650" align = "middle">
+    <img src={image_path} width = "650" align = "middle">
     </center>
     <div class="header">
     <h1>Debt Tracker</h1>
