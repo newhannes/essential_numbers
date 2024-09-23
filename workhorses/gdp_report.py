@@ -1,21 +1,15 @@
 ####### ========== Create Automated Report for GDP release ========== #######
 import matplotlib.pyplot as plt
 import seaborn as sns
-import numpy as np
 import pandas as pd
+import numpy as np
 import beaapi
 import datetime
 import requests
 from bs4 import BeautifulSoup
-from full_fred.fred import Fred
 import streamlit as st
-import os
-os.chdir(r"C:\Users\DSikkink\OneDrive - US House of Representatives\Python\Essential Numbers")
-# beaky = st.secrets["BEA_API_KEY"]
-# FRED_API_KEY = st.secrets["FRED_API_KEY"]
-beaky = "6755F5CF-C995-499D-8687-210BBFFEAC16"
-FRED_API_KEY = "d54f6f80ebf26f05dafe603646f2f58f"
-fred = Fred()
+
+beaky = st.secrets["BEA_API_KEY"]
 dark_grey = '#3E3E3E'
 light_grey = '#D3D3D3'
 slightly_dark_grey = '#4F4F4F'
@@ -23,51 +17,25 @@ emerald = "#004647"
 jade = "#84AE95"
 hunter = "#002829"
 today = datetime.datetime.today()
-fifty_years_ago = str(today.year - 50) + "-01-01"
-def get_fred_data(series_id, nickname, start_date=None, end_date=None, frequency=None, units=None, to_datetime=False, to_numeric=False, to_float=False, errors="raise", yoy=False, mom=False):
-    data = fred.get_series_df(series_id, observation_start=start_date, observation_end=end_date, frequency=frequency, units=units)
-    data = data.drop(columns=['realtime_start', 'realtime_end']).rename(columns={'value': nickname})
-    if to_datetime:
-        data["date"] = pd.to_datetime(data['date'])
-    if to_numeric:
-        data[nickname] = pd.to_numeric(data[nickname], errors=errors)
-    if to_float:
-        data[nickname] = data[nickname].replace('.', float('nan')).astype(float, errors=errors)
-    if yoy:
-        data[f"{nickname} YoY"] = round(data[nickname].pct_change(periods=12) * 100, 1)
-    if mom:
-        data[f"{nickname} MoM"] = round(data[nickname].pct_change() * 100, 1)
-    return data
+fifty_years_ago = str(today.year - 50)
+
 
 print("Beginning GDP report script...")
 
-
-##### ===== Helper Functions ===== #####
-def get_or_initialize(var_name, init_func):
-    if var_name not in globals():
-        print("Initializing", var_name)
-        globals()[var_name] = init_func()
-    elif not isinstance(globals()[var_name], pd.DataFrame):
-        print("Re-initializing", var_name)
-        globals()[var_name] = init_func()
-    else:
-        print("Using existing", var_name)
-    return globals()[var_name]
 ##### ===== DATA ===== #####
-## Params
-year = 1974
-pct_change = get_or_initialize("pct_change", lambda: beaapi.get_data(beaky, datasetname="NIPA", TableName="T10101", Frequency="Q", Year="X"))
-gdp = get_or_initialize("gdp", lambda: beaapi.get_data(beaky, datasetname="NIPA", TableName="T10105", Frequency="Q", Year="X"))
-contributors_raw = get_or_initialize("contributors_raw", lambda: beaapi.get_data(beaky, datasetname="NIPA", TableName="T10102", Frequency="Q", Year="X"))
+pct_change = beaapi.get_data(beaky, datasetname="NIPA", TableName="T10101", Frequency="Q", Year="X")
+gdp = beaapi.get_data(beaky, datasetname="NIPA", TableName="T10105", Frequency="Q", Year="X")
+contributors_raw = beaapi.get_data(beaky, datasetname="NIPA", TableName="T10102", Frequency="Q", Year="X")
 
 ##### ===== SECTION 1: OVERVIEW ===== #####
+## MARK: Overview
 ## Real gdp growth, comparison to 50 year average, growth last quarter, GDP in current dollars
 current_q = pct_change.TimePeriod.max()
 prior_q = pct_change.TimePeriod.max()[:-1] + str(int(pct_change.TimePeriod.max()[-1]) - 1)
 real_gdp = pct_change.query('LineDescription == "Gross domestic product" and TimePeriod == @current_q')["DataValue"].values[0]
 real_gdp_last = pct_change.query('LineDescription == "Gross domestic product" and TimePeriod == @prior_q')["DataValue"].values[0] # type: ignore
 gdp_nominal = gdp.query('LineDescription == "Gross domestic product" and TimePeriod == @current_q')["DataValue"].values[0] 
-fifty_yr_avg = pct_change.loc[(pct_change.LineDescription == "Gross domestic product") & (pct_change.TimePeriod >= "1974Q1"), "DataValue"].mean().round(1)
+fifty_yr_avg = pct_change.loc[(pct_change.LineDescription == "Gross domestic product") & (pct_change.TimePeriod >= f"{fifty_years_ago}Q1"), "DataValue"].mean().round(1)
 ## Scrape the current GDP release title/type from website
 url = "https://www.bea.gov/data/gdp/gross-domestic-product"
 response = requests.get(url)
@@ -82,6 +50,7 @@ This is {real_gdp - fifty_yr_avg:.1} percentage points above the 50 year average
 Growth last quarter was {real_gdp_last} percent. GDP now amounts to ${gdp_nominal/1e6:.1f} trillion in current dollars."""
 
 ##### ===== SECTION 2: COMPOSITION OF GDP ===== #####
+## MARK: Composition of GDP
 ### === Topline contributors to GDP === ###
 ## Data prep ##
 main_contributors = ["Personal consumption expenditures", "Gross private domestic investment", "Net exports of goods and services", "Exports", "Imports", "Government consumption expenditures and gross investment"]
@@ -112,11 +81,10 @@ Imports, which are counted against GDP, contributed {imports['DataValue'].values
 plot1_data = contributors_netexports.pivot(columns="LineDescription", values="DataValue", index="sign")
 column_order = plot1_data.sum().sort_values(ascending=False).index
 plot1_data = plot1_data[column_order]
-total_positive = plot1_data.loc["positive"].sum()
 ## Setup
-fig, ax = plt.subplots(figsize=(9,4))
 plt.style.use("housebudget-garet")
 plt.rcParams['font.family'] = 'EB Garamond'
+fig, ax = plt.subplots(figsize=(9,4))
 start_color = 200
 end_color = 10
 custom_pal = sns.diverging_palette(start_color, end_color)
@@ -148,6 +116,7 @@ fig_contributors = plt.gcf()
 fig.savefig("output/contributors.svg", bbox_inches='tight', dpi=900)
 
 ###### ===== SECTION 3: CHANGES THIS QUARTER ===== #####
+## MARK: Changes this quarter
 ## Data prep
 current_pct_change = pct_change.query('TimePeriod == @current_q')
 prior_pct_change = pct_change.query('TimePeriod == @prior_q')
@@ -208,34 +177,32 @@ fig_growth_comparison = ax.get_figure()
 fig.savefig("output/growth_comparison.svg", bbox_inches='tight', dpi=900)
 
 ##### ===== SECTION 4: PAST TWO YEARS ===== #####
-quarter_dict = {'-01-01': 'Q1', '-04-01': 'Q2', '-07-01': 'Q3', '-10-01': 'Q4'}
-gdp_growth_rate = get_fred_data("A191RL1Q225SBEA", "gdp_growth_rate", start_date=fifty_years_ago, to_numeric=True)
-gdp_growth_rate["quarter-year"] = gdp_growth_rate["date"].str[4:].map(quarter_dict) + " " + gdp_growth_rate["date"].str[:4]
-# add a column that records whether the value is bellow or above the historical average
-gdp_growth_rate["context"] = gdp_growth_rate["gdp_growth_rate"].apply(lambda x: "above/equal" if x >= round(gdp_growth_rate["gdp_growth_rate"].mean(), 1) else "below")
-gdp_since22 = gdp_growth_rate[gdp_growth_rate["date"] >= "2022-01-01"]
-gdp_since22 = gdp_since22[['quarter-year', 'gdp_growth_rate', 'context']]
-historic_average = gdp_growth_rate['gdp_growth_rate'].mean()
-#### -------- Chart Time -------- ####
-plt.rcParams['font.family'] = "EB Garamond"
-plt.figure(figsize=(12,6))
-ax = sns.barplot(data=gdp_since22, x="quarter-year", y="gdp_growth_rate", hue="context", palette=[jade, emerald])
-plt.title("Quarterly annualized real GDP growth since Q1 2022", fontsize=19, pad=15)
-plt.xlabel("")
-plt.xticks(fontsize=13)
-plt.ylabel("")
-plt.yticks([])
-plt.gca().xaxis.set_tick_params(width=0)
+## MARK: Past Two Years
+gdp_past_2yrs = pct_change.query("LineDescription == 'Gross domestic product' and TimePeriod >= '2022Q1'")[["TimePeriod", "DataValue"]]
+gdp_past_2yrs['date'] = [x[-2:] + "\n" + x[:-2] for x in gdp_past_2yrs.TimePeriod]
+gdp_past_2yrs["context"] = np.where(gdp_past_2yrs["DataValue"] >= fifty_yr_avg, "above/equal", "below")
+plt.style.use("housebudget-garet")
+plt.rcParams['font.family'] = 'EB Garamond'
+fig, ax = plt.subplots(figsize=(9,5))
+sns.barplot(data=gdp_past_2yrs, x="date", y="DataValue", ax=ax, hue="context", palette=[jade, emerald])
+## Labels
+ax.set_title("Quarterly annualized real GDP growth since Q1 2022", fontsize=16, pad=20)
+ax.set_xlabel("")
+ax.set_ylabel("")
+## Format
+ax.set_yticks([])
+ax.xaxis.set_tick_params(length=0)
+ax.spines['bottom'].set_position(('outward', 8))  # Move the bottom spine outward by 10 points
+sns.despine(left=True, bottom=True)
 for i in ax.containers:
-        ax.bar_label(i, labels = [f"{x}%" for x in i.datavalues], weight="bold", fontsize = 13, label_type="edge", padding=1) #add labels to bars
-plt.legend(title="Comparison to 50-year average", title_fontsize="12", fontsize="11", loc="upper left", frameon=False)
-sns.despine(bottom=True, left=True)
-## Store fig as object
-fig_past_two_years = plt.gcf()
+    ax.bar_label(i, labels = [f"{x}%" for x in i.datavalues], fontsize = 13) #add labels to bars
+plt.legend(title="Comparison to 50-year average", title_fontsize="12", fontsize="11", loc="upper left", bbox_to_anchor=(-0.015, 1.08), frameon=False)
 ## Save
-fig_past_two_years.savefig("output/gdp_growth_since22.svg", bbox_inches='tight', dpi=900)
+fig_since22 = ax.get_figure()
+fig_since22.savefig("output/since22.svg", bbox_inches='tight', dpi=900)
 
 ##### ====== HTML REPORT ===== #####
+## MARK: HTML
 html = f"""
 <!DOCTYPE html>
 <html>
@@ -280,7 +247,7 @@ html = f"""
 </head>
 
 <body>
-    <img src="../input/HBR_Logo_Primary.png" class="centered-image" />
+    <img src="../inputs/HBR_Logo_Primary.png" class="centered-image" />
     <h1>GDP Report: {current_q_text} {release_stage}</h1>
     <p>{overview_str}</p>
     <h2>Composition of GDP</h2>
@@ -295,15 +262,16 @@ html = f"""
     </div>
     <h2>GDP Growth Since 2022</h2>
     <div class="chart">
-        <img src="gdp_growth_since22.svg" />
+        <img src="since22.svg" />
     </div>
-    <p class="source">Source: Bureau of Economic Analysis</p>
 </body>
 
 </html>
 """
 
-with open(f"output/gdp_report_{today.strftime("%d-%m-%y")}.html", "w") as file:
+html_filename = f"output/gdp_report_{today.strftime('%d-%m-%y')}.html"
+with open(html_filename, "w") as file:
     file.write(html)
+
 
 print("GDP report script complete!")
