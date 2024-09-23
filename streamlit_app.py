@@ -14,5 +14,14 @@ import streamlit as st
 #     ]
 # )
 
-page = st.navigation([st.Page("pages/Home.py"), st.Page("pages/Debt_Tracker.py")])
-page.run()
+
+
+
+pg = st.navigation(
+    [st.Page("functions/Home.py"),
+     st.Page("functions/Debt_Tracker.py"),
+     st.Page("functions/Inflation.py"),
+     st.Page("functions/Labor_Data.py")])
+
+
+pg.run()
