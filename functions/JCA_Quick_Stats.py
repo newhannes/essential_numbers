@@ -262,4 +262,4 @@ with cols[1]:
     )
 
 #st.markdown(final_html.replace(style,""), unsafe_allow_html=True)
-st.html(final_html)
+st.html(final_html.replace(style,""))
