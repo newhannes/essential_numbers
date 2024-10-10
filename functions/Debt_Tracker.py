@@ -1,7 +1,6 @@
 import streamlit as st
 from workhorses.debt_tracker import debt_tracker_main
 from datetime import datetime
-import tempfile, shutil
 import pdfkit
 
 def day_string_formatter(date):
@@ -14,20 +13,12 @@ def day_string_formatter(date):
 
 
 dt = debt_tracker_main()
-# if dt['today'] != datetime.today():
-#         with st.spinner("Updating Debt Tracker..."):
-#                 debt_tracker_main.clear()
-#                 dt = debt_tracker_main()
+if dt['today'] != datetime.today():
+        with st.spinner("Updating Debt Tracker..."):
+                debt_tracker_main.clear()
+                dt = debt_tracker_main()
 
 today_string = day_string_formatter(dt['today'])
-
-# # Create a temporary directory
-# temp_dir = tempfile.mkdtemp()
-# source_path = 'inputs/HBR_Logo_Primary.png'
-# destination_path = temp_dir + '/HBR_Logo_Primary.png'
-# # Copy the file
-# shutil.copy(source_path, destination_path)
-
 
 basic_debt_html = f"""
 <h1 style='text-align: center;'>Debt Tracker</h1>
@@ -41,7 +32,7 @@ basic_debt_html = f"""
             <li><strong>${dt['debt_per_household']:,}</strong> per household</li>
             <li><strong>${dt['debt_per_child']:,}</strong> per child</li>
         </ul>
-        <h2>Debt Accumulation under President Biden and VP Harris</h2>
+        <h2>Debt Accumulation under Biden-Harris</h2>
         <p>When President Biden and VP Harris took office total gross debt was <strong>${dt['biden_start_debt_rounded']:,} trillion</strong>, meaning they have increased the national debt by <strong>${dt['biden_debt_rounded']:,} trillion</strong>. This equates to:</p>
         <ul>
             <li><strong>${dt['biden_debt_per_person']:,}</strong> more debt per person</li>
