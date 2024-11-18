@@ -34,52 +34,55 @@ for data_dictionary in [debt_tracker, inflation_data, labor_data, interest_rates
 #### ==== HTML and PDF Creation ==== ####
 image_path = "/mount/src/essential_numbers/inputs/HBR_Logo_Primary.png"
 style_html = f'''
-<html>
-        <head>
-            <center>
-            <img src={image_path} width="500" align = "middle">
-            </center> 
-            <style>
-                h1 {{
-                    text-align: center;
-                    font-size: 16px;
-                    font-family: Calibri, sans-serif;
-                }}
-                p {{
-                    margin-left: 25px;
-                    font-size: 12px;
-                    font-family: Calibri, sans-serif;
-                }}
-            </style>
-        </head>
-        <body>
-            <style>
-                h1 {{text-align: center;
-                    margin-left: 25px;
-                    font-size: 24px;
-                }}
-                 h2 {{
-                    text-align: left;
-                    font-size: 19px;
-                    font-family: Calibri, sans-serif;
-                }}
-                p {{
-                    margin-left: 25px;
-                    font-size: 15px;
-                    font-family: Calibri, sans-serif;
-                }}
-                ul{{
-                    list-style: disc;
-                    font-family: Calibri, sans-serif;
-                    font-size: 15px;
-                    text_align: center;
-                }}
-            </style>
+<!DOCTYPE html>
+    <html>
+    <head>
+        <center>
+            <img src={image_path} width = "70%" align = "middle">
+        </center> 
+        <title>JCA Quick Stats</title>
+        <style>
+            body {{
+                font-family: 'Montserrat', sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f7f7f7;
+            }}
+            .container {{
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+            }}
+            .header {{
+                background-color: #004647;
+                color: white;
+                padding: 20px;
+                text-align: center;
+            }}
+            .content {{
+                background-color: white;
+                padding: 20px;
+                margin-top: 20px;
+            }}
+            .content h2 {{
+                color: #004647;
+            }}
+            .content p {{
+                color: #333;
+            }}
+            .content img {{
+                width: 90%;
+                margin-top: 20px;
+            }}
+        </style>
             '''
 html = f'''
     {style_html}
-            <p></p>
-            <h1>Data Summary Report as of {CURRENT_DATE.strftime("%B")} {ordinaltg(CURRENT_DATE.day)}, {CURRENT_DATE.year}</h1>
+            <div class="header">
+                <h1>Data Summary Report as of {CURRENT_DATE.strftime("%B")} {ordinaltg(CURRENT_DATE.day)}, {CURRENT_DATE.year}</h1>
+            </div>
+            <div class="container">
+                <div class="content">
             <h2><b>Inflation</b></h2>
             <p>Year-over-year CPI inflation as of {cpi_month_year} is <b>{cpi_current} percent</b></p>
             <ul>
@@ -142,7 +145,8 @@ html = f'''
                 <li><b>${last_year_debt_per_min} million</b> in new debt per minute</li>
                 <li><b>${last_year_debt_per_sec:,}</b> in new debt per second</li>
             </ul>
-        </body>
+        </div>
+    </div>
     </html>
     '''
 
