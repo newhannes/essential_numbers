@@ -151,6 +151,7 @@ html = f'''
     '''
 
 pdf = pdfkit.from_string(html, False, options={'enable-local-file-access': ''})
+st.image(image_path)
 cols = st.columns([1, 1, 1])
 with cols[1]:
     st.download_button(
@@ -161,5 +162,5 @@ with cols[1]:
     )
 
 # Display in app
-#st.html(html.replace(style_html, ""))
-st.html(html)
+st.html(html.replace(style_html, ""))
+#st.html(html.replace(f"""<img src={image_path} width = "70%" align = "middle">""", ""))
