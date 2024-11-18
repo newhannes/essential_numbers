@@ -120,34 +120,12 @@ if st.checkbox("Static Report"):
             highest = "This is the highest value recorded for this variable."
         else:
             closest_higher_value = data.loc[closest_higher]
-            highest = (f"Highest value since {closest_higher.strftime('%B %Y')} which was {num_formatter(closest_higher_value, format)}")
+            highest = (f"Last higher: {closest_higher.strftime('%B %Y')} which was {num_formatter(closest_higher_value, format)}")
         if pd.isna(closest_lower):
             lowest = "This is the lowest value recorded for this variable."
         else:
             closest_lower_value = data.loc[closest_lower]
-            lowest = f"Lowest value since {closest_lower.strftime('%B %Y')} which was {num_formatter(closest_lower_value, format)}"
-    # Display
-#         st.markdown(f"### {col}")
-#         st.markdown(f"""- **{data.index[-1].strftime("%B")}:** {num_formatter(current, format)}
-# - **Previous:** {num_formatter(previous, format)}
-# - **Context:**
-#     - {highest}
-#     - {lowest}
-#     - Average Since {data.index[0].year}: {num_formatter(data.mean(), format)}""")
-
-    # st.markdown(f"<h3 style='margin-bottom:0px;'>{col}</h3>", unsafe_allow_html=True)
-    # st.markdown(f"""<ul style='margin-top:-17px;'>
-    # <li><b>{data.index[-1].strftime("%B")}:</b> {num_formatter(current, format)}</li>
-    # <li><b>Previous:</b> {num_formatter(previous, format)}</li>
-    # <li><b>Context:</b>
-    #     <ul>
-    #     <li>{highest}</li>
-    #     <li>{lowest}</li>
-    #     <li>Average since {data.index[0].year}: {num_formatter(data.mean(), format)}</li>
-    #     </ul>
-    # </li>
-    # </ul>""", unsafe_allow_html=True)
-
+            lowest = f"Last lower: since {closest_lower.strftime('%B %Y')} which was {num_formatter(closest_lower_value, format)}"
     # Generate the report text
         report_text = f"""
         <h3 style='margin-bottom:0px;'>{col}</h3>
