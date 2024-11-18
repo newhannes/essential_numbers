@@ -216,7 +216,7 @@ html = f'''
     </html>
     '''
 
-pdf = pdfkit.from_string(html, False, options={'enable-local-file=access': ''})
+pdf = pdfkit.from_string(html, False, options={'enable-local-file-access': ''})
 cols = st.columns([1, 1, 1])
 with cols[1]:
     st.download_button(
