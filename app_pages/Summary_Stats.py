@@ -161,4 +161,5 @@ with cols[1]:
     )
 
 # Display in app
-st.html(html.replace(style_html, ""))
+#st.html(html.replace(style_html, ""))
+st.html(html)
