@@ -29,7 +29,10 @@ for data_dictionary in [debt_tracker, inflation_data, labor_data, interest_rates
         if not isinstance(value, pd.DataFrame):
             if isinstance(value, str):
                 value = f'"{value}"'
-            exec(f"{key} = {value}")
+            try:    
+                exec(f"{key} = {value}")
+            except(SyntaxError):
+                print(f"Error unpacking {key} with value {value}")
 
 #### ==== HTML and PDF Creation ==== ####
 image_path = "/mount/src/essential_numbers/inputs/HBR_Logo_Primary.png"
