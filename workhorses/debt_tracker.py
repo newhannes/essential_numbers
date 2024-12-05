@@ -27,7 +27,7 @@ def debt_tracker_main():
     ### FRED ###
     population = fred.get_series_df('POPTOTUSA647NWDB', observation_start=biden_start)
     households = fred.get_series_df('TTLHH', observation_start=biden_start)
-    child_population = 72325602 #from census bureau ACS 2022
+    child_population = 72_648_436 #from census bureau ACS 2023 1-yr estimate DP05 Under-18 years 
 
     ### DEBT/POPULATION VALUES ###
     # Current
