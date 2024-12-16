@@ -14,6 +14,7 @@ def bea_api_fetch(api_key, dataset_name, table_name, frequency, year):
     response.raise_for_status()
     data = response.json()
     data_df = pd.DataFrame(data['BEAAPI']['Results']['Data'])
+    data_df["DataValue"] = pd.to_numeric(data_df["DataValue"])
     return data_df
 
 ## Data Helper Functions
