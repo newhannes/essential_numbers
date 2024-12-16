@@ -11,3 +11,4 @@ kaleido
 seaborn
 html2text
 pyperclip
+bs4
