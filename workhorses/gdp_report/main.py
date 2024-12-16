@@ -1,15 +1,12 @@
 ######### =========== GDP REPORT --MAIN =========== #########
 
 import streamlit as st
-import os
 import datetime
 
-os.chdir("workhorses/gdp_report")
-
-from data_fetcher import fetch_all_data
-from data_processor import *
-from visualizations import generate_charts
-from report_export import generate_word_doc, generate_html_report
+from workhorses.gdp_report.data_fetcher import fetch_all_data
+from workhorses.gdp_report.data_processor import *
+from workhorses.gdp_report.visualizations import generate_charts
+from workhorses.gdp_report.report_export import generate_word_doc, generate_html_report
 
 
 # Constants
