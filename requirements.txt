@@ -12,3 +12,5 @@ seaborn
 html2text
 pyperclip
 bs4
+PyPDF2
+io
