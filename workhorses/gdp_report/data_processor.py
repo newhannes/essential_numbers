@@ -168,14 +168,14 @@ def generate_changes_text(pct_change_raw, current_quarter):
     investment_pctchange_df = get_component_df("Gross private domestic investment", current_pct_change, pct_change_linenumber_dict)
     exports_pctchange_df = get_component_df("Exports", current_pct_change, pct_change_linenumber_dict)
     imports_pctchange_df = get_component_df("Imports", current_pct_change, pct_change_linenumber_dict)
-    gove_pctchange_df = get_component_df("Government consumption expenditures and gross investment", current_pct_change, pct_change_linenumber_dict)
+    gov_pctchange_df = get_component_df("Government consumption expenditures and gross investment", current_pct_change, pct_change_linenumber_dict)
     
     # Generate the change text for each component
     consumer_spending_change_text = generate_change_text(consumer_spending_pctchange_df)
     investment_change_text = generate_change_text(investment_pctchange_df)
     exports_change_text = generate_change_text(exports_pctchange_df)
     imports_change_text = generate_change_text(imports_pctchange_df)
-    gov_change_text = generate_change_text(gove_pctchange_df)
+    gov_change_text = generate_change_text(gov_pctchange_df)
 
     ## Text
     CHANGES_TEXT = f"""

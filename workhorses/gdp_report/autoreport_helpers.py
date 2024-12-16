@@ -163,14 +163,16 @@ def generate_change_text(component_df):
         change_text = f"{intro} with spending on goods {increase_or_decrease_text(goods_val, tense='ing')} by {goods_val:.1f} percent and spending on services {increase_or_decrease_text(services_val, tense='ing')} by {services_val:.1f} percent."
 
     if component_name == "Gross private domestic investment":
+       
         positive_subcat_names = [subcat for subcat in positive_subcat_names if subcat not in ["fixed investment", "nonresidential"]]
         negative_subcat_names = [subcat for subcat in negative_subcat_names if subcat not in ["fixed investment", "nonresidential"]]
         positive_subcat_names = [subcat if subcat != "structures" else "nonresidential structures" for subcat in positive_subcat_names]
         negative_subcat_names = [subcat if subcat != "structures" else "nonresidential structures" for subcat in negative_subcat_names]
+        
         if component_val > 0:
-            change_text = f"{intro} with growth in {format_list_with_and(positive_subcat_names)} investment partially offset by declines in {format_list_with_and(negative_subcat_names)} investment."
+            change_text = f'{intro} with growth in {format_list_with_and(positive_subcat_names)} investment partially offset by declines in {format_list_with_and(negative_subcat_names)} investment.'
         if component_val < 0:
-            change_text = f"{intro} with declines in {format_list_with_and(negative_subcat_names)} investment partially offset by growth in {format_list_with_and(positive_subcat_names)} investment."
+            change_text = f'{intro} with declines in {format_list_with_and(negative_subcat_names)} investment partially offset by growth in {format_list_with_and(positive_subcat_names)} investment.'
     
     if component_name == "Government consumption expenditures and gross investment":
         if component_val > 0:
