@@ -4,7 +4,7 @@ import time
 import os
 import streamlit as st
 
-BEA_API_KEY = st.secrets('BEA_API_KEY')
+BEA_API_KEY = st.secrets['BEA_API_KEY']
 
 
 def bea_api_fetch(api_key, dataset_name, table_name, frequency, year):
