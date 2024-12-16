@@ -23,14 +23,17 @@ def generate_overview_text(pct_change_raw, gdp_raw, debt_df, current_quarter, pr
     
     current_q = current_quarter
     prior_q = prior_quarter
-    
+    fifty_years_ago = str(int(current_q[:4])-50) + current_q[-2:]
+
     real_gdp = pct_change_raw.query('LineDescription == "Gross domestic product" and TimePeriod == @current_q')["DataValue"].values[0]
     real_gdp_last = pct_change_raw.query('LineDescription == "Gross domestic product" and TimePeriod == @prior_q')["DataValue"].values[0] # type: ignore
     gdp_nominal = gdp_raw.query('LineDescription == "Gross domestic product" and TimePeriod == @current_q')["DataValue"].values[0] 
-    
+
     fifty_yr_avg = (
         pct_change_raw
-        .loc[(pct_change_raw.LineDescription == "Gross domestic product") & (pct_change_raw.TimePeriod >= str(int(current_q[:4])-50) + current_q[-2:]), "DataValue"]
+        #.loc[(pct_change_raw.LineDescription == "Gross domestic product") & (pct_change_raw.TimePeriod >= str(int(current_q[:4])-50) + current_q[-2:]), "DataValue"]
+        .query('LineDescription == "Gross domestic product" and TimePeriod >= @fifty_years_ago')
+        .DataValue
         .mean()
         .round(1)
     )
