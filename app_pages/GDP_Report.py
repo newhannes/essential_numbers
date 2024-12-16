@@ -1,4 +1,8 @@
 import pdfkit
 import pandas as pd
-import workhorses.gdp_report
+from workhorses.gdp_report.main import main
+
+main()
+
+
 
