@@ -14,7 +14,10 @@ def bea_api_fetch(api_key, dataset_name, table_name, frequency, year):
     response.raise_for_status()
     data = response.json()
     data_df = pd.DataFrame(data['BEAAPI']['Results']['Data'])
-    data_df["DataValue"] = pd.to_numeric(data_df["DataValue"])
+    try:
+        data_df["DataValue"] = data_df["DataValue"].astype(float)
+    except ValueError:
+        data_df["DataValue"] = data_df["DataValue"].str.replace(',', '').astype(float)
     return data_df
 
 ## Data Helper Functions
