@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 import numpy as np
 import PyPDF2 as p2
 from io import BytesIO
-from autoreport_helpers import *
+from workhorses.gdp_report.autoreport_helpers import *
 
 ## MARK: Overview
 def scrape_release_info():
