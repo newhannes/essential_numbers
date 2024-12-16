@@ -2,7 +2,6 @@
 import pandas as pd
 import requests
 import time
-import beaapi
 import re
 import numpy as np
 
