@@ -3,8 +3,9 @@ import requests
 import time
 import beaapi
 import os
+import streamlit as st
 
-BEA_API_KEY = os.environ.get('BEA_API_KEY')
+BEA_API_KEY = st.secrets('BEA_API_KEY')
 
 ## Data Helper Functions
 def get_data_with_retry(api_key, datasetname, TableName, Frequency, Year, retries=3, delay=5):
