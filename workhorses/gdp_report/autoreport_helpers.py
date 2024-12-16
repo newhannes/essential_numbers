@@ -155,7 +155,7 @@ def generate_change_text(component_df):
     if component_name in ["Exports", "Imports"]:
         goods_val = component_df.query('LineDescription == "Goods"')["DataValue"].values[0]
         services_val = component_df.query('LineDescription == "Services"')["DataValue"].values[0]
-        change_text = f"{intro} with goods {component_name.lower()} {increase_or_decrease_text(goods_val, tense="ing")} by {goods_val:.1f} percent and services {component_name.lower()} {increase_or_decrease_text(services_val, tense='ing')} by {services_val:.1f} percent."
+        change_text = f"{intro} with goods {component_name.lower()} {increase_or_decrease_text(goods_val, tense='ing')} by {goods_val:.1f} percent and services {component_name.lower()} {increase_or_decrease_text(services_val, tense='ing')} by {services_val:.1f} percent."
             
     if component_name == "Personal consumption expenditures":
         goods_val = component_df.query('LineDescription == "Goods"')["DataValue"].values[0]
