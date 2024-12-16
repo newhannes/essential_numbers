@@ -1,13 +1,16 @@
 ######### =========== GDP REPORT --MAIN =========== #########
 
+import streamlit as st
+import os
+import datetime
+
+os.chdir("workhorses/gdp_report")
+
 from data_fetcher import fetch_all_data
 from data_processor import *
 from visualizations import generate_charts
 from report_export import generate_word_doc, generate_html_report
 
-import streamlit as st
-
-import datetime
 
 # Constants
 BEA_API_KEY = st.secrets["BEA_API_KEY"]
