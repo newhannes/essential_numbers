@@ -21,6 +21,14 @@ beige = "#F2EFE9"
 chart_background = "white"
 
 VISUALS_PATH = "output/charts"
+STYLE_PATH = "inputs/housebudget-garet.mplstyle"
+
+def apply_style():
+    if os.path.exists(STYLE_PATH):
+        plt.style.use(STYLE_PATH)
+    else:
+        print("Style file not found. Using default style.")
+        plt.style.use("default")
 
 ## MARK: Overview
 def overview_chart(pct_change_raw, current_q):
@@ -31,7 +39,7 @@ def overview_chart(pct_change_raw, current_q):
     first_q = gdp_past_2yrs.iloc[0]["TimePeriod"]
 
     ## Setup
-    plt.style.use("housebudget-garet")
+    apply_style()
     plt.rcParams['font.family'] = 'EB Garamond'
     fig, ax = plt.subplots(figsize=(8,3.5))
     fig.set_facecolor(chart_background)
@@ -82,7 +90,7 @@ def composition_chart(composition_chart_data, current_q):
     composition_chart_data = composition_chart_data[column_order] 
 
     ## Setup
-    plt.style.use("housebudget-garet")
+    apply_style()
     plt.rcParams['font.family'] = 'EB Garamond'
     fig, ax = plt.subplots(figsize=(9,4))
     fig.set_facecolor(chart_background)
@@ -147,7 +155,7 @@ def changes_chart(pct_change_raw, current_q, prior_q):
 
     ## Setup
     fig, ax = plt.subplots(figsize=(8,4.5))
-    plt.style.use("housebudget-garet")
+    apply_style()
     plt.rcParams['font.family'] = 'EB Garamond'
     fig.set_facecolor(chart_background)
     ax.set_facecolor(chart_background)

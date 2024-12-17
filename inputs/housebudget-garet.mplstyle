@@ -1,0 +1,50 @@
+# Example custom Matplotlib style
+
+# Font settings
+font.family         : Garet
+font.size           : 12.0
+
+# Figure settings
+figure.figsize      : 9, 4      # Figure size in inches (width, height)
+figure.titlesize    : 16
+figure.titleweight  : bold
+figure.facecolor    : D6E5DC
+
+# Axes settings
+axes.grid           : True      # Display grid or not
+axes.grid.axis      : y      # Which axis the grid lines apply to ('both', 'x', 'y')
+axes.grid.which     : major     # Grid lines at major, minor or both ticks ('major', 'minor', 'both')
+axes.titlesize      : 14        # Title font size
+axes.titlelocation  : left
+axes.spines.top     : False
+axes.spines.right   : False
+axes.spines.bottom  : False
+axes.spines.left    : False
+axes.prop_cycle     : cycler('color', ['004647', '84ae95', '002829', '000000'])
+axes.facecolor      : D6E5DC
+
+# ticks
+xtick.major.width  : 0.0
+xtick.minor.width   : 0.0
+ytick.color         : "grey"
+ytick.labelcolor    : inherit
+ytick.major.width   : 0.0
+ytick.minor.width   : 0.0
+
+# Line settings
+lines.linewidth     : 3.5       # Line width
+lines.markersize    : 8         # Marker size
+
+# Grid settings
+grid.color          : 0.3       # Grid color (0 to 1 grayscale)
+grid.linewidth      : 0.5       # Grid line width
+grid.alpha          : 0.2
+
+# Savefig settings
+savefig.dpi         : 400       # Resolution of saved figures in dots per inch
+savefig.format      : svg       # Default file format for saving figures ('png', 'pdf', 'svg', 'eps')
+savefig.bbox        : tight 
+
+# Customize as needed:
+# Add more parameters to suit your specific requirements
+
