@@ -74,7 +74,7 @@ def generate_html_report(OVERVIEW_TEXT, CONTRIBUTOR_TEXT, CHANGES_TEXT, REVISION
                 background-color: #f4f4f4;
             }}
             .container {{
-                width: 70%;
+                width: 80%;
                 margin: auto;
                 overflow: hidden;
             }}
@@ -83,7 +83,6 @@ def generate_html_report(OVERVIEW_TEXT, CONTRIBUTOR_TEXT, CHANGES_TEXT, REVISION
                 color: #fff;
                 padding-top: 30px;
                 min-height: 70px;
-                border-bottom: #77aaff 3px solid;
                 text-align: center;
                 width: 70%;
                 margin: 0 auto 

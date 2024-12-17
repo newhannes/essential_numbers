@@ -9,14 +9,17 @@ with st.spinner("Generating GDP Report..."):
 image_path = 'inputs/HBR_Logo_Primary.png'
 st.image(image_path)
 # display html
-st.html(html_string)
+# st.html(html_string)
+# st.image("output/charts/contributors.png")
 
-st.image("output/charts/contributors.png")
-
-st.write(html_string)
 
 # offer PDF download 
 pdf = pdfkit.from_string(html_string, False, options={"enable-local-file-access": ""})
+
+# Show the pdf 
+st.markdown(f'<embed src="data:application/pdf;base64,{pdf}" width="100%" height="800"></embed>', unsafe_allow_html=True)
+
+
 cols = st.columns([1, 1, 1])
 with cols[1]:
     st.download_button(
