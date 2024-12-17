@@ -16,6 +16,7 @@ def bea_api_fetch(api_key, dataset_name, table_name, frequency, year):
     data_df = pd.DataFrame(data['BEAAPI']['Results']['Data'])
     try:
         data_df["DataValue"] = data_df["DataValue"].astype(float)
+        data_df["LineNumber"] = data_df["LineNumber"].astype(int)
     except ValueError:
         data_df["DataValue"] = data_df["DataValue"].str.replace(',', '').astype(float)
     return data_df
