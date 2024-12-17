@@ -17,7 +17,7 @@ st.image(image_path)
 pdf = pdfkit.from_string(html_string, False, options={"enable-local-file-access": ""})
 
 # Show the pdf 
-st.markdown(f'<embed src="data:application/pdf;base64,{pdf}" width="100%" height="800"></embed>', unsafe_allow_html=True)
+st.html(f'<embed src="data:application/pdf;base64,{pdf}" width="100%" height="800"></embed>')
 
 
 cols = st.columns([1, 1, 1])
