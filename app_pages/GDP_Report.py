@@ -9,7 +9,7 @@ with st.spinner("Generating GDP Report..."):
 image_path = 'inputs/HBR_Logo_Primary.png'
 st.image(image_path)
 # display html
-html = open("output/GDP_REPORT.html", "r").read()
+html = open("output/GDP_REPORT_local.html", "r").read()
 st.html(html)
 
 st.image("output/charts/contributors.png")
