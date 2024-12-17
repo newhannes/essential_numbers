@@ -110,7 +110,7 @@ def composition_chart(composition_chart_data, current_q):
 
     ## Labels
     title = f"Percentage point contributions to GDP growth in {current_q[-2:]} {current_q[:4]}"
-    ax.set_title(title, fontsize=16, pad=25, x=-0.065, ha='left', color=dark_grey_3, fontproperties=CUSTOM_FONT)
+    ax.set_title(title, fontproperties=CUSTOM_FONT, fontsize=16, pad=25, x=-0.065, ha='left', color=dark_grey_3)
     ax.set_ylabel("")
 
     ## Format
