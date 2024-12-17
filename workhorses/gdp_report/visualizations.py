@@ -46,7 +46,7 @@ def overview_chart(pct_change_raw, current_q):
 
     ## Setup
     apply_style()
-    plt.rcParams['font.family'] = CUSTOM_FONT_NAME
+    plt.rcParams['font.family'] = "EB Garamond"
     fig, ax = plt.subplots(figsize=(8,3.5))
     fig.set_facecolor(chart_background)
     ax.set_facecolor(chart_background)
