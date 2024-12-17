@@ -13,6 +13,8 @@ st.html(html_string)
 
 st.image("output/charts/contributors.png")
 
+st.write(html_string)
+
 # offer PDF download 
 pdf = pdfkit.from_string(html_string, False, options={"enable-local-file-access": ""})
 cols = st.columns([1, 1, 1])
