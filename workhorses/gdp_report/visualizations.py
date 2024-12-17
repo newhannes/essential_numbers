@@ -22,7 +22,7 @@ beige = "#F2EFE9"
 chart_background = "white"
 
 VISUALS_PATH = "output/charts"
-STYLE_PATH = "inputs/housebudget-garet.mplstyle"
+STYLE_PATH = "inputs/housebudget-ebgaramond.mplstyle"
 FONT_PATH = "inputs/EBGaramond-VariableFont_wght.ttf"
 
 CUSTOM_FONT = font_manager.FontProperties(fname=FONT_PATH)
@@ -45,7 +45,7 @@ def overview_chart(pct_change_raw, current_q):
 
     ## Setup
     apply_style()
-    plt.rcParams['font.sans-serif'] = "EB Garamond"
+    # plt.rcParams['font.sans-serif'] = "EB Garamond"
     fig, ax = plt.subplots(figsize=(8,3.5))
     fig.set_facecolor(chart_background)
     ax.set_facecolor(chart_background)
