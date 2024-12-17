@@ -128,7 +128,7 @@ def composition_chart(composition_chart_data, current_q):
 
     ## Fig 
     fig_contributors = plt.gcf()
-    fig.savefig(f"../{VISUALS_PATH}/contributors.png", bbox_inches='tight', dpi=300)
+    fig.savefig(f"{VISUALS_PATH}/contributors.png", bbox_inches='tight', dpi=300)
 
 ## MARK: Changes
 def changes_chart(pct_change_raw, current_q, prior_q):
