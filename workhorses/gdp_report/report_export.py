@@ -31,7 +31,7 @@ def generate_word_doc(OVERVIEW_TEXT, CONTRIBUTOR_TEXT, CHANGES_TEXT, REVISION_TE
     # Add Changes This Quarter Section
     doc.add_heading('Changes This Quarter', level=2)
     doc.add_paragraph(CHANGES_TEXT)
-    doc.add_picture(f'../../{VISUALS_PATH}/growth_comparison.png', width=Inches(6))
+    doc.add_picture(f'../{VISUALS_PATH}/growth_comparison.png', width=Inches(6))
     last_paragraph = doc.paragraphs[-1]
     last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
