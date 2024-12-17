@@ -45,7 +45,7 @@ def overview_chart(pct_change_raw, current_q):
 
     ## Setup
     apply_style()
-    plt.rcParams['font.family'] = CUSTOM_FONT
+    # plt.rcParams['font.family'] = CUSTOM_FONT
     fig, ax = plt.subplots(figsize=(8,3.5))
     fig.set_facecolor(chart_background)
     ax.set_facecolor(chart_background)
@@ -161,7 +161,7 @@ def changes_chart(pct_change_raw, current_q, prior_q):
     ## Setup
     fig, ax = plt.subplots(figsize=(8,4.5))
     apply_style()
-    plt.rcParams['font.family'] = CUSTOM_FONT_NAME
+    # plt.rcParams['font.family'] = CUSTOM_FONT_NAME
     fig.set_facecolor(chart_background)
     ax.set_facecolor(chart_background)
 
