@@ -26,8 +26,7 @@ STYLE_PATH = "inputs/housebudget-garet.mplstyle"
 FONT_PATH = "inputs/EBGaramond-VariableFont_wght.ttf"
 
 CUSTOM_FONT = font_manager.FontProperties(fname=FONT_PATH)
-CUSTOM_FONT_NAME = CUSTOM_FONT.get_name()
-print(f"Using custom font: {CUSTOM_FONT_NAME}")
+
 
 def apply_style():
     if os.path.exists(STYLE_PATH):
@@ -46,7 +45,7 @@ def overview_chart(pct_change_raw, current_q):
 
     ## Setup
     apply_style()
-    plt.rcParams['font.family'] = "EB Garamond"
+    plt.rcParams['font.family'] = CUSTOM_FONT
     fig, ax = plt.subplots(figsize=(8,3.5))
     fig.set_facecolor(chart_background)
     ax.set_facecolor(chart_background)
@@ -97,7 +96,7 @@ def composition_chart(composition_chart_data, current_q):
 
     ## Setup
     apply_style()
-    plt.rcParams['font.family'] = CUSTOM_FONT_NAME
+    # plt.rcParams['font.family'] = CUSTOM_FONT_NAME
     fig, ax = plt.subplots(figsize=(9,4))
     fig.set_facecolor(chart_background)
     ax.set_facecolor(chart_background)
@@ -111,7 +110,7 @@ def composition_chart(composition_chart_data, current_q):
 
     ## Labels
     title = f"Percentage point contributions to GDP growth in {current_q[-2:]} {current_q[:4]}"
-    ax.set_title(title, fontsize=16, pad=25, x=-0.065, ha='left', color=dark_grey_3)
+    ax.set_title(title, fontsize=16, pad=25, x=-0.065, ha='left', color=dark_grey_3, fontproperties=CUSTOM_FONT)
     ax.set_ylabel("")
 
     ## Format
