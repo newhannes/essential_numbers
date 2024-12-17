@@ -10,10 +10,10 @@ image_path = 'inputs/HBR_Logo_Primary.png'
 st.image(image_path)
 # display html
 html = open("output/GDP_REPORT.html", "r").read()
-st.write(html)
+st.html(html)
 
 # offer PDF download 
-pdf = pdfkit.from_file("output/GDP_REPORT.html", "output/GDP_REPORT.pdf")
+pdf = pdfkit.from_string(html, False)
 cols = st.columns([1, 1, 1])
 with cols[1]:
     st.download_button(
