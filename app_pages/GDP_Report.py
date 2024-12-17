@@ -12,6 +12,8 @@ st.image(image_path)
 html = open("output/GDP_REPORT.html", "r").read()
 st.html(html)
 
+st.image("output/charts/contributors.png")
+
 # offer PDF download 
 pdf = pdfkit.from_string(html, False)
 cols = st.columns([1, 1, 1])
