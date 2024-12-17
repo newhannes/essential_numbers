@@ -156,7 +156,9 @@ def generate_html_report(OVERVIEW_TEXT, CONTRIBUTOR_TEXT, CHANGES_TEXT, REVISION
     </body>
     </html>
     """
-
+    
     # Save the HTML content to a file
     with open("output/GDP_REPORT.html", "w") as file:
         file.write(html_content)
+
+    return html_content

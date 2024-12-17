@@ -58,9 +58,9 @@ def main():
     generate_word_doc(overview_text, contributors_text, changes_text, revision_text)
 
     ## Export to HTML
-    generate_html_report(overview_text, contributors_text, changes_text, revision_text)
-
-    print("GDP Report Generation Complete!\n")
+    html_string = generate_html_report(overview_text, contributors_text, changes_text, revision_text)
+    
+    return html_string
 
 if __name__ == "__main__":
     main()
