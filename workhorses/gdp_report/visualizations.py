@@ -27,6 +27,7 @@ FONT_PATH = "inputs/EBGaramond-VariableFont_wght.ttf"
 
 CUSTOM_FONT = font_manager.FontProperties(fname=FONT_PATH)
 CUSTOM_FONT_NAME = CUSTOM_FONT.get_name()
+print(f"Using custom font: {CUSTOM_FONT_NAME}")
 
 def apply_style():
     if os.path.exists(STYLE_PATH):
