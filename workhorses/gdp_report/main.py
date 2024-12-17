@@ -52,7 +52,7 @@ def main():
         revision_text = None
 
     ## Generate Visualizations
-    generate_charts(pct_change_raw, contributors_chart_data, revision_data, CURRENT_QUARTER, PREVIOUS_QUARTER, release_stage, original)
+    #generate_charts(pct_change_raw, contributors_chart_data, revision_data, CURRENT_QUARTER, PREVIOUS_QUARTER, release_stage, original)
 
     ## Export to Word
     generate_word_doc(overview_text, contributors_text, changes_text, revision_text)
