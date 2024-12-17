@@ -134,21 +134,21 @@ def generate_html_report(OVERVIEW_TEXT, CONTRIBUTOR_TEXT, CHANGES_TEXT, REVISION
                 <h2>Overview</h2>
                 <p>{OVERVIEW_TEXT}</p>
                 <div class="chart">
-                    <img src="../../{VISUALS_PATH}/since22.png" alt="Annualized real GDP growth since Q1 2022">
+                    <img src="{VISUALS_PATH}/since22.png" alt="Annualized real GDP growth since Q1 2022">
                 </div>
             </section>
             <section>
                 <h2>Contributors to GDP Growth</h2>
                 <p>{CONTRIBUTOR_TEXT}</p>
                 <div class="chart">
-                    <img src="../{VISUALS_PATH}/contributors.png" alt="Percentage point contributions to GDP growth">
+                    <img src="{VISUALS_PATH}/contributors.png" alt="Percentage point contributions to GDP growth">
                 </div>
             </section>
             <section>
                 <h2>Changes This Quarter</h2>
                 <p>{CHANGES_TEXT}</p>
                 <div class="chart">
-                    <img src="/mount/src/essential_numbers/inputs/charts/growth_comparison.png" alt="Growth in GDP components in Q3 2024">
+                    <img src="/mount/src/essential_numbers/output/charts/growth_comparison.png" alt="Growth in GDP components in Q3 2024">
                 </div>
             </section>
             {revision_html}
