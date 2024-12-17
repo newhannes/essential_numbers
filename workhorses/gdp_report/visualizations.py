@@ -2,6 +2,7 @@
 
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
+from matplotlib import font_manager
 import seaborn as sns
 import pandas as pd
 from datetime import datetime
@@ -22,6 +23,10 @@ chart_background = "white"
 
 VISUALS_PATH = "output/charts"
 STYLE_PATH = "inputs/housebudget-garet.mplstyle"
+FONT_PATH = "inputs/EBGaramond-VariableFont_wght.ttf"
+
+custom_font = font_manager.FontProperties(fname=FONT_PATH)
+plt.rcParams['font.family'] = 'EB Garamond'
 
 def apply_style():
     if os.path.exists(STYLE_PATH):
