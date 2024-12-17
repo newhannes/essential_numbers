@@ -75,7 +75,7 @@ def overview_chart(pct_change_raw, current_q):
             adjust = 0.5 if val > 0 else -0.4
             adjust = 0 if (val > 0 and val < 0.7) else adjust # bar is too short to fit the label
             va = 'bottom' if val > 0 else 'top'
-        bars.text(i, val - adjust, f"{val:.1f}%", color=color, ha='center', va=va, fontweight=fontweight, fontsize=fontsize)
+        bars.text(i, val - adjust, f"{val:.1f}", color=color, ha='center', va=va, fontweight=fontweight, fontsize=fontsize)
 
     ## Save
     fig_since22 = ax.get_figure()
