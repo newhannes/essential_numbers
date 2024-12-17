@@ -31,7 +31,7 @@ def generate_word_doc(OVERVIEW_TEXT, CONTRIBUTOR_TEXT, CHANGES_TEXT, REVISION_TE
     # Add Changes This Quarter Section
     doc.add_heading('Changes This Quarter', level=2)
     doc.add_paragraph(CHANGES_TEXT)
-    doc.add_picture(f'../{VISUALS_PATH}/growth_comparison.png', width=Inches(6))
+    doc.add_picture(f'{VISUALS_PATH}/growth_comparison.png', width=Inches(6))
     last_paragraph = doc.paragraphs[-1]
     last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
@@ -134,14 +134,14 @@ def generate_html_report(OVERVIEW_TEXT, CONTRIBUTOR_TEXT, CHANGES_TEXT, REVISION
                 <h2>Overview</h2>
                 <p>{OVERVIEW_TEXT}</p>
                 <div class="chart">
-                    <img src="{VISUALS_PATH}/since22.png" alt="Annualized real GDP growth since Q1 2022">
+                    <img src="../../{VISUALS_PATH}/since22.png" alt="Annualized real GDP growth since Q1 2022">
                 </div>
             </section>
             <section>
                 <h2>Contributors to GDP Growth</h2>
                 <p>{CONTRIBUTOR_TEXT}</p>
                 <div class="chart">
-                    <img src="{VISUALS_PATH}/contributors.png" alt="Percentage point contributions to GDP growth">
+                    <img src="../{VISUALS_PATH}/contributors.png" alt="Percentage point contributions to GDP growth">
                 </div>
             </section>
             <section>
