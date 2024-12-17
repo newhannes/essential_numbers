@@ -25,8 +25,8 @@ VISUALS_PATH = "output/charts"
 STYLE_PATH = "inputs/housebudget-garet.mplstyle"
 FONT_PATH = "inputs/EBGaramond-VariableFont_wght.ttf"
 
-custom_font = font_manager.FontProperties(fname=FONT_PATH)
-plt.rcParams['font.family'] = 'EB Garamond'
+CUSTOM_FONT = font_manager.FontProperties(fname=FONT_PATH)
+CUSTOM_FONT_NAME = CUSTOM_FONT.get_name()
 
 def apply_style():
     if os.path.exists(STYLE_PATH):
@@ -45,7 +45,7 @@ def overview_chart(pct_change_raw, current_q):
 
     ## Setup
     apply_style()
-    plt.rcParams['font.family'] = 'EB Garamond'
+    plt.rcParams['font.family'] = CUSTOM_FONT_NAME
     fig, ax = plt.subplots(figsize=(8,3.5))
     fig.set_facecolor(chart_background)
     ax.set_facecolor(chart_background)
@@ -96,7 +96,7 @@ def composition_chart(composition_chart_data, current_q):
 
     ## Setup
     apply_style()
-    plt.rcParams['font.family'] = 'EB Garamond'
+    plt.rcParams['font.family'] = CUSTOM_FONT_NAME
     fig, ax = plt.subplots(figsize=(9,4))
     fig.set_facecolor(chart_background)
     ax.set_facecolor(chart_background)
@@ -161,7 +161,7 @@ def changes_chart(pct_change_raw, current_q, prior_q):
     ## Setup
     fig, ax = plt.subplots(figsize=(8,4.5))
     apply_style()
-    plt.rcParams['font.family'] = 'EB Garamond'
+    plt.rcParams['font.family'] = CUSTOM_FONT_NAME
     fig.set_facecolor(chart_background)
     ax.set_facecolor(chart_background)
 
