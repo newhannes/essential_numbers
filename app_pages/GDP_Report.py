@@ -15,7 +15,7 @@ st.html(html)
 st.image("output/charts/contributors.png")
 
 # offer PDF download 
-pdf = pdfkit.from_string(html, False)
+pdf = pdfkit.from_string(html, False, options={"enable-local-file-access": ""})
 cols = st.columns([1, 1, 1])
 with cols[1]:
     st.download_button(

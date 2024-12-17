@@ -53,7 +53,7 @@ def generate_html_report(OVERVIEW_TEXT, CONTRIBUTOR_TEXT, CHANGES_TEXT, REVISION
                     <h2>Revisions</h2>
                     <p>{REVISION_TEXT}</p>
                     <div class="table">
-                        <img src="../{VISUALS_PATH}/revisions.png" alt="Revisions to Growth in 3rd Estimate">
+                        <img src="{VISUALS_PATH}/revisions.png" alt="Revisions to Growth in 3rd Estimate">
                     </div>
                 </section>"""
     else:
@@ -148,7 +148,7 @@ def generate_html_report(OVERVIEW_TEXT, CONTRIBUTOR_TEXT, CHANGES_TEXT, REVISION
                 <h2>Changes This Quarter</h2>
                 <p>{CHANGES_TEXT}</p>
                 <div class="chart">
-                    <img src="{VISUALS_PATH}/growth_comparison.png" alt="Growth in GDP components in Q3 2024">
+                    <img src="/mount/src/essential_numbers/inputs/charts/growth_comparison.png" alt="Growth in GDP components in Q3 2024">
                 </div>
             </section>
             {revision_html}
