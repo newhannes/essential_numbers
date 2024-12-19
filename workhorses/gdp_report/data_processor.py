@@ -127,7 +127,7 @@ def generate_contributors_text(main_contributors_df, contributors_expanded_df, m
     Within {contributors[0].NAME.lower()}, {explainers[0].NAME.lower()} {get_qualifier(contributors[0], explainers[0])} was the largest contributor and made up {explainers[0].DataValue / real_gdp * 100:.0f} percent of growth.
     The second largest contributor was {contributors[1].NAME.lower()} which accounted for {contributors[1].share_of_growth:.0f} percent of total growth, with {explainers[1].NAME.lower()} {get_qualifier(contributors[1], explainers[1])} 
     driving the contribution of {contributors[1].NAME.lower()}. 
-    {contributors[2].NAME} accounted for {contributors[2].share_of_growth:.0f} percent of total growth, with this growth primarily attributable to {explainers[3].NAME.lower()} {get_qualifier(contributors[2], explainers[3])}.
+    {contributors[2].NAME} accounted for {contributors[2].share_of_growth:.0f} percent of total growth, with this growth primarily attributable to {explainers[2].NAME.lower()} {get_qualifier(contributors[2], explainers[2])}.
     {contributors[3].NAME} comprised {contributors[3].share_of_growth:.0f} percent of total growth. 
     {contributors[4].NAME} accounted for {contributors[4].share_of_growth:.0f} percent of total growth.
     """
