@@ -14,4 +14,4 @@ tableau_embed = """
 
 st.html(tableau_embed)
 
-components.html(tableau_embed)
+#components.html(tableau_embed)
