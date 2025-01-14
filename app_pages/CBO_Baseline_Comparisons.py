@@ -39,8 +39,7 @@ if component:
         subcategory = st.selectbox("Select a subcategory", subcategories)
 
         if subcategory:
-            filtered_baseline = filtered_baseline[filtered_baseline["subcategory"] == subcategory]
-            projected_years = filtered_baseline["projected_fiscal_year"].unique()
+            projected_years = sorted(set(current_baseline["projected_fiscal_year"]) & set(prior_baseline["projected_fiscal_year"]))
             projected_yr = st.selectbox("Select a year", projected_years)
 
 ten_year_sum = st.checkbox("Sum over 10 years")
