@@ -44,16 +44,16 @@ component = st.selectbox("Select a component", components)
 
 if component:
     filtered_baseline = current_baseline[current_baseline["component"] == component]
-    categories = filtered_baseline["category"][filtered_baseline["category"].isin(prior_baseline["category"])]
+    categories = set(filtered_baseline["category"]) & set(prior_baseline["category"])
     category = st.selectbox("Select a category", categories)
 
     if category:
         filtered_baseline = filtered_baseline[filtered_baseline["category"] == category]
-        subcategories = filtered_baseline["subcategory"][filtered_baseline["subcategory"].isin(prior_baseline["subcategory"])]
+        subcategories = set(filtered_baseline["subcategory"]) & set(prior_baseline["subcategory"])
         subcategory = st.selectbox("Select a subcategory", subcategories)
 
         if subcategory:
-            projected_years = sorted(filtered_baseline["projected_fiscal_year"][filtered_baseline["projected_fiscal_year"].isin(prior_baseline["projected_fiscal_year"])])
+            projected_years = sorted(set(current_baseline["projected_fiscal_year"]) & set(prior_baseline["projected_fiscal_year"]))
             projected_yr = st.selectbox("Select a year", projected_years)
 
 ten_year_sum = st.checkbox("Sum over 10 years (ignores year selection)")
