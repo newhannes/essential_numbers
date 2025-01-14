@@ -7,7 +7,7 @@ import streamlit as st
 from workhorses.comparing_baselines import get_mega_baseline_dataframe, compare_current_baseline_to_previous, get_baseline_data
 
 # Load the data
-cbo_csv_url = "https://github.com/US-CBO/eval-projections/blob/main/input_data/baselines.csv"
+cbo_csv_url = "https://raw.githubusercontent.com/US-CBO/eval-projections/refs/heads/main/input_data/baselines.csv"
 baselines = get_mega_baseline_dataframe(cbo_csv_url)
 
 # Current and Prior Baselines
