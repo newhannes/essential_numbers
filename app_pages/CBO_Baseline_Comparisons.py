@@ -20,7 +20,7 @@ baselines = get_mega_baseline_dataframe(cbo_csv_url)
 
 # Current and Prior Baselines
 unique_baselines = baselines.index.unique().sort_values()
-unique_baselines_names = [baseline.strftime("%B %Y") for baseline in unique_baselines]
+unique_baselines_names = [baseline.strftime("%B %Y") for baseline in unique_baselines][::-1] # Reverse order for display
 
 first_baseline = st.selectbox("Select a baseline", unique_baselines_names)
 second_baseline = st.selectbox("Select another baseline", unique_baselines_names)
@@ -39,7 +39,6 @@ prior_baseline_date = prior_baseline.baseline_name.unique()[0]
 # Streamlit Page
 # -------------------
 
-
 # User input for component, category, subcategory, and projected year
 component = st.selectbox("Select a component", components)
 
@@ -50,7 +49,7 @@ if component:
 
     if category:
         filtered_baseline = filtered_baseline[filtered_baseline["category"] == category]
-        subcategories = filtered_baseline["subcategory"].unique()
+        subcategories = set(filtered_baseline["subcategory"]) & set(prior_baseline["subcategory"])
         subcategory = st.selectbox("Select a subcategory", subcategories)
 
         if subcategory:
