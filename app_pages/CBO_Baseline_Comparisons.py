@@ -73,6 +73,6 @@ st.markdown(f"Percent Change: **{((current_val - prior_val) / prior_val) * 100:.
 # Option to view the data
 if st.button("View the data"):
     st.markdown(f"## {current_baseline_date}")
-    st.write(get_baseline_data(current_baseline_date, baselines, component, category, subcategory, projected_yr))
+    st.write(current_baseline)
     st.markdown(f"## {prior_baseline_date}")
-    st.write(get_baseline_data(prior_baseline_date, baselines, component, category, subcategory, projected_yr))
+    st.write(prior_baseline)
