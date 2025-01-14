@@ -17,30 +17,32 @@ baselines = get_mega_baseline_dataframe(cbo_csv_url)
 unique_baselines = baselines.index.unique().sort_values()
 current_baseline = baselines.loc[unique_baselines[-1]]
 prior_baseline = baselines.loc[unique_baselines[-2]]
-
-# Options for component, category, and subcategory
 components = current_baseline.component.unique()
-categories = current_baseline.category.unique()
-subcategories = current_baseline.subcategory.unique()
-projected_years = current_baseline.projected_fiscal_year.unique()
-
+current_baseline_date = current_baseline.baseline_name.unique()[0]
+prior_baseline_date = prior_baseline.baseline_name.unique()[0]
 
 # Streamlit Page
 # -------------------
 st.title("CBO Baseline Comparisons")
 
-# User input for component, category, and subcategory
+# User input for component, category, subcategory, and projected year
 component = st.selectbox("Select a component", components)
 
 if component:
-    category = st.selectbox("Select a category", current_baseline.query(f"component == '{component}'").category.unique())
-if category:
-    subcategory = st.selectbox("Select a subcategory", current_baseline.query(f"component == '{component}' and category == '{category}'").subcategory.unique())
-if subcategory:
-    projected_yr = st.selectbox("Select a year", current_baseline.query(f"component == '{component}' and category == '{category}' and subcategory == '{subcategory}'").projected_fiscal_year.unique())
+    filtered_baseline = current_baseline[current_baseline["component"] == component]
+    categories = filtered_baseline["category"].unique()
+    category = st.selectbox("Select a category", categories)
 
-# subcategory = st.selectbox("Select a subcategory", subcategories)
-# projected_yr = st.selectbox("Select a year", projected_years)
+    if category:
+        filtered_baseline = filtered_baseline[filtered_baseline["category"] == category]
+        subcategories = filtered_baseline["subcategory"].unique()
+        subcategory = st.selectbox("Select a subcategory", subcategories)
+
+        if subcategory:
+            filtered_baseline = filtered_baseline[filtered_baseline["subcategory"] == subcategory]
+            projected_years = filtered_baseline["projected_fiscal_year"].unique()
+            projected_yr = st.selectbox("Select a year", projected_years)
+
 ten_year_sum = st.checkbox("Sum over 10 years")
 
 # Get the comparison
@@ -49,7 +51,8 @@ current_val, prior_val = compare_current_baseline_to_previous(current_baseline, 
                                                               projected_yr, ten_year_sum=ten_year_sum) 
 
 # Display the comparison
-st.write(f"Current Value: ${current_val:,.0f}")
-st.write(f"Prior Value: {prior_val:,.0f}")
+st.write(f"{current_baseline_date}: ${current_val:,.0f}")
+st.markdown(f"{current_baseline_date}: *${current_val:,.0f}*")
+st.write(f"{prior_baseline_date}: ${prior_val:,.0f}")
 st.write(f"Difference: {current_val - prior_val:,.0f}")
 st.write(f"Percent Change: {((current_val - prior_val) / prior_val) * 100:.1f}%")
