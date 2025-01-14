@@ -52,7 +52,7 @@ current_val, prior_val = compare_current_baseline_to_previous(current_baseline, 
 
 # Display the comparison
 st.write(f"{current_baseline_date}: ${current_val:,.0f}")
-st.markdown(f"{current_baseline_date}: *${current_val:,.0f}*")
+st.markdown(f"{current_baseline_date}: **${current_val:,.0f}**")
 st.write(f"{prior_baseline_date}: ${prior_val:,.0f}")
 st.write(f"Difference: {current_val - prior_val:,.0f}")
 st.write(f"Percent Change: {((current_val - prior_val) / prior_val) * 100:.1f}%")
