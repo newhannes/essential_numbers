@@ -6,6 +6,11 @@
 import streamlit as st
 from workhorses.comparing_baselines import get_mega_baseline_dataframe, compare_current_baseline_to_previous, get_baseline_data
 
+# Streamlit Title
+# -----------------
+st.title("CBO Baseline Comparisons")
+st.write("Values are in billions of dollars.")
+
 # Preparation
 # -----------------
 
@@ -15,15 +20,25 @@ baselines = get_mega_baseline_dataframe(cbo_csv_url)
 
 # Current and Prior Baselines
 unique_baselines = baselines.index.unique().sort_values()
-current_baseline = baselines.loc[unique_baselines[-1]]
-prior_baseline = baselines.loc[unique_baselines[-2]]
+unique_baselines_names = [baseline.strftime("%B %Y") for baseline in unique_baselines]
+
+first_baseline = st.selectbox("Select a baseline", unique_baselines_names)
+second_baseline = st.selectbox("Select another baseline", unique_baselines_names)
+
+current_baseline = baselines[baselines.baseline_name == first_baseline]
+prior_baseline = baselines[baselines.baseline_name == second_baseline]
+# current_baseline = baselines.loc[unique_baselines[-1]]
+# prior_baseline = baselines.loc[unique_baselines[-2]]
+
+
 components = current_baseline.component.unique()
+
 current_baseline_date = current_baseline.baseline_name.unique()[0]
 prior_baseline_date = prior_baseline.baseline_name.unique()[0]
 
 # Streamlit Page
 # -------------------
-st.title("CBO Baseline Comparisons")
+
 
 # User input for component, category, subcategory, and projected year
 component = st.selectbox("Select a component", components)
