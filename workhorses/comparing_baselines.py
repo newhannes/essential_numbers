@@ -13,7 +13,7 @@ def get_mega_baseline_dataframe(url):
         .drop(columns=["Spring_flag", "Winter_flag"])
         .assign(
             baseline_date = lambda x: pd.to_datetime(x["baseline_date"], format="%Y-%m-%d"),
-            baseline_name = lambda x: x["baseline_date"].strftime("%B %Y")
+            baseline_name = lambda x: x["baseline_date"].str.strftime("%B %Y")
             )
         .set_index("baseline_date")
     )
