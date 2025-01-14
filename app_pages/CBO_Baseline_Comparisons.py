@@ -45,7 +45,7 @@ component = st.selectbox("Select a component", components)
 
 if component:
     filtered_baseline = current_baseline[current_baseline["component"] == component]
-    categories = filtered_baseline["category"].unique()
+    categories = set(filtered_baseline["category"]) & set(prior_baseline["category"])
     category = st.selectbox("Select a category", categories)
 
     if category:
