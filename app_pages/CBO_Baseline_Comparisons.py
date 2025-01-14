@@ -57,7 +57,7 @@ if component:
             projected_years = sorted(set(current_baseline["projected_fiscal_year"]) & set(prior_baseline["projected_fiscal_year"]))
             projected_yr = st.selectbox("Select a year", projected_years)
 
-ten_year_sum = st.checkbox("Sum over 10 years")
+ten_year_sum = st.checkbox("Sum over 10 years (ignores year selection)")
 
 # Get the comparison
 current_val, prior_val = compare_current_baseline_to_previous(current_baseline, prior_baseline, 
@@ -69,3 +69,10 @@ st.markdown(f"{current_baseline_date}: **${current_val:,.0f}**")
 st.markdown(f"{prior_baseline_date}: **${prior_val:,.0f}**")
 st.markdown(f"Difference: **{current_val - prior_val:,.0f}**")
 st.markdown(f"Percent Change: **{((current_val - prior_val) / prior_val) * 100:.1f}%**")
+
+# Option to view the data
+if st.button("View the data"):
+    st.markdown(f"## {current_baseline_date}")
+    st.write(get_baseline_data(current_baseline_date, baselines, component, category, subcategory, projected_yr))
+    st.markdown(f"## {prior_baseline_date}")
+    st.write(get_baseline_data(prior_baseline_date, baselines, component, category, subcategory, projected_yr))
