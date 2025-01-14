@@ -70,8 +70,10 @@ st.markdown(f"Difference: **{current_val - prior_val:,.0f}**")
 st.markdown(f"Percent Change: **{((current_val - prior_val) / prior_val) * 100:.1f}%**")
 
 # Option to view the data
-if st.button("View the data"):
+if st.button("View the raw data"):
     st.markdown(f"## {current_baseline_date}")
     st.write(current_baseline)
+    st.write(current_baseline.shape)
     st.markdown(f"## {prior_baseline_date}")
     st.write(prior_baseline)
+    st.write(prior_baseline.shape)
