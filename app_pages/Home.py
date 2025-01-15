@@ -15,9 +15,18 @@ tableau_embed = """
 # st.write("using st.html:")
 # st.html(tableau_embed)
 
-st.write("using components:")
-components.html(tableau_embed, 
-                width=800, 
-                height=800, 
-                scrolling=True)
+password = st.text_input("Enter password", type="password")
+
+if password == st.secrets["PASSWORD"]:
+    st.write("using components:")
+    components.html(tableau_embed, 
+                    width=800, 
+                    height=800, 
+                    scrolling=True)
+
+# st.write("using components:")
+# components.html(tableau_embed, 
+#                 width=800, 
+#                 height=800, 
+#                 scrolling=True)
 
