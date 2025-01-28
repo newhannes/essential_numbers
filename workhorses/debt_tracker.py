@@ -14,7 +14,7 @@ def debt_tracker_main():
     biden_start = date(2021,1,20)
     biden_end = date(2024,1,20)
     biden_start_str = '2021-01-20'
-    biden_end_str = '2024-01-20'
+    biden_end_str = '2025-01-20'
     biden_days = (biden_end - biden_start).days
     biden_months = biden_days/ 30.45 #average month length
 
