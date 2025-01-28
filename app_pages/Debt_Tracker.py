@@ -33,7 +33,7 @@ basic_debt_html = f"""
             <li><strong>${dt['debt_per_child']:,}</strong> per child</li>
         </ul>
         <h2>Debt Accumulation under Biden-Harris</h2>
-        <p>When President Biden and VP Harris took office total gross debt was <strong>${dt['biden_start_debt_rounded']:,} trillion</strong>, meaning they have increased the national debt by <strong>${dt['biden_debt_rounded']:,} trillion</strong>. This equates to:</p>
+        <p>When President Biden and VP Harris took office total gross debt was <strong>${dt['biden_start_debt_rounded']:,} trillion</strong>, when they left office the debt was <strong>${dt["biden_end_debt_rounded"]} trillion </strong> meaning they increased the debt by <strong>${dt['biden_debt_rounded']:,} trillion</strong>. This equates to:</p>
         <ul>
             <li><strong>${dt['biden_debt_per_person']:,}</strong> more debt per person</li>
             <li><strong>${dt['biden_debt_per_household']:,}</strong> more debt per household</li>

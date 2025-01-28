@@ -88,6 +88,7 @@ def debt_tracker_main():
                 'debt_per_household':debt_per_household,
                 'debt_per_child':debt_per_child,
                 'biden_start_debt_rounded':biden_start_debt_rounded,
+                'biden_end_debt_rounded':biden_end_debt_rounded,
                 'biden_debt_rounded':biden_debt_rounded,
                 'biden_debt_per_person':biden_debt_per_person,
                 'biden_debt_per_household':biden_debt_per_household,
