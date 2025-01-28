@@ -42,7 +42,7 @@ def debt_tracker_main():
     biden_start_debt = debt_df.loc[debt_df["record_date"] == biden_start_str, "tot_pub_debt_out_amt"].values[0]
     biden_start_debt_rounded = round(biden_start_debt/1e+12, 2)
     # Biden End
-    biden_end_debt = debt_df.loc[debt_df["record_date"] == biden_end_str, "tot_pub_debt_out_amt"].values[0]
+    biden_end_debt = debt_df.loc[debt_df["record_date"] <= biden_end_str, "tot_pub_debt_out_amt"].values[0]
     biden_end_debt_rounded = round(biden_end_debt/1e+12, 2)
     # Year Ago
     debt_df['record_date'] = pd.to_datetime(debt_df['record_date'])
