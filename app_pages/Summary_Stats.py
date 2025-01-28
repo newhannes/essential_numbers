@@ -93,9 +93,9 @@ html = f'''
                     <ul>
                         <li>This means that the average family of four is paying an additional <b>${kole_inc:,} per year or ${mon_kole_inc:,} per month</b> to purchase the same goods and services as in January 2021.</li>
                     </ul>
-                <li>Since President Biden took office, <b>food</b> prices are up <b>{food_biden} percent</b>;
-                    <b>energy</b> prices have risen <b>{energy_biden} percent</b>; and 
-                    <b>housing</b> prices are up <b>{housing_biden} percent</b></li>                                     
+                <li>Under President Biden, <b>food</b> prices increased <b>{food_biden} percent</b>;
+                    <b>energy</b> prices increased <b>{energy_biden} percent</b>; and 
+                    <b>housing</b> prices increased <b>{housing_biden} percent</b></li>                                     
             </ul>
             <h2><b>Job Market and Wages</b></h2>
             <p>The labor market has not returned to its pre-Covid strength. For example:</p>
@@ -109,7 +109,7 @@ html = f'''
                     </ul>
             </ul>
             <h2><b>Interest Rates</b></h2>
-            <p>Due to Biden's inflation crisis, interest rates have risen dramatically:</p>
+            <p>Due to President Biden's inflation crisis, interest rates rose dramatically:</p>
             <ul>
                 <li>When President Biden took office, the Federal Funds Rate was between <b>0 and 0.25 percent</b>. Now, the Federal Funds Rate sits between <b>{fed_target_lower_now} and {fed_target_upper_now} percent</b>
                 <li>The 10-year treasury yield in January 2021 was <b>{treasury_10_biden_start} percent</b>, now the 10-year yield is <b>{treasury_10_now} percent</b></li>
@@ -117,7 +117,7 @@ html = f'''
             <h2><b>Oil and Gas Prices</b></h2>
             <p>President Biden's disastrous energy policy has caused oil and gas prices to skyrocket:</p>
             <ul>         
-                <li>When President Trump was in office, the average for a gallon of gas was <b>${gas_trump_average}</b>, and the average price per barrel of oil was <b>$53.11</b></li>
+                <li>In President Trump's first term, the average for a gallon of gas was <b>${gas_trump_average}</b>, and the average price per barrel of oil was <b>$53.11</b></li>
                 <li>Now, a gallon of gas is <b>${gas_now}</b> and a barrel of WTI crude oil is <b>${oil_now}</b></li>
             </ul>
             <h2><b>Debt Tracker</b></h2>

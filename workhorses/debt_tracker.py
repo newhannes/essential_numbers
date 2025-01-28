@@ -12,8 +12,10 @@ def debt_tracker_main():
     fred = Fred()
     today = date.today()
     biden_start = date(2021,1,20)
+    biden_end = date(2024,1,20)
     biden_start_str = '2021-01-20'
-    biden_days = (today - biden_start).days
+    biden_end_str = '2024-01-20'
+    biden_days = (biden_end - biden_start).days
     biden_months = biden_days/ 30.45 #average month length
 
     ### Treasury API ###
@@ -39,6 +41,9 @@ def debt_tracker_main():
     # Biden Start
     biden_start_debt = debt_df.loc[debt_df["record_date"] == biden_start_str, "tot_pub_debt_out_amt"].values[0]
     biden_start_debt_rounded = round(biden_start_debt/1e+12, 2)
+    # Biden End
+    biden_end_debt = debt_df.loc[debt_df["record_date"] == biden_end_str, "tot_pub_debt_out_amt"].values[0]
+    biden_end_debt_rounded = round(biden_end_debt/1e+12, 2)
     # Year Ago
     debt_df['record_date'] = pd.to_datetime(debt_df['record_date'])
     most_recent_date = debt_df['record_date'].iloc[-1]
@@ -53,7 +58,7 @@ def debt_tracker_main():
     debt_per_household = round(current_debt / current_households)
     debt_per_child = round(current_debt / current_child_population)
     # Since Biden
-    biden_debt = current_debt - biden_start_debt
+    biden_debt = biden_end_debt - biden_start_debt
     biden_debt_rounded = round(biden_debt/1e+12, 2)
     biden_debt_per_person = round(biden_debt / current_population)
     biden_debt_per_household = round(biden_debt / current_households)
