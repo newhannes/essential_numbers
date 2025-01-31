@@ -44,13 +44,13 @@ def get_inflation_data():
     combined_cpi = combined_cpi.set_index("date")
     # Calculations and Currents 
     kole_ce = exp_fam_four.loc[2020:2021]["Avg CE HH4"].mean() # this is the average of CE for 2020 and 2021. Idk why its done this way. 
-    biden_inflation = round((combined_cpi.iloc[-1]["CPI"] / combined_cpi.loc["January 2021", "CPI"] - 1) * 100,1).values[0]
+    biden_inflation = round((combined_cpi.loc["December 2024", "CPI"] / combined_cpi.loc["January 2021", "CPI"] - 1) * 100,1).values[0]
     kole_inc = kole_ce * (biden_inflation / 100 + 1) - kole_ce # take kole_ce and multiply by bidenflation. then subtract kole_ce to get the increase.
     mon_kole_inc = kole_inc / 12
     # Food, energy, housing since Biden
-    food_biden = round((combined_cpi.iloc[-1]["Food CPI"] / combined_cpi.loc["January 2021", "Food CPI"] - 1) * 100, 0).values[0]
-    energy_biden = round((combined_cpi.iloc[-1]["Energy CPI"] / combined_cpi.loc["January 2021", "Energy CPI"] - 1) * 100, 0).values[0]
-    housing_biden = round((combined_cpi.iloc[-1]["Housing CPI"] / combined_cpi.loc["January 2021", "Housing CPI"] - 1) * 100, 0).values[0]
+    food_biden = round((combined_cpi.loc["December 2024", "Food CPI"] / combined_cpi.loc["January 2021", "Food CPI"] - 1) * 100, 0).values[0]
+    energy_biden = round((combined_cpi.loc["December 2024", "Energy CPI"] / combined_cpi.loc["January 2021", "Energy CPI"] - 1) * 100, 0).values[0]
+    housing_biden = round((combined_cpi.loc["December 2024", "Housing CPI"] / combined_cpi.loc["January 2021", "Housing CPI"] - 1) * 100, 0).values[0]
     # Currents
     cpi_current = combined_cpi.iloc[-1]["CPI Unadjusted YoY"]
     core_cpi_current = combined_cpi.iloc[-1]["Core CPI YoY"]
