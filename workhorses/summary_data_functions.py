@@ -52,9 +52,9 @@ def get_inflation_data():
         print(f"biden_inflation: {biden_inflation}, kole_ce: {kole_ce}")
 
     # Food, energy, housing since Biden
-    food_biden = round((combined_cpi.loc["December 2024", "Food CPI"] / combined_cpi.loc["January 2021", "Food CPI"] - 1) * 100, 0).values[0]
-    energy_biden = round((combined_cpi.loc["December 2024", "Energy CPI"] / combined_cpi.loc["January 2021", "Energy CPI"] - 1) * 100, 0).values[0]
-    housing_biden = round((combined_cpi.loc["December 2024", "Housing CPI"] / combined_cpi.loc["January 2021", "Housing CPI"] - 1) * 100, 0).values[0]
+    food_biden = round((combined_cpi.iloc[-1]["Food CPI"] / combined_cpi.loc["January 2021", "Food CPI"] - 1) * 100, 0).values[0]
+    energy_biden = round((combined_cpi.iloc[-1]["Energy CPI"] / combined_cpi.loc["January 2021", "Energy CPI"] - 1) * 100, 0).values[0]
+    housing_biden = round((combined_cpi.iloc[-1]["Housing CPI"] / combined_cpi.loc["January 2021", "Housing CPI"] - 1) * 100, 0).values[0]
     # Currents
     cpi_current = combined_cpi.iloc[-1]["CPI Unadjusted YoY"]
     core_cpi_current = combined_cpi.iloc[-1]["Core CPI YoY"]
