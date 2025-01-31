@@ -47,6 +47,10 @@ def get_inflation_data():
     biden_inflation = round((combined_cpi.loc["December 2024", "CPI"] / combined_cpi.loc["January 2021", "CPI"] - 1) * 100,1).values[0]
     kole_inc = kole_ce * (biden_inflation / 100 + 1) - kole_ce # take kole_ce and multiply by bidenflation. then subtract kole_ce to get the increase.
     mon_kole_inc = kole_inc / 12
+
+    if pd.isna(kole_inc):
+        print(f"biden_inflation: {biden_inflation}, kole_ce: {kole_ce}")
+
     # Food, energy, housing since Biden
     food_biden = round((combined_cpi.loc["December 2024", "Food CPI"] / combined_cpi.loc["January 2021", "Food CPI"] - 1) * 100, 0).values[0]
     energy_biden = round((combined_cpi.loc["December 2024", "Energy CPI"] / combined_cpi.loc["January 2021", "Energy CPI"] - 1) * 100, 0).values[0]
