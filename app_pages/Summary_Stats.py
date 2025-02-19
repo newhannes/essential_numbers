@@ -150,7 +150,7 @@ html = f'''
             <h2><b>Job Market and Wages</b></h2>
             <p>The labor market has not returned to its pre-Covid strength. For example:</p>
             <ul>
-                <li>Real earnings decreased <b>{real_earnings_biden} percent</b> under President Biden.</li>
+                <li>Real earnings decreased <b>{real_earnings_change_biden_pct} percent</b> under President Biden.</li>
                 <li>The {current_lfpr_date} labor force participation rate is <b>{current_lfpr} percent</b>, equating to a total labor force of <b>{labor_level} million</b> Americans</li>
                     <ul>
                         <li>This is <b>{abs(lfpr_change)} {'percentage points higher' if lfpr_change > 0 else ('percentage points higher' if lfpr_change == 0 else 'percentage points lower')}</b> than the labor force participation rate just prior to the COVID-19 pandemic: <b>63.3 percent in February 2020</b></li>
