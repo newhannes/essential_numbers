@@ -99,7 +99,7 @@ def get_labor_data(cpi_df):
     job_openings = get_fred_data("JTSJOL", "Job Openings", to_numeric=True)
     job_openings = job_openings["Job Openings"].iloc[-1]
 
-    ## Real Earnings (adjusted for inflation)
+    ## Real Earnings
     earnings = (
         get_fred_data("CES0500000011", "Earnings", to_numeric=True, yoy=False)
         .merge(cpi_df, on="date", how="left")
@@ -130,7 +130,7 @@ def get_labor_data(cpi_df):
     pre_covid_lfpr = lfpr.loc["2020-02-01", "LFPR"]
     lfpr_change = current_lfpr - pre_covid_lfpr
 
-    # Lowest LFPR before the pandemic (excluding pandemic period)
+    # Lowest LFPR before the pandemic 
     pre_covid_lfpr_df = lfpr.loc[:'2020-01-31']
     lowest_before_pandemic = pre_covid_lfpr_df[pre_covid_lfpr_df["LFPR"] <= current_lfpr].iloc[-1]
     lowest_before_pandemic_val = lowest_before_pandemic["LFPR"]
@@ -147,7 +147,7 @@ def get_labor_data(cpi_df):
     pre_covid_pop = pop.loc["2020-02-01"].values[0]
 
     # This calculation assumes a negative lfpr_change reduces labor force
-    adjusted_pop = round((abs(lfpr_change) / 100 * pre_covid_pop) / 1_000, 2)
+    adjusted_pop = round((abs(lfpr_change) / 100 * pre_covid_pop) / 1_000, 1)
 
     ## Return
     return {
@@ -160,7 +160,7 @@ def get_labor_data(cpi_df):
         "lowest_before_pandemic_date": lowest_before_pandemic_date,
         "lfpr_change": round(lfpr_change, 1),
         "adjusted_pop": adjusted_pop,
-        "labor_level_millions": round(labor_level_latest / 1_000, 1)
+        "labor_level_millions": round(labor_level_latest / 1_000)
     }
 
 ## MARK: INTEREST RATES
