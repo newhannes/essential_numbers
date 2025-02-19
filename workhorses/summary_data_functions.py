@@ -23,8 +23,14 @@ def get_fred_data(series_id, nickname, start_date=None, end_date=None, frequency
         data[f"{nickname} MoM"] = round(data[nickname].pct_change() * 100, 1)
     return data
 
-## INFLATION ##
+## MARK: INFLATION
 def get_inflation_data():
+    # Variables
+    biden_start_month = "2021-01-01"
+    biden_end_month = "2024-12-01"
+    # Helper function
+    def multiply_by_100_and_round(x, round_to=0):
+        return round(x * 100, round_to)
     # CPI
     cpi = get_fred_data("CPIAUCSL", "CPI", yoy=True, to_numeric=True) # seasonally adjusted
     cpi_unadj = get_fred_data("CPIAUCNS", "CPI Unadjusted", yoy=True, to_numeric=True) # not seasonally adjusted
@@ -42,9 +48,11 @@ def get_inflation_data():
     combined_cpi = reduce(lambda left, right: pd.merge(left, right, on='date', how='outer'), list_of_dfs)
     combined_cpi["date"] = pd.to_datetime(combined_cpi["date"])
     combined_cpi = combined_cpi.set_index("date")
+    biden_start_cpi = combined_cpi.loc[biden_start_month]
+    biden_end_cpi = combined_cpi.loc[biden_end_month]
     # Calculations and Currents 
     kole_ce = exp_fam_four.loc[2020:2021]["Avg CE HH4"].mean() # this is the average of CE for 2020 and 2021. Idk why its done this way. 
-    biden_inflation = round((combined_cpi.iloc[-1]["CPI"] / combined_cpi.loc["January 2021", "CPI"] - 1) * 100,1).values[0]
+    biden_inflation = multiply_by_100_and_round(biden_end_cpi["CPI"] / biden_start_cpi["CPI"] - 1, 1)
     kole_inc = kole_ce * (biden_inflation / 100 + 1) - kole_ce # take kole_ce and multiply by bidenflation. then subtract kole_ce to get the increase.
     mon_kole_inc = kole_inc / 12
 
@@ -52,9 +60,9 @@ def get_inflation_data():
         print(f"biden_inflation: {biden_inflation}, kole_ce: {kole_ce}")
 
     # Food, energy, housing since Biden
-    food_biden = round((combined_cpi.iloc[-1]["Food CPI"] / combined_cpi.loc["January 2021", "Food CPI"] - 1) * 100, 0).values[0]
-    energy_biden = round((combined_cpi.iloc[-1]["Energy CPI"] / combined_cpi.loc["January 2021", "Energy CPI"] - 1) * 100, 0).values[0]
-    housing_biden = round((combined_cpi.iloc[-1]["Housing CPI"] / combined_cpi.loc["January 2021", "Housing CPI"] - 1) * 100, 0).values[0]
+    food_biden = multiply_by_100_and_round(biden_end_cpi["Food CPI"] / biden_start_cpi["Food CPI"] - 1)
+    energy_biden = multiply_by_100_and_round(biden_end_cpi["Energy CPI"] / biden_start_cpi["Energy CPI"] - 1)
+    housing_biden = multiply_by_100_and_round(biden_end_cpi["Housing CPI"] / biden_start_cpi["Housing CPI"] - 1)
     # Currents
     cpi_current = combined_cpi.iloc[-1]["CPI Unadjusted YoY"]
     core_cpi_current = combined_cpi.iloc[-1]["Core CPI YoY"]
@@ -72,7 +80,7 @@ def get_inflation_data():
         "cpi_month_year" : combined_cpi.index[-1].strftime("%B %Y")
     }
 
-## LABOR MARKET ##
+## MARK: LABOR MARKET
 def get_labor_data(cpi_df):
     ## Unemployment
     unemployment = get_fred_data("UNRATE", "Unemployment Rate", to_numeric=True)
@@ -81,17 +89,20 @@ def get_labor_data(cpi_df):
     job_openings = get_fred_data("JTSJOL", "Job Openings", to_numeric=True)
     job_openings = job_openings["Job Openings"].iloc[-1]
     ## Real Earnings
-    earnings = get_fred_data("CES0500000011", "Earnings", to_numeric=True, yoy=False) # seasonally adjusted, avg weekly earnings
-    earnings = earnings.merge(cpi_df, on="date", how="left")
-    earnings["date"] = pd.to_datetime(earnings["date"], format="%Y-%m-%d")
-    earnings = earnings.dropna() # drop missing values, this occurs when one data source is ahead of another
+    earnings = (
+        get_fred_data("CES0500000011", "Earnings", to_numeric=True, yoy=False)
+        .merge(cpi_df, on="date", how="left")
+        .assign(date=lambda x: pd.to_datetime(x["date"], format="%Y-%m-%d"))
+        .query("date <= '2024-12-01'")
+        .dropna()
+    )
     earnings["YoY Increase"] = earnings["Earnings"].diff(periods=12)
     earnings["CPI Multiplier"] = earnings["CPI"].iloc[-1] / earnings["CPI"]
     earnings["Real Earnings, Today's Dollars"] = round(earnings["Earnings"] * earnings["CPI Multiplier"], 2) # take the real earnings and multiply by the CPI ratio to get the real earnings in today's dollars
     # Stats
     biden_real_earn = earnings.loc[earnings["date"] == "2021-01-01", "Real Earnings, Today's Dollars"].values[0]
     current_real_earn = earnings["Earnings"].iloc[-1]
-    real_earn_change = round(((biden_real_earn/current_real_earn)-1)*100,2)
+    real_earn_change = round(((biden_real_earn/current_real_earn)-1)*100, 2)
     real_earnings_biden = round(100 - ((current_real_earn / biden_real_earn) * 100), 1)
     ## Labor Force Participation Rate
     start_date = "1974-01-01"
@@ -115,8 +126,6 @@ def get_labor_data(cpi_df):
         "unemployment": unemployment,
         "job_openings": job_openings,
         "real_earnings_biden": real_earnings_biden,
-        "real_earn_change": real_earn_change,
-        "current_real_earn": current_real_earn,
         "current_lfpr": current_lfpr,
         "current_lfpr_date": current_lfpr_date,
         "lowest_before_pandemic_val": lowest_before_pandemic_val,
@@ -126,7 +135,7 @@ def get_labor_data(cpi_df):
         "labor_level": round(labor_level / 1_000, 1) 
     }
 
-## INTEREST RATES ##
+## MARK: INTEREST RATES
 def get_interest_data():
     ## 10 year treasury YIELD
     treasury_10 = get_fred_data("DGS10", "10yr Treasury Yield", to_float=True).dropna() # daily
@@ -149,19 +158,23 @@ def get_interest_data():
         "fed_target_upper_biden_start": fed_target_upper_biden_start
     }
 
-## GAS AND OIL ##
+## MARK: GAS AND OIL
 def get_gas_oil_data():
-    gas = get_fred_data("GASREGW", "gas_price", to_numeric=True).set_index("date")
-    gas_trump_average = gas["2017-01-01":"2021-01-20"]["gas_price"].mean().round(2)
+    gas = get_fred_data("GASREGW", "gas_price", to_numeric=True).set_index("date") # Weekly
+    gas_trump_average = gas["2017-01-20":"2021-01-19"]["gas_price"].mean().round(2)
+    gas_biden_average = gas["2021-01-20":"2025-01-19"]["gas_price"].mean().round(2)
     gas_now = gas["gas_price"].iloc[-1].round(2)
-    oil = get_fred_data("DCOILWTICO", "oil_price", to_numeric=True).set_index("date")
-    oil_trump_average = oil["2017-01-01":"2021-01-20"]["oil_price"].mean()
+    oil = get_fred_data("DCOILWTICO", "oil_price", to_numeric=True).set_index("date") # Daily
+    oil_trump_average = oil["2017-01-20":"2021-01-19"]["oil_price"].mean()
+    oil_biden_average = oil["2021-01-20":"2025-01-19"]["oil_price"].mean()
     oil_now = oil["oil_price"].iloc[-1]
     ## Return
     return {
         "gas_trump_average": gas_trump_average,
+        "gas_biden_average": gas_biden_average,
         "gas_now": gas_now,
         "oil_trump_average": oil_trump_average,
+        "oil_biden_average": oil_biden_average,
         "oil_now": oil_now
     }
 
