@@ -108,7 +108,7 @@ basic_debt_html = f"""
             <li><strong>${dt['biden_debt_per_household']:,}</strong> more debt per household</li>
             <li><strong>${dt['biden_debt_per_child']:,}</strong> more debt per child</li>
         </ul>
-        <p>The rate of debt accumulation during the Biden-Harris Administration equaled:</p>
+        <p>The rate of debt accumulation during the Biden-Harris administration equaled:</p>
         <ul>
             <li><strong>${dt['biden_debt_per_month']:,} billion</strong> in new debt per month</li>
             <li><strong>${dt['biden_debt_per_day_rounded']:,} billion</strong> in new debt per day</li>
@@ -139,18 +139,18 @@ html = f'''
             <h2><b>Inflation</b></h2>
             <p>Year-over-year CPI inflation as of {cpi_month_year} is <b>{cpi_current} percent</b></p>
             <ul>
-                <li>Under President Biden, prices increased by <b>{biden_inflation} percent</b></li> 
+                <li>Under Biden-Harris, prices increased by <b>{biden_inflation} percent</b></li> 
                     <ul>
-                        <li>At the end of Biden's presidency, in December 2024, the average family of four was paying an additional <b>${kole_inc:,} per year or ${mon_kole_inc:,} per month</b> to purchase the same goods and services as in January 2021.</li>
+                        <li>At the end of their administration, in December 2024, the average family of four was paying an additional <b>${kole_inc:,} per year or ${mon_kole_inc:,} per month</b> to purchase the same goods and services as in January 2021.</li>
                     </ul>
-                <li>Under President Biden, <b>food</b> prices increased <b>{food_biden} percent</b>;
+                <li>Under Biden-Harris, <b>food</b> prices increased <b>{food_biden} percent</b>;
                     <b>energy</b> prices increased <b>{energy_biden} percent</b>; and 
                     <b>housing</b> prices increased <b>{housing_biden} percent</b></li>                                     
             </ul>
             <h2><b>Job Market and Wages</b></h2>
             <p>The labor market has not returned to its pre-Covid strength. For example:</p>
             <ul>
-                <li>Real earnings decreased <b>{real_earnings_change_biden_pct} percent</b> under President Biden.</li>
+                <li>Real earnings decreased <b>{real_earnings_change_biden_pct} percent</b> under Biden-Harris.</li>
                 <li>The {current_lfpr_date} labor force participation rate is <b>{current_lfpr} percent</b>, equating to a total labor force of <b>{labor_level_millions} million</b> Americans</li>
                     <ul>
                         <li>This is <b>{abs(lfpr_change)} {'percentage points higher' if lfpr_change > 0 else ('percentage points higher' if lfpr_change == 0 else 'percentage points lower')}</b> than the labor force participation rate just prior to the COVID-19 pandemic: <b>63.3 percent in February 2020</b></li>
@@ -159,16 +159,16 @@ html = f'''
                     </ul>
             </ul>
             <h2><b>Interest Rates</b></h2>
-            <p>Due to President Biden's inflation crisis, interest rates rose dramatically:</p>
+            <p>Due to Biden-Harris's inflation crisis, interest rates rose dramatically:</p>
             <ul>
-                <li>When President Biden took office, the Federal Funds Rate was between <b>{fed_target_lower_biden_start} and {fed_target_upper_biden_start} percent</b>. At the end of his presidency, the rate was between {fed_target_lower_biden_end} and {fed_target_upper_biden_end}. Now, the Federal Funds Rate sits between <b>{fed_target_lower_now} and {fed_target_upper_now} percent</b>
+                <li>When Biden-Harris took office, the Federal Funds Rate was between <b>{fed_target_lower_biden_start} and {fed_target_upper_biden_start} percent</b>. At the end of their administration, the rate was between {fed_target_lower_biden_end} and {fed_target_upper_biden_end}. Now, the Federal Funds Rate sits between <b>{fed_target_lower_now} and {fed_target_upper_now} percent</b>
                 <li>The 10-year treasury yield in January 2021 was <b>{treasury_10_biden_start} percent</b>. The yield at the end of Biden's presidency was {treasury_10_biden_end}. Currently, the 10-year yield is <b>{treasury_10_now} percent</b></li>
             </ul>
             <h2><b>Oil and Gas Prices</b></h2>
-            <p>President Biden's disastrous energy policy caused oil and gas prices to skyrocket:</p>
+            <p>Biden-Harris's disastrous energy policy caused oil and gas prices to skyrocket:</p>
             <ul>         
                 <li>In President Trump's first term, the average for a gallon of gas was <b>${gas_trump_average}</b>, and the average price per barrel of oil was <b>${oil_trump_average}</b></li>
-                <li>Under President Biden, the average for a gallon of gas was <b>${gas_biden_average}</b>, and the average price per barrel of oil was <b>${oil_biden_average}</b></li>
+                <li>Under Biden-Harris, the average for a gallon of gas was <b>${gas_biden_average}</b>, and the average price per barrel of oil was <b>${oil_biden_average}</b></li>
                 <li>Currently, a gallon of gas is <b>${gas_now}</b> and a barrel of WTI crude oil is <b>${oil_now}</b></li>
             </ul>
             {basic_debt_html}
