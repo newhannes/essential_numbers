@@ -1,6 +1,6 @@
 import streamlit as st
 from workhorses.debt_tracker import debt_tracker_main
-from datetime import datetime
+from datetime import date, datetime
 import pdfkit
 
 def day_string_formatter(date):
@@ -17,6 +17,15 @@ if dt['today'] != datetime.today():
         with st.spinner("Updating Debt Tracker..."):
                 debt_tracker_main.clear()
                 dt = debt_tracker_main()
+
+
+if st.button("Round Debt Numbers"):
+    for key, val in dt.items():
+        if (not isinstance(val, date)) and (val > 999):
+            print(f"Rounding {key} to the nearest thousand")
+            dt[key] = round(val, -3)
+
+
 
 today_string = day_string_formatter(dt['today'])
 
