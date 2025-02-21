@@ -108,7 +108,7 @@ basic_debt_html = f"""
             <li><strong>${dt['biden_debt_per_household']:,}</strong> more debt per household</li>
             <li><strong>${dt['biden_debt_per_child']:,}</strong> more debt per child</li>
         </ul>
-        <p>The rate of debt accumulation during the Biden-Harris Administration has equaled:</p>
+        <p>The rate of debt accumulation during the Biden-Harris Administration equaled:</p>
         <ul>
             <li><strong>${dt['biden_debt_per_month']:,} billion</strong> in new debt per month</li>
             <li><strong>${dt['biden_debt_per_day_rounded']:,} billion</strong> in new debt per day</li>

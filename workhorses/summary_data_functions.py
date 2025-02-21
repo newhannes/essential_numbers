@@ -28,7 +28,7 @@ def get_inflation_data():
     # Constants
     BIDEN_START_MONTH = "2021-01-01"
     BIDEN_END_MONTH = "2024-12-01"
-
+    PANDEMIC_PEAK = "2022-06-01"
     # Helper function for percentage calculations
     def multiply_by_100_and_round(x, decimals=0):
         return round(x * 100, decimals)
@@ -75,6 +75,9 @@ def get_inflation_data():
     core_cpi_current_yoy = combined_cpi.iloc[-1]["Core CPI YoY"]
     cpi_month_year = combined_cpi.index[-1].strftime("%B %Y")
 
+    # Pandemic Peak
+    cpi_peak = combined_cpi.loc[PANDEMIC_PEAK]["CPI Unadjusted YoY"]
+
     ## Return Data
     return {
         "cpi_df": cpi,
@@ -87,6 +90,7 @@ def get_inflation_data():
         "cpi_current": cpi_current_yoy,
         "core_cpi_current": core_cpi_current_yoy,
         "cpi_month_year": cpi_month_year,
+        "cpi_pandemic_peak": cpi_peak,
     }
 
 ## MARK: LABOR MARKET
@@ -153,7 +157,7 @@ def get_labor_data(cpi_df):
     return {
         "unemployment": unemployment,
         "job_openings": job_openings,
-        "real_earnings_change_biden_pct": real_earnings_change_pct,
+        "real_earnings_change_biden_pct": abs(real_earnings_change_pct),
         "current_lfpr": round(current_lfpr, 1),
         "current_lfpr_date": current_lfpr_date,
         "lowest_before_pandemic_val": lowest_before_pandemic_val,

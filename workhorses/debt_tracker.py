@@ -16,10 +16,10 @@ def debt_tracker_main():
     biden_start_str = '2021-01-20'
     biden_end_str = '2025-01-20'
     biden_days = (biden_end - biden_start).days
-    biden_months = biden_days/ 30.45 #average month length
+    biden_months = biden_days / 30.45 # average month length
 
     ### Treasury API ###
-    #get debt data
+    # get debt data
     treasury_link = 'https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/accounting/od/debt_to_penny?page[size]=10000'
     p = requests.get(treasury_link)
     data = p.json()
@@ -42,7 +42,7 @@ def debt_tracker_main():
     biden_start_debt = debt_df.loc[debt_df["record_date"] == biden_start_str, "tot_pub_debt_out_amt"].values[0]
     biden_start_debt_rounded = round(biden_start_debt/1e+12, 2)
     # Biden End
-    biden_end_debt = debt_df.loc[debt_df["record_date"] <= biden_end_str, "tot_pub_debt_out_amt"].values[-1] #last value before end date
+    biden_end_debt = debt_df.loc[debt_df["record_date"] <= biden_end_str, "tot_pub_debt_out_amt"].values[-1] # last value before end date
     biden_end_debt_rounded = round(biden_end_debt/1e+12, 2)
     # Year Ago
     debt_df['record_date'] = pd.to_datetime(debt_df['record_date'])
