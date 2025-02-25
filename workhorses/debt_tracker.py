@@ -12,7 +12,7 @@ def debt_tracker_main():
     fred = Fred()
     today = date.today()
     biden_start = date(2021, 1, 20)
-    biden_end = date(2024, 1, 20)
+    biden_end = date(2025, 1, 20)
     biden_start_str = '2021-01-20'
     biden_end_str = '2025-01-20'
     biden_days = (biden_end - biden_start).days
