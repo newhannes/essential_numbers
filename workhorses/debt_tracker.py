@@ -11,8 +11,8 @@ def debt_tracker_main():
     FRED_API_KEY = st.secrets["FRED_API_KEY"]
     fred = Fred()
     today = date.today()
-    biden_start = date(2021,1,20)
-    biden_end = date(2024,1,20)
+    biden_start = date(2021, 1, 20)
+    biden_end = date(2024, 1, 20)
     biden_start_str = '2021-01-20'
     biden_end_str = '2025-01-20'
     biden_days = (biden_end - biden_start).days
@@ -71,17 +71,17 @@ def debt_tracker_main():
     biden_debt_per_min = round(biden_debt_per_day/1e+6/(60*24), 1)
     biden_debt_per_sec = round(biden_debt_per_day/(60*60*24))
     # Rate of Change Year Ago
-    debt_increase_from_year_ago = current_debt - debt_year_ago #actual
-    debt_increase_from_year_ago_rounded = round(debt_increase_from_year_ago/1e+12, 2) #in trillions
-    debt_year_ago_rounded = round(debt_year_ago/1e+12, 2) #in trillions
-    last_year_debt_per_month = round(debt_increase_from_year_ago/1e9 / 12) #in billions
-    last_year_debt_per_day = debt_increase_from_year_ago/365 #actual
-    last_year_debt_per_day_rounded = round((last_year_debt_per_day)/1e+9, 1) #in billions
-    last_year_debt_per_hour = round(last_year_debt_per_day/1e+6 / 24) #in millions
-    last_year_debt_per_min = round(last_year_debt_per_day/1e+6 /(60*24), 1) #in millions
-    last_year_debt_per_sec = round(last_year_debt_per_day / (60*60*24)) #actual
+    debt_increase_from_year_ago = current_debt - debt_year_ago # actual
+    debt_increase_from_year_ago_rounded = round(debt_increase_from_year_ago/1e+12, 2) # in trillions
+    debt_year_ago_rounded = round(debt_year_ago/1e+12, 2) # in trillions
+    last_year_debt_per_month = round(debt_increase_from_year_ago/1e9 / 12) # in billions
+    last_year_debt_per_day = debt_increase_from_year_ago/365 # actual
+    last_year_debt_per_day_rounded = round((last_year_debt_per_day)/1e+9, 1) # in billions
+    last_year_debt_per_hour = round(last_year_debt_per_day/1e+6 / 24) # in millions
+    last_year_debt_per_min = round(last_year_debt_per_day/1e+6 /(60*24), 1) # in millions
+    last_year_debt_per_sec = round(last_year_debt_per_day / (60*60*24)) # actual
 
-    #Store all variables in a dictionary
+    # Store all variables in a dictionary
     debt_dict = {"today":today,
                 'current_debt_rounded':current_debt_rounded,
                 'debt_per_person':debt_per_person,
