@@ -133,6 +133,3 @@ st.download_button(
     file_name=f"Debt Tracking Report - {dt['today']}.pdf",
     mime="application/octet-stream"
 )
-
-###
-print("this is a test why the f is this not working i hate myself")
