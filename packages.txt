@@ -1,3 +1,0 @@
-wkhtmltopdf 
-weasyprint
-fonts-ebgaramond
