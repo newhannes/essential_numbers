@@ -177,16 +177,16 @@ html = f'''
     </html>
     '''
 
-pdf = pdfkit.from_string(html, False, options={'enable-local-file-access': ''})
+# pdf = pdfkit.from_string(html, False, options={'enable-local-file-access': ''})
 st.image(image_path)
-cols = st.columns([1, 1, 1])
-with cols[1]:
-    st.download_button(
-        "⬇️ Download PDF",
-        data=pdf,
-        file_name=f"{CURRENT_DATE_STRING} Econ Summary Stats Report.pdf",
-        mime="application/octet-stream"
-    )
+# cols = st.columns([1, 1, 1])
+# with cols[1]:
+#     st.download_button(
+#         "⬇️ Download PDF",
+#         data=pdf,
+#         file_name=f"{CURRENT_DATE_STRING} Econ Summary Stats Report.pdf",
+#         mime="application/octet-stream"
+#     )
 
 # Display in app
 st.html(html.replace(style_html, ""))
