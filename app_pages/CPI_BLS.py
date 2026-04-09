@@ -64,34 +64,46 @@ BIDEN_ENERGY_START  = "January 2021"
 
 @st.cache_data(ttl=3600 * 6)
 def fetch_bls_cpi(start_year=2016, api_key=None):
-    end_year = datetime.now().year
-    payload = {
-        "seriesid":        list(SERIES_IDS.keys()),
-        "startyear":       start_year,
-        "endyear":         end_year,
-        "catalog":         False,
-        "registrationkey": api_key,
-    }
-    resp = requests.post(
-        "https://api.bls.gov/publicAPI/v2/timeseries/data/",
-        data=json.dumps(payload),
-        headers={"Content-type": "application/json"},
-    )
-    result = resp.json()
-    if result["status"] != "REQUEST_SUCCEEDED":
-        return None, result.get("message", ["Unknown BLS API error"])
+    """Fetch CPI series from BLS API in small batches.
+
+    The BLS API silently truncates responses when too many series are requested
+    at once, causing the most-recent months to be dropped. Batching to 5 series
+    per request avoids this.
+    """
+    end_year    = datetime.now().year
+    series_list = list(SERIES_IDS.keys())
+    batch_size  = 5
+    batches     = [series_list[i:i + batch_size] for i in range(0, len(series_list), batch_size)]
 
     records = []
-    for series in result["Results"]["series"]:
-        sid = series["seriesID"]
-        for item in series["data"]:
-            if "M01" <= item["period"] <= "M12":
-                records.append({
-                    "series_id": sid,
-                    "year":      item["year"],
-                    "period":    item["period"],
-                    "value":     item["value"],
-                })
+    for batch in batches:
+        payload = {
+            "seriesid":        batch,
+            "startyear":       start_year,
+            "endyear":         end_year,
+            "catalog":         False,
+            "registrationkey": api_key,
+        }
+        resp   = requests.post(
+            "https://api.bls.gov/publicAPI/v2/timeseries/data/",
+            data=json.dumps(payload),
+            headers={"Content-type": "application/json"},
+        )
+        result = resp.json()
+        if result["status"] != "REQUEST_SUCCEEDED":
+            return None, result.get("message", ["Unknown BLS API error"])
+
+        for series in result["Results"]["series"]:
+            sid = series["seriesID"]
+            for item in series["data"]:
+                if "M01" <= item["period"] <= "M12":
+                    records.append({
+                        "series_id": sid,
+                        "year":      item["year"],
+                        "period":    item["period"],
+                        "value":     item["value"],
+                    })
+
     return pd.DataFrame(records), None
 
 
