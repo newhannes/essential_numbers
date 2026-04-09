@@ -7,7 +7,9 @@ import pyperclip
 import html2text
 from datetime import datetime
 
-BLS_API_KEY = st.secrets["BLS_API_KEY"]
+st.write("Paste your BLS API key:")
+
+BLS_API_KEY = st.text_input("BLS API Key")
 
 SERIES_IDS = {
     "CUSR0000SA0":          "cpi_adjusted",
