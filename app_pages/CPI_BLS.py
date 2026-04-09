@@ -61,14 +61,14 @@ BIDEN_ENERGY_START  = "January 2021"
 # ── Data helpers ───────────────────────────────────────────────────────────────
 
 @st.cache_data(ttl=3600 * 6)
-def fetch_bls_cpi(start_year=2016):
+def fetch_bls_cpi(start_year=2016, api_key=None):
     end_year = datetime.now().year
     payload = {
-        "seriesid":       list(SERIES_IDS.keys()),
-        "startyear":      start_year,
-        "endyear":        end_year,
-        "catalog":        False,
-        "registrationkey": BLS_API_KEY,
+        "seriesid":        list(SERIES_IDS.keys()),
+        "startyear":       start_year,
+        "endyear":         end_year,
+        "catalog":         False,
+        "registrationkey": api_key,
     }
     resp = requests.post(
         "https://api.bls.gov/publicAPI/v2/timeseries/data/",
@@ -128,7 +128,7 @@ def process_cpi(raw_df):
 # ── Load ───────────────────────────────────────────────────────────────────────
 
 with st.spinner("Fetching CPI data from BLS..."):
-    raw_df, error = fetch_bls_cpi()
+    raw_df, error = fetch_bls_cpi(api_key=BLS_API_KEY)
 
 if error:
     st.error(f"BLS API error: {error}")
