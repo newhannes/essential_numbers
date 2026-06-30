@@ -11,6 +11,7 @@ pg = st.navigation(
     st.Page("app_pages/Summary_Stats.py"),
     st.Page("app_pages/GDP_Report.py"),
     st.Page("app_pages/CBO_Baseline_Comparisons.py"),
+    st.Page("app_pages/CBO_GDP_Projection_Explorer.py"),
     ]
     )
 
