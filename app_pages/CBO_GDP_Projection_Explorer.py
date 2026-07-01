@@ -93,36 +93,33 @@ vintage_order = (
 )
 vintages = vintage_order["projection_date"].tolist()
 
-if "cbo_gdp_idx" not in st.session_state:
-    st.session_state.cbo_gdp_idx = len(vintages) - 1  # default: most recent
+# The selectbox's own widget state ("cbo_gdp_select") is the single source of
+# truth. Default to the most recent vintage.
+if "cbo_gdp_select" not in st.session_state or st.session_state.cbo_gdp_select not in vintages:
+    st.session_state.cbo_gdp_select = vintages[-1]
 
-# Keep the index in range if data changes.
-st.session_state.cbo_gdp_idx = min(st.session_state.cbo_gdp_idx, len(vintages) - 1)
+current_idx = vintages.index(st.session_state.cbo_gdp_select)
 
 prev_col, sel_col, next_col = st.columns([1, 4, 1])
 
+# Process the buttons BEFORE creating the selectbox so the new value is picked
+# up by the widget on this same rerun.
 with prev_col:
     st.write("")
-    if st.button("◀ Prev", use_container_width=True, disabled=st.session_state.cbo_gdp_idx == 0):
-        st.session_state.cbo_gdp_idx -= 1
+    if st.button("◀ Prev", use_container_width=True, disabled=current_idx == 0):
+        st.session_state.cbo_gdp_select = vintages[current_idx - 1]
 
 with next_col:
     st.write("")
-    if st.button("Next ▶", use_container_width=True, disabled=st.session_state.cbo_gdp_idx == len(vintages) - 1):
-        st.session_state.cbo_gdp_idx += 1
+    if st.button("Next ▶", use_container_width=True, disabled=current_idx == len(vintages) - 1):
+        st.session_state.cbo_gdp_select = vintages[current_idx + 1]
 
 with sel_col:
-    selected = st.selectbox(
+    vintage = st.selectbox(
         "CBO projection vintage",
         vintages,
-        index=st.session_state.cbo_gdp_idx,
         key="cbo_gdp_select",
     )
-# Sync selectbox -> index (selectbox choice wins if user picked directly).
-if selected != vintages[st.session_state.cbo_gdp_idx]:
-    st.session_state.cbo_gdp_idx = vintages.index(selected)
-
-vintage = vintages[st.session_state.cbo_gdp_idx]
 
 
 # -------------------------------------------------------------------------
